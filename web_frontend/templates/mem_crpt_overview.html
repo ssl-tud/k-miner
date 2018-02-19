@@ -1,0 +1,106 @@
+{% extends "index.html" %}
+
+{% block body %}
+<div class="container" style="max-width:1500px; min-height:100%">
+	<h1 class="page-header">Kernel Report</h1>
+
+	<h2 class="page-header">Memory Corruptions Summary</h2>
+
+	<table class="table table-hover">
+		<thead> <tr> <th>#</th> 
+				{% for kv, kr in kernel_reports.items()%}
+				<th>{{kv}}</th> 
+				{% endfor %}
+			</tr> 
+		</thead>
+		<tbody> 
+			<tr style="display:table-row"> 
+				<th scope="row">Use-After-Free</th> 
+				{% for kv, kr in kernel_reports.items() %}
+				<!-- memory corruption options
+				<td>{{kr.get_actual_num_memory_corruptions("UAF")}}({{kr.get_total_num_memory_corruptions("UAF")}})</td> 
+				-->
+				<td>{{kr.get_actual_num_memory_corruptions("UAF")}}</td> 
+				{% endfor %}
+			</tr> 
+			<tr style="display:table-row"> 
+				<th scope="row">Memory-Leak</th> 
+				{% for kv, kr in kernel_reports.items() %}
+				<td>{{kr.get_actual_num_memory_corruptions("LEAK")}}</td> 
+				{% endfor %}
+			</tr> 
+			<tr style="display:table-row"> 
+				<th scope="row">Use-After-Return</th> 
+				{% for kv, kr in kernel_reports.items() %}
+				<td>{{kr.get_actual_num_memory_corruptions("UAR")}}</td> 
+				{% endfor %}
+			</tr> 
+			<tr style="display:table-row"> 
+				<th scope="row">Double-Free</th> 
+				{% for kv, kr in kernel_reports.items() %}
+				<td>{{kr.get_actual_num_memory_corruptions("DFREE")}}</td> 
+				{% endfor %}
+			</tr> 
+			<tr style="display:table-row; border-bottom: 3px solid #ccc"> 
+				<th scope="row">Double-Lock</th> 
+				{% for kv, kr in kernel_reports.items() %}
+				<td>{{kr.get_actual_num_memory_corruptions("DLOCK")}}</td> 
+				{% endfor %}
+			</tr> 
+			<tr style="display:table-row"> 
+				<th scope="row"><b>Total</b></th> 
+				{% for kv, kr in kernel_reports.items() %}
+				<td><b>{{kr.get_actual_num_memory_corruptions("TOTAL")}}</b></td> 
+				{% endfor %}
+			</tr> 
+		</tbody>
+	</table>
+
+	{% for kv, kr in kernel_reports.items() %}
+	<h2 class="page-header">Memory Corruptions <small><span style="float:right;">{{kv}}</span></small></h2>
+
+	<table class="table table-hover" name="mem_crpt_overview_table" id="{{kv}}">
+		<thead> <tr> <th>ID</th> <th>Type</th> <th>Function</th> <th>File</th> <th>Line</th> <th>Status</th></tr> </thead>
+		<tbody> 
+			{% for ty, mem_crpt in kr.get_memory_corruptions().items() %}
+			{% for mc in mem_crpt%}
+			<tr style="display:table-row"> 
+				<td name="mem_corruption_id">{{mc.ID}}</td> 
+				<td name="type">{{mc.type.name}}</td> 
+				<td name="func_name">{{mc.get_obj().loc.function_name}}</td> 
+				<td name="file_name"><a href="{{mc.get_obj().loc.getLink(kv)}}">{{mc.get_obj().loc.file_name}}</a></td> 
+				<td name="line">{{mc.get_obj().loc.line}}</td> 
+				<!-- 
+				{% if mc.is_false_positive == False %}
+				<td name="checked"><span class="glyphicon glyphicon-ok"></span></td>
+				{% else %}
+				<td name="checked"><span class="glyphicon glyphicon-ok" style="display: none"></span></td> -->
+				<!-- memory corruption options -->
+				<td name="mem_corrupt_option"> 
+					<div class="dropdown">
+						<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+							{% if mc.is_positive() == True %}
+							<i class="glyphicon glyphicon-ok"></i>
+							{% elif mc.is_false_positive() == True %}
+							<i class="glyphicon glyphicon-remove"></i>
+							{% else %}
+							<i class="glyphicon glyphicon-option-horizontal"></i>
+							{% endif %}
+						</button>
+						<ul class="dropdown-menu" id="select_mem_currupt_option" style="padding:7px; min-width: 0px" role="menu">
+							<li id="Positive"><i class="glyphicon glyphicon-ok" style="font-size: 25px"></i></li>
+							<li id="False"><i class="glyphicon glyphicon-remove" style="font-size: 25px"></i></li>
+							<li id="Remove"><i class="glyphicon glyphicon-trash" style="font-size: 25px"></i></li>
+						</ul>
+					</div>
+				</td>
+				<!-- {% endif %}-->
+			</tr> 
+			{% endfor %}
+			{% endfor %}
+		</tbody>
+	</table>
+			
+	{% endfor %}
+</div>
+{% endblock%}

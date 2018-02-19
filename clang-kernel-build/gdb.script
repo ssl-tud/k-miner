@@ -1,0 +1,4 @@
+set architecture i386:x86-64:intel
+symbol-file linux-stable/vmlinux
+target remote localhost:1234
+br show_fault_oops

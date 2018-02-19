@@ -1,0 +1,2084 @@
+######################################################
+////////////////////// REPORT ////////////////////////
+######################################################
+General Info:
+======================================================
+______________________________________________________
+Module                            vmlinux_v3.19_min.bc
+______________________________________________________
+API                                          SYSCALL
+______________________________________________________
+System call                                  sys_futex
+______________________________________________________
+Num Threads                                          8
+
+
+
+Use-After-Return Analysis Statistic:
+======================================================
+______________________________________________________
+Time (sec)                                          3
+______________________________________________________
+Timeout (sec)                                       10
+______________________________________________________
+Num analyzed local variables                       401
+______________________________________________________
+Num bugs found                                       1
+
+
+
+
+1. Use-After-Return:
+======================================================
+______________________________________________________
+DANGLING POINTER:
+
+File                                    kernel/futex.c
+Function                                    futex_init
+Line                                              3036
+Name                                             call3
+
+______________________________________________________
+LOCAL VARIABLE:
+
+File                                    kernel/futex.c
+Function                         futex_wait_requeue_pi
+Line                                              2554
+Name                                                 q
+
+______________________________________________________
+API TO LOCALVAR:
+
+-> SyS_futex
+-> SYSC_futex
+-> do_futex
+-> futex_wait_requeue_pi
+
+______________________________________________________
+LOCALVAR TO OUTOFSCOPE:
+
+list_add_tail.187
+	===> __list_add.188
+	<--- __list_add.188
+<--- list_add_tail.187
+<--- plist_add
+<--- queue_me
+<--- futex_wait_queue_me
+---> handle_early_requeue_pi_wakeup
+<--- handle_early_requeue_pi_wakeup
+<--- futex_wait_requeue_pi
+
+______________________________________________________
+DANGLINGPTR TO OUTOFSCOPE:
+
+SyS_futex
+	---> SYSC_futex
+	.	---> do_futex
+	.	.	---> futex_wait_requeue_pi
+	.	.	.	---> futex_wait_setup
+	.	.	.	.	---> queue_lock
+	.	.	.	.	.	---> hash_futex
+	.	.	.	.	.	<=== hash_futex
+	.	.	.	.	<=== queue_lock
+	.	.	.	<--- futex_wait_setup
+
+______________________________________________________
+FUNCTION-LOCATION MAP:
+
+ - SYSC_futex               kernel/futex.c (ln: 2972)
+ - SyS_futex                kernel/futex.c (ln: 2972)
+ - __list_add.188           include/linux/list.h (ln: 38)
+ - do_futex                 kernel/futex.c (ln: 2915)
+ - futex_wait_queue_me      kernel/futex.c (ln: 2053)
+ - futex_wait_requeue_pi    kernel/futex.c (ln: 2545)
+ - futex_wait_setup         kernel/futex.c (ln: 2105)
+ - handle_early_requeue_pi_wakeup kernel/futex.c (ln: 2473)
+ - hash_futex               kernel/futex.c (ln: 309)
+ - list_add_tail.187        include/linux/list.h (ln: 75)
+ - plist_add                lib/plist.c (ln: 75)
+ - queue_lock               kernel/futex.c (ln: 1742)
+ - queue_me                 kernel/futex.c (ln: 1785)
+______________________________________________________
+Duration (sec)                                       0
+======================================================
+
+
+
+System Info:
+======================================================
+______________________________________________________
+Kernel Name                                      Linux
+______________________________________________________
+Kernel Release                       3.19.0-79-generic
+______________________________________________________
+Kernel Version
+ #87~14.04.1-Ubuntu SMP Wed Dec 21 18:12:31 UTC 2016
+______________________________________________________
+Processor                                       x86_64
+______________________________________________________
+Num Cores                                            8
+______________________________________________________
+Used/Max/Total-Mem (kB)                   0/0/32173836
+
+
+
+Partitioner Statistic:
+======================================================
+ Type      |                       |  A  |  R  |  O
+======================================================
+ Initcalls |                       |    5|    5|   92
+           | Functions             |   14|   14| 1302
+           | Global Variables      |   11|   11| 1170
+           | Non Defined Variables |   11|   11|  333
+           | Call Graph Depth      |   16|   16|   22
+-----------+-----------------------+-----+-----+----
+ Syscall   | Functions             |  200|  200|20571
+           | Global Variables      |   39|   39|11045
+           | Call Graph Depth      |   15|   15|    0
+-----------+-----------------------+-----+-----+----
+ Kernel    | Functions             |  209|  207|20571
+           | Global Variables      |   39|   39|11045
+======================================================
+Legend: A= actual ; R= relevant ; O= original
+______________________________________________________
+Initcall Function Limit                           4000
+______________________________________________________
+API Function Limit                                3000
+
+
+
+Blacklisted (Sub-)Function Names:
+======================================================
+BUG, ERR, Page, atomic, cpu, dbg, 
+debug, error, fatal, fault, info, might_sleep, 
+page, print, schedule, task, test, thread_info, 
+time, warn, 
+
+
+
+Sinks: 
+======================================================
+__list_del.192, __list_del.2903, __list_del_entry.191, 
+__list_del_entry.2902, list_del_init.190, list_del_init.2901, 
+plist_del, unqueue_me, unqueue_me_pi, 
+
+
+======================================================
+Total (sec)                                    63.3074
+======================================================
+
+
+######################################################
+////////////////////// REPORT ////////////////////////
+######################################################
+General Info:
+======================================================
+______________________________________________________
+Module                            vmlinux_v3.19_min.bc
+______________________________________________________
+API                                          SYSCALL
+______________________________________________________
+System call                                  sys_futex
+______________________________________________________
+Num Threads                                          8
+
+
+
+Use-After-Return Analysis Statistic:
+======================================================
+______________________________________________________
+Time (sec)                                         29
+______________________________________________________
+Timeout (sec)                                       11
+______________________________________________________
+Num analyzed local variables                       401
+______________________________________________________
+Num bugs found                                       1
+
+
+
+
+1. Use-After-Return:
+======================================================
+______________________________________________________
+DANGLING POINTER:
+
+File                                    kernel/futex.c
+Function                                    futex_init
+Line                                              3036
+Name                                             call3
+
+______________________________________________________
+LOCAL VARIABLE:
+
+File                                    kernel/futex.c
+Function                         futex_wait_requeue_pi
+Line                                              2554
+Name                                                 q
+
+______________________________________________________
+API TO LOCALVAR:
+
+-> SyS_futex
+-> SYSC_futex
+-> do_futex
+-> futex_wait_requeue_pi
+
+______________________________________________________
+LOCALVAR TO OUTOFSCOPE:
+
+futex_wait_requeue_pi
+	===> futex_wait_queue_me
+	.	===> queue_me
+	.	.	===> plist_add
+	.	.	.	===> list_add_tail.187
+	.	.	.	.	===> __list_add.188
+	.	.	.	.	+
+	.	.	.	.	++> assignment (ln: 45)
+	.	.	.	.	+
+	.	.	.	.	<--- __list_add.188
+	.	.	.	<--- list_add_tail.187
+	.	.	<--- plist_add
+	.	<--- queue_me
+	<--- futex_wait_queue_me
+	---> handle_early_requeue_pi_wakeup
+	<--- handle_early_requeue_pi_wakeup
+<--- futex_wait_requeue_pi
+
+______________________________________________________
+DANGLINGPTR TO OUTOFSCOPE:
+
+futex_init
++
+++> assignment (ln: 3036)
++
+<--- futex_init
+---> SYSC_futex
+	---> do_futex
+	.	---> futex_wait_requeue_pi
+	.	.	---> futex_wait_setup
+	.	.	.	---> queue_lock
+	.	.	.	.	---> hash_futex
+	.	.	.	.	<=== hash_futex
+	.	.	.	.	+
+	.	.	.	.	++> assignment (ln: 1747)
+	.	.	.	.	+
+	.	.	.	<=== queue_lock
+	.	.	.	+
+	.	.	.	++> assignment (ln: 2135)
+	.	.	.	+
+	.	.	<--- futex_wait_setup
+	.	.	===> futex_wait_queue_me
+	.	.	.	===> queue_me
+	.	.	.	.	===> plist_add
+	.	.	.	.	.	===> plist_first.1579
+	.	.	.	.	.	.	+
+	.	.	.	.	.	.	++> assignment (ln: 284)
+	.	.	.	.	.	.	+
+	.	.	.	.	.	.	+
+	.	.	.	.	.	.	++> assignment (ln: 284)
+	.	.	.	.	.	.	+
+	.	.	.	.	.	<=== plist_first.1579
+	.	.	.	.	.	+
+	.	.	.	.	.	++> assignment (ln: 87)
+	.	.	.	.	.	+
+	.	.	.	.	.	+
+	.	.	.	.	.	++> assignment (ln: 96)
+	.	.	.	.	.	+
+	.	.	.	.	.	+
+	.	.	.	.	.	++> assignment (ln: 96)
+	.	.	.	.	.	+
+	.	.	.	.	.	+
+	.	.	.	.	.	++> assignment (ln: 96)
+	.	.	.	.	.	+
+	.	.	.	.	.	+
+	.	.	.	.	.	++> assignment (ln: 91)
+	.	.	.	.	.	+
+	.	.	.	.	.	===> list_add_tail.187
+	.	.	.	.	.	.	===> __list_add.188
+	.	.	.	.	.	.	+
+	.	.	.	.	.	.	++> assignment (ln: 45)
+	.	.	.	.	.	.	+
+	.	.	.	.	.	.	<--- __list_add.188
+	.	.	.	.	.	<--- list_add_tail.187
+	.	.	.	.	<--- plist_add
+	.	.	.	<--- queue_me
+	.	.	<--- futex_wait_queue_me
+	.	.	---> handle_early_requeue_pi_wakeup
+	.	.	<--- handle_early_requeue_pi_wakeup
+	.	<--- futex_wait_requeue_pi
+
+______________________________________________________
+FUNCTION-LOCATION MAP:
+
+ - SYSC_futex               kernel/futex.c (ln: 2972)
+ - SyS_futex                kernel/futex.c (ln: 2972)
+ - __list_add.188           include/linux/list.h (ln: 38)
+ - do_futex                 kernel/futex.c (ln: 2915)
+ - futex_init               kernel/futex.c (ln: 3025)
+ - futex_wait_queue_me      kernel/futex.c (ln: 2053)
+ - futex_wait_requeue_pi    kernel/futex.c (ln: 2545)
+ - futex_wait_setup         kernel/futex.c (ln: 2105)
+ - handle_early_requeue_pi_wakeup kernel/futex.c (ln: 2473)
+ - hash_futex               kernel/futex.c (ln: 309)
+ - list_add_tail.187        include/linux/list.h (ln: 75)
+ - plist_add                lib/plist.c (ln: 75)
+ - plist_first.1579         include/linux/plist.h (ln: 282)
+ - queue_lock               kernel/futex.c (ln: 1742)
+ - queue_me                 kernel/futex.c (ln: 1785)
+______________________________________________________
+Duration (sec)                                      11
+======================================================
+
+
+
+System Info:
+======================================================
+______________________________________________________
+Kernel Name                                      Linux
+______________________________________________________
+Kernel Release                       3.19.0-79-generic
+______________________________________________________
+Kernel Version
+ #87~14.04.1-Ubuntu SMP Wed Dec 21 18:12:31 UTC 2016
+______________________________________________________
+Processor                                       x86_64
+______________________________________________________
+Num Cores                                            8
+______________________________________________________
+Used/Max/Total-Mem (kB)                   0/0/32173836
+
+
+
+Partitioner Statistic:
+======================================================
+ Type      |                       |  A  |  R  |  O
+======================================================
+ Initcalls |                       |    5|    5|   92
+           | Functions             |   14|   14| 1302
+           | Global Variables      |   11|   11| 1170
+           | Non Defined Variables |   11|   11|  333
+           | Call Graph Depth      |   16|   16|   22
+-----------+-----------------------+-----+-----+----
+ Syscall   | Functions             |  200|  200|20571
+           | Global Variables      |   39|   39|11045
+           | Call Graph Depth      |   15|   15|    0
+-----------+-----------------------+-----+-----+----
+ Kernel    | Functions             |  209|  207|20571
+           | Global Variables      |   39|   39|11045
+======================================================
+Legend: A= actual ; R= relevant ; O= original
+______________________________________________________
+Initcall Function Limit                           4000
+______________________________________________________
+API Function Limit                                3000
+
+
+
+Blacklisted (Sub-)Function Names:
+======================================================
+BUG, ERR, Page, atomic, cpu, dbg, 
+debug, error, fatal, fault, info, might_sleep, 
+page, print, schedule, task, test, thread_info, 
+time, warn, 
+
+
+
+Sinks: 
+======================================================
+__list_del.192, __list_del.2903, __list_del_entry.191, 
+__list_del_entry.2902, list_del_init.190, list_del_init.2901, 
+plist_del, unqueue_me, unqueue_me_pi, 
+
+
+======================================================
+Total (sec)                                    91.8436
+======================================================
+
+
+######################################################
+////////////////////// REPORT ////////////////////////
+######################################################
+General Info:
+======================================================
+______________________________________________________
+Module                            vmlinux_v3.19_min.bc
+______________________________________________________
+API                                          SYSCALL
+______________________________________________________
+System call                                  sys_futex
+______________________________________________________
+Num Threads                                          8
+
+
+
+Use-After-Return Analysis Statistic:
+======================================================
+______________________________________________________
+Time (sec)                                        218
+______________________________________________________
+Timeout (sec)                                      100
+______________________________________________________
+Num analyzed local variables                       401
+______________________________________________________
+Num bugs found                                       1
+
+
+
+
+1. Use-After-Return:
+======================================================
+______________________________________________________
+DANGLING POINTER:
+
+File                                    kernel/futex.c
+Function                                    futex_init
+Line                                              3036
+Name                                             call3
+
+______________________________________________________
+LOCAL VARIABLE:
+
+File                                    kernel/futex.c
+Function                         futex_wait_requeue_pi
+Line                                              2554
+Name                                                 q
+
+______________________________________________________
+API TO LOCALVAR:
+
+-> SyS_futex
+-> SYSC_futex
+-> do_futex
+-> futex_wait_requeue_pi
+
+______________________________________________________
+LOCALVAR TO OUTOFSCOPE:
+
+futex_wait_requeue_pi
+	===> futex_wait_queue_me
+	.	===> queue_me
+	.	.	===> plist_add
+	.	.	.	===> list_add_tail.187
+	.	.	.	.	===> __list_add.188
+	.	.	.	.	+
+	.	.	.	.	++> assignment (ln: 45)
+	.	.	.	.	+
+	.	.	.	.	<--- __list_add.188
+	.	.	.	<--- list_add_tail.187
+	.	.	<--- plist_add
+	.	<--- queue_me
+	<--- futex_wait_queue_me
+	---> handle_early_requeue_pi_wakeup
+	<--- handle_early_requeue_pi_wakeup
+<--- futex_wait_requeue_pi
+
+______________________________________________________
+DANGLINGPTR TO OUTOFSCOPE:
+
+futex_init
++
+++> assignment (ln: 3036)
++
+<--- futex_init
+---> SYSC_futex
+	---> do_futex
+	.	---> futex_wait_requeue_pi
+	.	.	---> futex_wait_setup
+	.	.	.	---> queue_lock
+	.	.	.	.	---> hash_futex
+	.	.	.	.	<=== hash_futex
+	.	.	.	.	+
+	.	.	.	.	++> assignment (ln: 1747)
+	.	.	.	.	+
+	.	.	.	<=== queue_lock
+	.	.	.	+
+	.	.	.	++> assignment (ln: 2135)
+	.	.	.	+
+	.	.	<--- futex_wait_setup
+	.	.	===> futex_wait_queue_me
+	.	.	.	===> queue_me
+	.	.	.	.	===> plist_add
+	.	.	.	.	.	===> plist_first.1579
+	.	.	.	.	.	.	+
+	.	.	.	.	.	.	++> assignment (ln: 284)
+	.	.	.	.	.	.	+
+	.	.	.	.	.	.	+
+	.	.	.	.	.	.	++> assignment (ln: 284)
+	.	.	.	.	.	.	+
+	.	.	.	.	.	<=== plist_first.1579
+	.	.	.	.	.	+
+	.	.	.	.	.	++> assignment (ln: 87)
+	.	.	.	.	.	+
+	.	.	.	.	.	+
+	.	.	.	.	.	++> assignment (ln: 96)
+	.	.	.	.	.	+
+	.	.	.	.	.	+
+	.	.	.	.	.	++> assignment (ln: 96)
+	.	.	.	.	.	+
+	.	.	.	.	.	+
+	.	.	.	.	.	++> assignment (ln: 96)
+	.	.	.	.	.	+
+	.	.	.	.	.	+
+	.	.	.	.	.	++> assignment (ln: 91)
+	.	.	.	.	.	+
+	.	.	.	.	.	===> list_add_tail.187
+	.	.	.	.	.	.	===> __list_add.188
+	.	.	.	.	.	.	+
+	.	.	.	.	.	.	++> assignment (ln: 45)
+	.	.	.	.	.	.	+
+	.	.	.	.	.	.	<--- __list_add.188
+	.	.	.	.	.	<--- list_add_tail.187
+	.	.	.	.	<--- plist_add
+	.	.	.	<--- queue_me
+	.	.	<--- futex_wait_queue_me
+	.	.	---> handle_early_requeue_pi_wakeup
+	.	.	<--- handle_early_requeue_pi_wakeup
+	.	<--- futex_wait_requeue_pi
+
+______________________________________________________
+FUNCTION-LOCATION MAP:
+
+ - SYSC_futex               kernel/futex.c (ln: 2972)
+ - SyS_futex                kernel/futex.c (ln: 2972)
+ - __list_add.188           include/linux/list.h (ln: 38)
+ - do_futex                 kernel/futex.c (ln: 2915)
+ - futex_init               kernel/futex.c (ln: 3025)
+ - futex_wait_queue_me      kernel/futex.c (ln: 2053)
+ - futex_wait_requeue_pi    kernel/futex.c (ln: 2545)
+ - futex_wait_setup         kernel/futex.c (ln: 2105)
+ - handle_early_requeue_pi_wakeup kernel/futex.c (ln: 2473)
+ - hash_futex               kernel/futex.c (ln: 309)
+ - list_add_tail.187        include/linux/list.h (ln: 75)
+ - plist_add                lib/plist.c (ln: 75)
+ - plist_first.1579         include/linux/plist.h (ln: 282)
+ - queue_lock               kernel/futex.c (ln: 1742)
+ - queue_me                 kernel/futex.c (ln: 1785)
+______________________________________________________
+Duration (sec)                                     140
+======================================================
+
+
+
+System Info:
+======================================================
+______________________________________________________
+Kernel Name                                      Linux
+______________________________________________________
+Kernel Release                       3.19.0-79-generic
+______________________________________________________
+Kernel Version
+ #87~14.04.1-Ubuntu SMP Wed Dec 21 18:12:31 UTC 2016
+______________________________________________________
+Processor                                       x86_64
+______________________________________________________
+Num Cores                                            8
+______________________________________________________
+Used/Max/Total-Mem (kB)                   0/0/32173836
+
+
+
+Partitioner Statistic:
+======================================================
+ Type      |                       |  A  |  R  |  O
+======================================================
+ Initcalls |                       |    5|    5|   92
+           | Functions             |   14|   14| 1302
+           | Global Variables      |   11|   11| 1170
+           | Non Defined Variables |   11|   11|  333
+           | Call Graph Depth      |   16|   16|   22
+-----------+-----------------------+-----+-----+----
+ Syscall   | Functions             |  200|  200|20571
+           | Global Variables      |   39|   39|11045
+           | Call Graph Depth      |   15|   15|    0
+-----------+-----------------------+-----+-----+----
+ Kernel    | Functions             |  209|  207|20571
+           | Global Variables      |   39|   39|11045
+======================================================
+Legend: A= actual ; R= relevant ; O= original
+______________________________________________________
+Initcall Function Limit                           4000
+______________________________________________________
+API Function Limit                                3000
+
+
+
+Blacklisted (Sub-)Function Names:
+======================================================
+BUG, ERR, Page, atomic, cpu, dbg, 
+debug, error, fatal, fault, info, might_sleep, 
+page, print, schedule, task, test, thread_info, 
+time, warn, 
+
+
+
+Sinks: 
+======================================================
+__list_del.192, __list_del.2903, __list_del_entry.191, 
+__list_del_entry.2902, list_del_init.190, list_del_init.2901, 
+plist_del, unqueue_me, unqueue_me_pi, 
+
+
+======================================================
+Total (sec)                                    279.07
+======================================================
+
+
+######################################################
+////////////////////// REPORT ////////////////////////
+######################################################
+General Info:
+======================================================
+______________________________________________________
+Module                            vmlinux_v3.19_min.bc
+______________________________________________________
+API                                          SYSCALL
+______________________________________________________
+System call                                  sys_futex
+______________________________________________________
+Num Threads                                          8
+
+
+
+Use-After-Return Analysis Statistic:
+======================================================
+______________________________________________________
+Time (sec)                                         30
+______________________________________________________
+Timeout (sec)                                       11
+______________________________________________________
+Num analyzed local variables                       401
+______________________________________________________
+Num bugs found                                       1
+
+
+
+
+1. Use-After-Return:
+======================================================
+______________________________________________________
+DANGLING POINTER:
+
+File                                    kernel/futex.c
+Function                                    futex_init
+Line                                              3036
+Name                                             call3
+
+______________________________________________________
+LOCAL VARIABLE:
+
+File                                    kernel/futex.c
+Function                         futex_wait_requeue_pi
+Line                                              2554
+Name                                                 q
+
+______________________________________________________
+API TO LOCALVAR:
+
+-> SyS_futex
+-> SYSC_futex
+-> do_futex
+-> futex_wait_requeue_pi
+
+______________________________________________________
+LOCALVAR TO OUTOFSCOPE:
+
+futex_wait_requeue_pi
+	===> futex_wait_queue_me
+	.	===> queue_me
+	.	.	===> plist_add
+	.	.	.	===> list_add_tail.187
+	.	.	.	.	===> __list_add.188
+	.	.	.	.	+
+	.	.	.	.	++> assignment (ln: 45)
+	.	.	.	.	+
+	.	.	.	.	<--- __list_add.188
+	.	.	.	<--- list_add_tail.187
+	.	.	<--- plist_add
+	.	<--- queue_me
+	<--- futex_wait_queue_me
+	---> handle_early_requeue_pi_wakeup
+	<--- handle_early_requeue_pi_wakeup
+<--- futex_wait_requeue_pi
+
+______________________________________________________
+DANGLINGPTR TO OUTOFSCOPE:
+
+futex_init
++
+++> assignment (ln: 3036)
++
+<--- futex_init
+---> SYSC_futex
+	---> do_futex
+	.	---> futex_wait_requeue_pi
+	.	.	---> futex_wait_setup
+	.	.	.	---> queue_lock
+	.	.	.	.	---> hash_futex
+	.	.	.	.	<=== hash_futex
+	.	.	.	.	+
+	.	.	.	.	++> assignment (ln: 1747)
+	.	.	.	.	+
+	.	.	.	<=== queue_lock
+	.	.	.	+
+	.	.	.	++> assignment (ln: 2135)
+	.	.	.	+
+	.	.	<--- futex_wait_setup
+	.	.	===> futex_wait_queue_me
+	.	.	.	===> queue_me
+	.	.	.	.	===> plist_add
+	.	.	.	.	.	===> plist_first.1579
+	.	.	.	.	.	.	+
+	.	.	.	.	.	.	++> assignment (ln: 284)
+	.	.	.	.	.	.	+
+	.	.	.	.	.	.	+
+	.	.	.	.	.	.	++> assignment (ln: 284)
+	.	.	.	.	.	.	+
+	.	.	.	.	.	<=== plist_first.1579
+	.	.	.	.	.	+
+	.	.	.	.	.	++> assignment (ln: 87)
+	.	.	.	.	.	+
+	.	.	.	.	.	+
+	.	.	.	.	.	++> assignment (ln: 96)
+	.	.	.	.	.	+
+	.	.	.	.	.	+
+	.	.	.	.	.	++> assignment (ln: 96)
+	.	.	.	.	.	+
+	.	.	.	.	.	+
+	.	.	.	.	.	++> assignment (ln: 96)
+	.	.	.	.	.	+
+	.	.	.	.	.	+
+	.	.	.	.	.	++> assignment (ln: 91)
+	.	.	.	.	.	+
+	.	.	.	.	.	===> list_add_tail.187
+	.	.	.	.	.	.	===> __list_add.188
+	.	.	.	.	.	.	+
+	.	.	.	.	.	.	++> assignment (ln: 45)
+	.	.	.	.	.	.	+
+	.	.	.	.	.	.	<--- __list_add.188
+	.	.	.	.	.	<--- list_add_tail.187
+	.	.	.	.	<--- plist_add
+	.	.	.	<--- queue_me
+	.	.	<--- futex_wait_queue_me
+	.	.	---> handle_early_requeue_pi_wakeup
+	.	.	<--- handle_early_requeue_pi_wakeup
+	.	<--- futex_wait_requeue_pi
+
+______________________________________________________
+FUNCTION-LOCATION MAP:
+
+ - SYSC_futex               kernel/futex.c (ln: 2972)
+ - SyS_futex                kernel/futex.c (ln: 2972)
+ - __list_add.188           include/linux/list.h (ln: 38)
+ - do_futex                 kernel/futex.c (ln: 2915)
+ - futex_init               kernel/futex.c (ln: 3025)
+ - futex_wait_queue_me      kernel/futex.c (ln: 2053)
+ - futex_wait_requeue_pi    kernel/futex.c (ln: 2545)
+ - futex_wait_setup         kernel/futex.c (ln: 2105)
+ - handle_early_requeue_pi_wakeup kernel/futex.c (ln: 2473)
+ - hash_futex               kernel/futex.c (ln: 309)
+ - list_add_tail.187        include/linux/list.h (ln: 75)
+ - plist_add                lib/plist.c (ln: 75)
+ - plist_first.1579         include/linux/plist.h (ln: 282)
+ - queue_lock               kernel/futex.c (ln: 1742)
+ - queue_me                 kernel/futex.c (ln: 1785)
+______________________________________________________
+Duration (sec)                                      12
+======================================================
+
+
+Memory-Leak Analysis Statistic:
+======================================================
+______________________________________________________
+Time (sec)                                         14
+______________________________________________________
+Num analyzed variables                               2
+______________________________________________________
+Num bugs found                                       0
+
+
+
+
+Double-Free Analysis Statistic:
+======================================================
+______________________________________________________
+Time (sec)                                          21
+______________________________________________________
+Num analyzed variables                               2
+______________________________________________________
+Num bugs found                                       4
+
+
+
+
+1. Double-Free:
+======================================================
+______________________________________________________
+SOURCE:
+
+File                                    kernel/futex.c
+Function                            attach_to_pi_owner
+Line                                               931
+Name                                            call17
+
+______________________________________________________
+FIRST SINK:
+
+File                                    kernel/futex.c
+Function                                 futex_requeue
+Line                                              1642
+
+______________________________________________________
+SECOND SINK:
+
+File                                    kernel/futex.c
+Function                                 futex_requeue
+Line                                              1642
+
+______________________________________________________
+API TO SOURCE:
+
+-> SyS_futex
+-> SYSC_futex
+-> do_futex
+-> futex_requeue
+-> lookup_pi_state
+-> attach_to_pi_owner
+
+______________________________________________________
+PATH TO FIRST SINK:
+
+attach_to_pi_owner
+<--- lookup_pi_state
+<--- futex_requeue
+
+______________________________________________________
+PATH TO SECOND SINK:
+
+attach_to_pi_owner
+<--- lookup_pi_state
+<--- futex_requeue
+---> lookup_pi_state
+---> attach_to_pi_state
+<--- lookup_pi_state
+<--- futex_requeue
+
+______________________________________________________
+FUNCTION-LOCATION MAP:
+
+______________________________________________________
+Duration (sec)                                       0
+======================================================
+
+
+2. Double-Free:
+======================================================
+______________________________________________________
+SOURCE:
+
+File                                    kernel/futex.c
+Function                         refill_pi_state_cache
+Line                                               624
+Name                                             call3
+
+______________________________________________________
+FIRST SINK:
+
+File                                    kernel/futex.c
+Function                                 futex_requeue
+Line                                              1625
+
+______________________________________________________
+SECOND SINK:
+
+File                                    kernel/futex.c
+Function                                 futex_requeue
+Line                                              1625
+
+______________________________________________________
+API TO SOURCE:
+
+-> SyS_futex
+-> SYSC_futex
+-> do_futex
+-> futex_requeue
+-> refill_pi_state_cache
+
+______________________________________________________
+PATH TO FIRST SINK:
+
+refill_pi_state_cache
+===> INIT_LIST_HEAD.2886
+<--- refill_pi_state_cache
+<--- futex_requeue
+---> lookup_pi_state
+===> attach_to_pi_state
+<--- lookup_pi_state
+<--- futex_requeue
+
+______________________________________________________
+PATH TO SECOND SINK:
+
+refill_pi_state_cache
+===> INIT_LIST_HEAD.2886
+<--- refill_pi_state_cache
+<--- futex_requeue
+---> lookup_pi_state
+===> attach_to_pi_state
+<--- lookup_pi_state
+<--- futex_requeue
+
+______________________________________________________
+FUNCTION-LOCATION MAP:
+
+______________________________________________________
+Duration (sec)                                      19
+======================================================
+
+
+3. Double-Free:
+======================================================
+______________________________________________________
+SOURCE:
+
+File                                    kernel/futex.c
+Function                         refill_pi_state_cache
+Line                                               624
+Name                                             call3
+
+______________________________________________________
+FIRST SINK:
+
+File                                    kernel/futex.c
+Function                                 futex_requeue
+Line                                              1625
+
+______________________________________________________
+SECOND SINK:
+
+File                                    kernel/futex.c
+Function                                 futex_requeue
+Line                                              1642
+
+______________________________________________________
+API TO SOURCE:
+
+-> SyS_futex
+-> SYSC_futex
+-> do_futex
+-> futex_requeue
+-> refill_pi_state_cache
+
+______________________________________________________
+PATH TO FIRST SINK:
+
+refill_pi_state_cache
+===> INIT_LIST_HEAD.2886
+<--- refill_pi_state_cache
+<--- futex_requeue
+---> lookup_pi_state
+===> attach_to_pi_state
+<--- lookup_pi_state
+<--- futex_requeue
+
+______________________________________________________
+PATH TO SECOND SINK:
+
+refill_pi_state_cache
+===> INIT_LIST_HEAD.2886
+<--- refill_pi_state_cache
+<--- futex_requeue
+---> lookup_pi_state
+===> attach_to_pi_state
+<--- lookup_pi_state
+<--- futex_requeue
+
+______________________________________________________
+FUNCTION-LOCATION MAP:
+
+______________________________________________________
+Duration (sec)                                      19
+======================================================
+
+
+4. Double-Free:
+======================================================
+______________________________________________________
+SOURCE:
+
+File                                    kernel/futex.c
+Function                         refill_pi_state_cache
+Line                                               624
+Name                                             call3
+
+______________________________________________________
+FIRST SINK:
+
+File                                    kernel/futex.c
+Function                                 futex_requeue
+Line                                              1642
+
+______________________________________________________
+SECOND SINK:
+
+File                                    kernel/futex.c
+Function                                 futex_requeue
+Line                                              1642
+
+______________________________________________________
+API TO SOURCE:
+
+-> SyS_futex
+-> SYSC_futex
+-> do_futex
+-> futex_requeue
+-> refill_pi_state_cache
+
+______________________________________________________
+PATH TO FIRST SINK:
+
+refill_pi_state_cache
+===> INIT_LIST_HEAD.2886
+<--- refill_pi_state_cache
+<--- futex_requeue
+---> lookup_pi_state
+===> attach_to_pi_state
+<--- lookup_pi_state
+<--- futex_requeue
+
+______________________________________________________
+PATH TO SECOND SINK:
+
+refill_pi_state_cache
+===> INIT_LIST_HEAD.2886
+<--- refill_pi_state_cache
+<--- futex_requeue
+---> lookup_pi_state
+===> attach_to_pi_state
+<--- lookup_pi_state
+<--- futex_requeue
+
+______________________________________________________
+FUNCTION-LOCATION MAP:
+
+______________________________________________________
+Duration (sec)                                      19
+======================================================
+
+
+
+System Info:
+======================================================
+______________________________________________________
+Kernel Name                                      Linux
+______________________________________________________
+Kernel Release                       3.19.0-79-generic
+______________________________________________________
+Kernel Version
+ #87~14.04.1-Ubuntu SMP Wed Dec 21 18:12:31 UTC 2016
+______________________________________________________
+Processor                                       x86_64
+______________________________________________________
+Num Cores                                            8
+______________________________________________________
+Used/Max/Total-Mem (kB)                   0/0/32173836
+
+
+
+Partitioner Statistic:
+======================================================
+ Type      |                       |  A  |  R  |  O
+======================================================
+ Initcalls |                       |    5|    5|   92
+           | Functions             |   14|   14| 1302
+           | Global Variables      |   11|   11| 1170
+           | Non Defined Variables |   11|   11|  333
+           | Call Graph Depth      |   16|   16|   22
+-----------+-----------------------+-----+-----+----
+ Syscall   | Functions             |  200|  200|20571
+           | Global Variables      |   39|   39|11045
+           | Call Graph Depth      |   15|   15|    0
+-----------+-----------------------+-----+-----+----
+ Kernel    | Functions             |  209|  207|20571
+           | Global Variables      |   39|   39|11045
+======================================================
+Legend: A= actual ; R= relevant ; O= original
+______________________________________________________
+Initcall Function Limit                           4000
+______________________________________________________
+API Function Limit                                3000
+
+
+
+Blacklisted (Sub-)Function Names:
+======================================================
+BUG, ERR, Page, atomic, cpu, dbg, 
+debug, error, fatal, fault, info, might_sleep, 
+page, print, schedule, task, test, thread_info, 
+time, warn, 
+
+
+
+Sinks: 
+======================================================
+__list_del.192, __list_del.2903, __list_del_entry.191, 
+__list_del_entry.2902, list_del_init.190, list_del_init.2901, 
+plist_del, unqueue_me, unqueue_me_pi, 
+
+
+======================================================
+Total (sec)                                    130.287
+======================================================
+
+
+######################################################
+////////////////////// REPORT ////////////////////////
+######################################################
+General Info:
+======================================================
+______________________________________________________
+Module                            vmlinux_v3.19_min.bc
+______________________________________________________
+API                                          SYSCALL
+______________________________________________________
+System call                                  sys_futex
+______________________________________________________
+Num Threads                                          8
+
+
+
+Use-After-Return Analysis Statistic:
+======================================================
+______________________________________________________
+Time (sec)                                         28
+______________________________________________________
+Timeout (sec)                                       11
+______________________________________________________
+Num analyzed local variables                       401
+______________________________________________________
+Num bugs found                                       1
+
+
+
+
+1. Use-After-Return:
+======================================================
+______________________________________________________
+DANGLING POINTER:
+
+File                                    kernel/futex.c
+Function                                    futex_init
+Line                                              3036
+Name                                             call3
+
+______________________________________________________
+LOCAL VARIABLE:
+
+File                                    kernel/futex.c
+Function                         futex_wait_requeue_pi
+Line                                              2554
+Name                                                 q
+
+______________________________________________________
+API TO LOCALVAR:
+
+-> SyS_futex
+-> SYSC_futex
+-> do_futex
+-> futex_wait_requeue_pi
+
+______________________________________________________
+LOCALVAR TO OUTOFSCOPE:
+
+futex_wait_requeue_pi
+	===> futex_wait_queue_me
+	.	===> queue_me
+	.	.	===> plist_add
+	.	.	.	===> list_add_tail.187
+	.	.	.	.	===> __list_add.188
+	.	.	.	.	+
+	.	.	.	.	++> assignment (ln: 45)
+	.	.	.	.	+
+	.	.	.	.	<--- __list_add.188
+	.	.	.	<--- list_add_tail.187
+	.	.	<--- plist_add
+	.	<--- queue_me
+	<--- futex_wait_queue_me
+	---> handle_early_requeue_pi_wakeup
+	<--- handle_early_requeue_pi_wakeup
+<--- futex_wait_requeue_pi
+
+______________________________________________________
+DANGLINGPTR TO OUTOFSCOPE:
+
+futex_init
++
+++> assignment (ln: 3036)
++
+<--- futex_init
+---> SYSC_futex
+	---> do_futex
+	.	---> futex_wait_requeue_pi
+	.	.	---> futex_wait_setup
+	.	.	.	---> queue_lock
+	.	.	.	.	---> hash_futex
+	.	.	.	.	<=== hash_futex
+	.	.	.	.	+
+	.	.	.	.	++> assignment (ln: 1747)
+	.	.	.	.	+
+	.	.	.	<=== queue_lock
+	.	.	.	+
+	.	.	.	++> assignment (ln: 2135)
+	.	.	.	+
+	.	.	<--- futex_wait_setup
+	.	.	===> futex_wait_queue_me
+	.	.	.	===> queue_me
+	.	.	.	.	===> plist_add
+	.	.	.	.	.	===> plist_first.1579
+	.	.	.	.	.	.	+
+	.	.	.	.	.	.	++> assignment (ln: 284)
+	.	.	.	.	.	.	+
+	.	.	.	.	.	.	+
+	.	.	.	.	.	.	++> assignment (ln: 284)
+	.	.	.	.	.	.	+
+	.	.	.	.	.	<=== plist_first.1579
+	.	.	.	.	.	+
+	.	.	.	.	.	++> assignment (ln: 87)
+	.	.	.	.	.	+
+	.	.	.	.	.	+
+	.	.	.	.	.	++> assignment (ln: 96)
+	.	.	.	.	.	+
+	.	.	.	.	.	+
+	.	.	.	.	.	++> assignment (ln: 96)
+	.	.	.	.	.	+
+	.	.	.	.	.	+
+	.	.	.	.	.	++> assignment (ln: 96)
+	.	.	.	.	.	+
+	.	.	.	.	.	+
+	.	.	.	.	.	++> assignment (ln: 91)
+	.	.	.	.	.	+
+	.	.	.	.	.	===> list_add_tail.187
+	.	.	.	.	.	.	===> __list_add.188
+	.	.	.	.	.	.	+
+	.	.	.	.	.	.	++> assignment (ln: 45)
+	.	.	.	.	.	.	+
+	.	.	.	.	.	.	<--- __list_add.188
+	.	.	.	.	.	<--- list_add_tail.187
+	.	.	.	.	<--- plist_add
+	.	.	.	<--- queue_me
+	.	.	<--- futex_wait_queue_me
+	.	.	---> handle_early_requeue_pi_wakeup
+	.	.	<--- handle_early_requeue_pi_wakeup
+	.	<--- futex_wait_requeue_pi
+
+______________________________________________________
+FUNCTION-LOCATION MAP:
+
+ - SYSC_futex               kernel/futex.c (ln: 2972)
+ - SyS_futex                kernel/futex.c (ln: 2972)
+ - __list_add.188           include/linux/list.h (ln: 38)
+ - do_futex                 kernel/futex.c (ln: 2915)
+ - futex_init               kernel/futex.c (ln: 3025)
+ - futex_wait_queue_me      kernel/futex.c (ln: 2053)
+ - futex_wait_requeue_pi    kernel/futex.c (ln: 2545)
+ - futex_wait_setup         kernel/futex.c (ln: 2105)
+ - handle_early_requeue_pi_wakeup kernel/futex.c (ln: 2473)
+ - hash_futex               kernel/futex.c (ln: 309)
+ - list_add_tail.187        include/linux/list.h (ln: 75)
+ - plist_add                lib/plist.c (ln: 75)
+ - plist_first.1579         include/linux/plist.h (ln: 282)
+ - queue_lock               kernel/futex.c (ln: 1742)
+ - queue_me                 kernel/futex.c (ln: 1785)
+______________________________________________________
+Duration (sec)                                      11
+======================================================
+
+
+Memory-Leak Analysis Statistic:
+======================================================
+______________________________________________________
+Time (sec)                                          7
+______________________________________________________
+Num analyzed variables                               2
+______________________________________________________
+Num bugs found                                       0
+
+
+
+
+Double-Free Analysis Statistic:
+======================================================
+______________________________________________________
+Time (sec)                                           7
+______________________________________________________
+Num analyzed variables                               2
+______________________________________________________
+Num bugs found                                       1
+
+
+
+
+1. Double-Free:
+======================================================
+______________________________________________________
+SOURCE:
+
+File                                    kernel/futex.c
+Function                         refill_pi_state_cache
+Line                                               624
+Name                                             call3
+
+______________________________________________________
+FIRST SINK:
+
+File                                    kernel/futex.c
+Function                                 futex_requeue
+Line                                              1711
+
+______________________________________________________
+SECOND SINK:
+
+File                                    kernel/futex.c
+Function                                 futex_requeue
+Line                                              1711
+
+______________________________________________________
+API TO SOURCE:
+
+-> SyS_futex
+-> SYSC_futex
+-> do_futex
+-> futex_requeue
+-> refill_pi_state_cache
+
+______________________________________________________
+PATH TO FIRST SINK:
+
+refill_pi_state_cache
+===> INIT_LIST_HEAD.2886
+<--- refill_pi_state_cache
+<--- futex_requeue
+---> lookup_pi_state
+===> attach_to_pi_state
+<--- lookup_pi_state
+<--- futex_requeue
+
+______________________________________________________
+PATH TO SECOND SINK:
+
+refill_pi_state_cache
+===> INIT_LIST_HEAD.2886
+<--- refill_pi_state_cache
+<--- futex_requeue
+---> lookup_pi_state
+===> attach_to_pi_state
+<--- lookup_pi_state
+<--- futex_requeue
+
+______________________________________________________
+FUNCTION-LOCATION MAP:
+
+______________________________________________________
+Duration (sec)                                       6
+======================================================
+
+
+
+System Info:
+======================================================
+______________________________________________________
+Kernel Name                                      Linux
+______________________________________________________
+Kernel Release                       3.19.0-79-generic
+______________________________________________________
+Kernel Version
+ #87~14.04.1-Ubuntu SMP Wed Dec 21 18:12:31 UTC 2016
+______________________________________________________
+Processor                                       x86_64
+______________________________________________________
+Num Cores                                            8
+______________________________________________________
+Used/Max/Total-Mem (kB)                   0/0/32173836
+
+
+
+Partitioner Statistic:
+======================================================
+ Type      |                       |  A  |  R  |  O
+======================================================
+ Initcalls |                       |    5|    5|   92
+           | Functions             |   14|   14| 1302
+           | Global Variables      |   11|   11| 1170
+           | Non Defined Variables |   11|   11|  333
+           | Call Graph Depth      |   16|   16|   22
+-----------+-----------------------+-----+-----+----
+ Syscall   | Functions             |  200|  200|20571
+           | Global Variables      |   39|   39|11045
+           | Call Graph Depth      |   15|   15|    0
+-----------+-----------------------+-----+-----+----
+ Kernel    | Functions             |  209|  207|20571
+           | Global Variables      |   39|   39|11045
+======================================================
+Legend: A= actual ; R= relevant ; O= original
+______________________________________________________
+Initcall Function Limit                           4000
+______________________________________________________
+API Function Limit                                3000
+
+
+
+Blacklisted (Sub-)Function Names:
+======================================================
+BUG, ERR, Page, atomic, cpu, dbg, 
+debug, error, fatal, fault, info, might_sleep, 
+page, print, schedule, task, test, thread_info, 
+time, warn, 
+
+
+
+Sinks: 
+======================================================
+__list_del.192, __list_del.2903, __list_del_entry.191, 
+__list_del_entry.2902, list_del_init.190, list_del_init.2901, 
+plist_del, unqueue_me, unqueue_me_pi, 
+
+
+======================================================
+Total (sec)                                    108.152
+======================================================
+
+
+######################################################
+////////////////////// REPORT ////////////////////////
+######################################################
+General Info:
+======================================================
+______________________________________________________
+Module                            vmlinux_v3.19_min.bc
+______________________________________________________
+API                                          SYSCALL
+______________________________________________________
+System call                                  sys_futex
+______________________________________________________
+Num Threads                                          8
+
+
+
+Use-After-Return Analysis Statistic:
+======================================================
+______________________________________________________
+Time (sec)                                         29
+______________________________________________________
+Timeout (sec)                                       11
+______________________________________________________
+Num analyzed local variables                       401
+______________________________________________________
+Num bugs found                                       1
+
+
+
+
+1. Use-After-Return:
+======================================================
+______________________________________________________
+DANGLING POINTER:
+
+File                                    kernel/futex.c
+Function                                    futex_init
+Line                                              3036
+Name                                             call3
+
+______________________________________________________
+LOCAL VARIABLE:
+
+File                                    kernel/futex.c
+Function                         futex_wait_requeue_pi
+Line                                              2554
+Name                                                 q
+
+______________________________________________________
+API TO LOCALVAR:
+
+-> SyS_futex
+-> SYSC_futex
+-> do_futex
+-> futex_wait_requeue_pi
+
+______________________________________________________
+LOCALVAR TO OUTOFSCOPE:
+
+futex_wait_requeue_pi
+	===> futex_wait_queue_me
+	.	===> queue_me
+	.	.	===> plist_add
+	.	.	.	===> list_add_tail.187
+	.	.	.	.	===> __list_add.188
+	.	.	.	.	+
+	.	.	.	.	++> assignment (ln: 45)
+	.	.	.	.	+
+	.	.	.	.	<--- __list_add.188
+	.	.	.	<--- list_add_tail.187
+	.	.	<--- plist_add
+	.	<--- queue_me
+	<--- futex_wait_queue_me
+	---> handle_early_requeue_pi_wakeup
+	<--- handle_early_requeue_pi_wakeup
+<--- futex_wait_requeue_pi
+
+______________________________________________________
+DANGLINGPTR TO OUTOFSCOPE:
+
+futex_init
++
+++> assignment (ln: 3036)
++
+<--- futex_init
+---> SYSC_futex
+	---> do_futex
+	.	---> futex_wait_requeue_pi
+	.	.	---> futex_wait_setup
+	.	.	.	---> queue_lock
+	.	.	.	.	---> hash_futex
+	.	.	.	.	<=== hash_futex
+	.	.	.	.	+
+	.	.	.	.	++> assignment (ln: 1747)
+	.	.	.	.	+
+	.	.	.	<=== queue_lock
+	.	.	.	+
+	.	.	.	++> assignment (ln: 2135)
+	.	.	.	+
+	.	.	<--- futex_wait_setup
+	.	.	===> futex_wait_queue_me
+	.	.	.	===> queue_me
+	.	.	.	.	===> plist_add
+	.	.	.	.	.	===> plist_first.1579
+	.	.	.	.	.	.	+
+	.	.	.	.	.	.	++> assignment (ln: 284)
+	.	.	.	.	.	.	+
+	.	.	.	.	.	.	+
+	.	.	.	.	.	.	++> assignment (ln: 284)
+	.	.	.	.	.	.	+
+	.	.	.	.	.	<=== plist_first.1579
+	.	.	.	.	.	+
+	.	.	.	.	.	++> assignment (ln: 87)
+	.	.	.	.	.	+
+	.	.	.	.	.	+
+	.	.	.	.	.	++> assignment (ln: 96)
+	.	.	.	.	.	+
+	.	.	.	.	.	+
+	.	.	.	.	.	++> assignment (ln: 96)
+	.	.	.	.	.	+
+	.	.	.	.	.	+
+	.	.	.	.	.	++> assignment (ln: 96)
+	.	.	.	.	.	+
+	.	.	.	.	.	+
+	.	.	.	.	.	++> assignment (ln: 91)
+	.	.	.	.	.	+
+	.	.	.	.	.	===> list_add_tail.187
+	.	.	.	.	.	.	===> __list_add.188
+	.	.	.	.	.	.	+
+	.	.	.	.	.	.	++> assignment (ln: 45)
+	.	.	.	.	.	.	+
+	.	.	.	.	.	.	<--- __list_add.188
+	.	.	.	.	.	<--- list_add_tail.187
+	.	.	.	.	<--- plist_add
+	.	.	.	<--- queue_me
+	.	.	<--- futex_wait_queue_me
+	.	.	---> handle_early_requeue_pi_wakeup
+	.	.	<--- handle_early_requeue_pi_wakeup
+	.	<--- futex_wait_requeue_pi
+
+______________________________________________________
+FUNCTION-LOCATION MAP:
+
+ - SYSC_futex               kernel/futex.c (ln: 2972)
+ - SyS_futex                kernel/futex.c (ln: 2972)
+ - __list_add.188           include/linux/list.h (ln: 38)
+ - do_futex                 kernel/futex.c (ln: 2915)
+ - futex_init               kernel/futex.c (ln: 3025)
+ - futex_wait_queue_me      kernel/futex.c (ln: 2053)
+ - futex_wait_requeue_pi    kernel/futex.c (ln: 2545)
+ - futex_wait_setup         kernel/futex.c (ln: 2105)
+ - handle_early_requeue_pi_wakeup kernel/futex.c (ln: 2473)
+ - hash_futex               kernel/futex.c (ln: 309)
+ - list_add_tail.187        include/linux/list.h (ln: 75)
+ - plist_add                lib/plist.c (ln: 75)
+ - plist_first.1579         include/linux/plist.h (ln: 282)
+ - queue_lock               kernel/futex.c (ln: 1742)
+ - queue_me                 kernel/futex.c (ln: 1785)
+______________________________________________________
+Duration (sec)                                      12
+======================================================
+
+
+Memory-Leak Analysis Statistic:
+======================================================
+______________________________________________________
+Time (sec)                                          7
+______________________________________________________
+Num analyzed variables                               2
+______________________________________________________
+Num bugs found                                       0
+
+
+
+
+Double-Free Analysis Statistic:
+======================================================
+______________________________________________________
+Time (sec)                                           7
+______________________________________________________
+Num analyzed variables                               2
+______________________________________________________
+Num bugs found                                       1
+
+
+
+
+1. Double-Free:
+======================================================
+______________________________________________________
+SOURCE:
+
+File                                    kernel/futex.c
+Function                         refill_pi_state_cache
+Line                                               624
+Name                                             call3
+
+______________________________________________________
+FIRST SINK:
+
+File                                    kernel/futex.c
+Function                                 futex_requeue
+Line                                              1711
+
+______________________________________________________
+SECOND SINK:
+
+File                                    kernel/futex.c
+Function                                 futex_requeue
+Line                                              1711
+
+______________________________________________________
+API TO SOURCE:
+
+-> SyS_futex
+-> SYSC_futex
+-> do_futex
+-> futex_requeue
+-> refill_pi_state_cache
+
+______________________________________________________
+PATH TO FIRST SINK:
+
+refill_pi_state_cache
+===> INIT_LIST_HEAD.2886
+<--- refill_pi_state_cache
+<--- futex_requeue
+---> lookup_pi_state
+===> attach_to_pi_state
+<--- lookup_pi_state
+<--- futex_requeue
+
+______________________________________________________
+PATH TO SECOND SINK:
+
+refill_pi_state_cache
+===> INIT_LIST_HEAD.2886
+<--- refill_pi_state_cache
+<--- futex_requeue
+---> lookup_pi_state
+===> attach_to_pi_state
+<--- lookup_pi_state
+<--- futex_requeue
+
+______________________________________________________
+FUNCTION-LOCATION MAP:
+
+______________________________________________________
+Duration (sec)                                       6
+======================================================
+
+
+
+System Info:
+======================================================
+______________________________________________________
+Kernel Name                                      Linux
+______________________________________________________
+Kernel Release                       3.19.0-79-generic
+______________________________________________________
+Kernel Version
+ #87~14.04.1-Ubuntu SMP Wed Dec 21 18:12:31 UTC 2016
+______________________________________________________
+Processor                                       x86_64
+______________________________________________________
+Num Cores                                            8
+______________________________________________________
+Used/Max/Total-Mem (kB)                   0/0/32173836
+
+
+
+Partitioner Statistic:
+======================================================
+ Type      |                       |  A  |  R  |  O
+======================================================
+ Initcalls |                       |    5|    5|   92
+           | Functions             |   14|   14| 1302
+           | Global Variables      |   11|   11| 1170
+           | Non Defined Variables |   11|   11|  333
+           | Call Graph Depth      |   16|   16|   22
+-----------+-----------------------+-----+-----+----
+ Syscall   | Functions             |  200|  200|20571
+           | Global Variables      |   39|   39|11045
+           | Call Graph Depth      |   15|   15|    0
+-----------+-----------------------+-----+-----+----
+ Kernel    | Functions             |  209|  207|20571
+           | Global Variables      |   39|   39|11045
+======================================================
+Legend: A= actual ; R= relevant ; O= original
+______________________________________________________
+Initcall Function Limit                           4000
+______________________________________________________
+API Function Limit                                3000
+
+
+
+Blacklisted (Sub-)Function Names:
+======================================================
+BUG, ERR, Page, atomic, cpu, dbg, 
+debug, error, fatal, fault, info, might_sleep, 
+page, print, schedule, task, test, thread_info, 
+time, warn, 
+
+
+
+Sinks: 
+======================================================
+__list_del.192, __list_del.2903, __list_del_entry.191, 
+__list_del_entry.2902, list_del_init.190, list_del_init.2901, 
+plist_del, unqueue_me, unqueue_me_pi, 
+
+
+======================================================
+Total (sec)                                    106.469
+======================================================
+
+
+######################################################
+////////////////////// REPORT ////////////////////////
+######################################################
+General Info:
+======================================================
+______________________________________________________
+Module                            vmlinux_v3.19_min.bc
+______________________________________________________
+API                                          SYSCALL
+______________________________________________________
+System call                                  sys_futex
+______________________________________________________
+Num Threads                                          8
+
+
+
+Use-After-Return Analysis Statistic:
+======================================================
+______________________________________________________
+Time (sec)                                         27
+______________________________________________________
+Timeout (sec)                                       11
+______________________________________________________
+Num analyzed local variables                       401
+______________________________________________________
+Num bugs found                                       1
+
+
+
+
+1. Use-After-Return:
+======================================================
+______________________________________________________
+DANGLING POINTER:
+
+File                                    kernel/futex.c
+Function                                    futex_init
+Line                                              3036
+Name                                             call3
+
+______________________________________________________
+LOCAL VARIABLE:
+
+File                                    kernel/futex.c
+Function                         futex_wait_requeue_pi
+Line                                              2554
+Name                                                 q
+
+______________________________________________________
+API TO LOCALVAR:
+
+-> SyS_futex
+-> SYSC_futex
+-> do_futex
+-> futex_wait_requeue_pi
+
+______________________________________________________
+LOCALVAR TO OUTOFSCOPE:
+
+futex_wait_requeue_pi
+	===> futex_wait_queue_me
+	.	===> queue_me
+	.	.	===> plist_add
+	.	.	.	===> list_add_tail.187
+	.	.	.	.	===> __list_add.188
+	.	.	.	.	+
+	.	.	.	.	++> assignment (ln: 45)
+	.	.	.	.	+
+	.	.	.	.	<--- __list_add.188
+	.	.	.	<--- list_add_tail.187
+	.	.	<--- plist_add
+	.	<--- queue_me
+	<--- futex_wait_queue_me
+	---> handle_early_requeue_pi_wakeup
+	<--- handle_early_requeue_pi_wakeup
+<--- futex_wait_requeue_pi
+
+______________________________________________________
+DANGLINGPTR TO OUTOFSCOPE:
+
+futex_init
++
+++> assignment (ln: 3036)
++
+<--- futex_init
+---> SYSC_futex
+	---> do_futex
+	.	---> futex_wait_requeue_pi
+	.	.	---> futex_wait_setup
+	.	.	.	---> queue_lock
+	.	.	.	.	---> hash_futex
+	.	.	.	.	<=== hash_futex
+	.	.	.	.	+
+	.	.	.	.	++> assignment (ln: 1747)
+	.	.	.	.	+
+	.	.	.	<=== queue_lock
+	.	.	.	+
+	.	.	.	++> assignment (ln: 2135)
+	.	.	.	+
+	.	.	<--- futex_wait_setup
+	.	.	===> futex_wait_queue_me
+	.	.	.	===> queue_me
+	.	.	.	.	===> plist_add
+	.	.	.	.	.	===> plist_first.1579
+	.	.	.	.	.	.	+
+	.	.	.	.	.	.	++> assignment (ln: 284)
+	.	.	.	.	.	.	+
+	.	.	.	.	.	.	+
+	.	.	.	.	.	.	++> assignment (ln: 284)
+	.	.	.	.	.	.	+
+	.	.	.	.	.	<=== plist_first.1579
+	.	.	.	.	.	+
+	.	.	.	.	.	++> assignment (ln: 87)
+	.	.	.	.	.	+
+	.	.	.	.	.	+
+	.	.	.	.	.	++> assignment (ln: 96)
+	.	.	.	.	.	+
+	.	.	.	.	.	+
+	.	.	.	.	.	++> assignment (ln: 96)
+	.	.	.	.	.	+
+	.	.	.	.	.	+
+	.	.	.	.	.	++> assignment (ln: 96)
+	.	.	.	.	.	+
+	.	.	.	.	.	+
+	.	.	.	.	.	++> assignment (ln: 91)
+	.	.	.	.	.	+
+	.	.	.	.	.	===> list_add_tail.187
+	.	.	.	.	.	.	===> __list_add.188
+	.	.	.	.	.	.	+
+	.	.	.	.	.	.	++> assignment (ln: 45)
+	.	.	.	.	.	.	+
+	.	.	.	.	.	.	<--- __list_add.188
+	.	.	.	.	.	<--- list_add_tail.187
+	.	.	.	.	<--- plist_add
+	.	.	.	<--- queue_me
+	.	.	<--- futex_wait_queue_me
+	.	.	---> handle_early_requeue_pi_wakeup
+	.	.	<--- handle_early_requeue_pi_wakeup
+	.	<--- futex_wait_requeue_pi
+
+______________________________________________________
+FUNCTION-LOCATION MAP:
+
+ - SYSC_futex               kernel/futex.c (ln: 2972)
+ - SyS_futex                kernel/futex.c (ln: 2972)
+ - __list_add.188           include/linux/list.h (ln: 38)
+ - do_futex                 kernel/futex.c (ln: 2915)
+ - futex_init               kernel/futex.c (ln: 3025)
+ - futex_wait_queue_me      kernel/futex.c (ln: 2053)
+ - futex_wait_requeue_pi    kernel/futex.c (ln: 2545)
+ - futex_wait_setup         kernel/futex.c (ln: 2105)
+ - handle_early_requeue_pi_wakeup kernel/futex.c (ln: 2473)
+ - hash_futex               kernel/futex.c (ln: 309)
+ - list_add_tail.187        include/linux/list.h (ln: 75)
+ - plist_add                lib/plist.c (ln: 75)
+ - plist_first.1579         include/linux/plist.h (ln: 282)
+ - queue_lock               kernel/futex.c (ln: 1742)
+ - queue_me                 kernel/futex.c (ln: 1785)
+______________________________________________________
+Duration (sec)                                      11
+======================================================
+
+
+Memory-Leak Analysis Statistic:
+======================================================
+______________________________________________________
+Time (sec)                                          7
+______________________________________________________
+Num analyzed variables                               2
+______________________________________________________
+Num bugs found                                       0
+
+
+
+
+Double-Free Analysis Statistic:
+======================================================
+______________________________________________________
+Time (sec)                                           7
+______________________________________________________
+Num analyzed variables                               2
+______________________________________________________
+Num bugs found                                       1
+
+
+
+
+1. Double-Free:
+======================================================
+______________________________________________________
+SOURCE:
+
+File                                    kernel/futex.c
+Function                         refill_pi_state_cache
+Line                                               624
+Name                                             call3
+
+______________________________________________________
+FIRST SINK:
+
+File                                    kernel/futex.c
+Function                                 futex_requeue
+Line                                              1720
+
+______________________________________________________
+SECOND SINK:
+
+File                                    kernel/futex.c
+Function                                 futex_requeue
+Line                                              1720
+
+______________________________________________________
+API TO SOURCE:
+
+-> SyS_futex
+-> SYSC_futex
+-> do_futex
+-> futex_requeue
+-> refill_pi_state_cache
+
+______________________________________________________
+PATH TO FIRST SINK:
+
+refill_pi_state_cache
+===> INIT_LIST_HEAD.2886
+<--- refill_pi_state_cache
+<--- futex_requeue
+---> lookup_pi_state
+===> attach_to_pi_state
+<--- lookup_pi_state
+<--- futex_requeue
+
+______________________________________________________
+PATH TO SECOND SINK:
+
+refill_pi_state_cache
+===> INIT_LIST_HEAD.2886
+<--- refill_pi_state_cache
+<--- futex_requeue
+---> lookup_pi_state
+===> attach_to_pi_state
+<--- lookup_pi_state
+<--- futex_requeue
+
+______________________________________________________
+FUNCTION-LOCATION MAP:
+
+______________________________________________________
+Duration (sec)                                       5
+======================================================
+
+
+
+System Info:
+======================================================
+______________________________________________________
+Kernel Name                                      Linux
+______________________________________________________
+Kernel Release                       3.19.0-79-generic
+______________________________________________________
+Kernel Version
+ #87~14.04.1-Ubuntu SMP Wed Dec 21 18:12:31 UTC 2016
+______________________________________________________
+Processor                                       x86_64
+______________________________________________________
+Num Cores                                            8
+______________________________________________________
+Used/Max/Total-Mem (kB)                   0/0/32173836
+
+
+
+Partitioner Statistic:
+======================================================
+ Type      |                       |  A  |  R  |  O
+======================================================
+ Initcalls |                       |    5|    5|   92
+           | Functions             |   14|   14| 1302
+           | Global Variables      |   11|   11| 1170
+           | Non Defined Variables |   11|   11|  333
+           | Call Graph Depth      |   16|   16|   22
+-----------+-----------------------+-----+-----+----
+ Syscall   | Functions             |  200|  200|20571
+           | Global Variables      |   39|   39|11045
+           | Call Graph Depth      |   15|   15|    0
+-----------+-----------------------+-----+-----+----
+ Kernel    | Functions             |  209|  207|20571
+           | Global Variables      |   39|   39|11045
+======================================================
+Legend: A= actual ; R= relevant ; O= original
+______________________________________________________
+Initcall Function Limit                           4000
+______________________________________________________
+API Function Limit                                3000
+
+
+
+Blacklisted (Sub-)Function Names:
+======================================================
+BUG, ERR, Page, atomic, cpu, dbg, 
+debug, error, fatal, fault, info, might_sleep, 
+page, print, schedule, task, test, thread_info, 
+time, warn, 
+
+
+
+Sinks: 
+======================================================
+__list_del.192, __list_del.2903, __list_del_entry.191, 
+__list_del_entry.2902, list_del_init.190, list_del_init.2901, 
+plist_del, unqueue_me, unqueue_me_pi, 
+
+
+======================================================
+Total (sec)                                    104.718
+======================================================
+
+

@@ -1,0 +1,9 @@
+pip3 install Jinja2
+pip3 install Flask 
+pip3 install pygal 
+pip3 install jsonpickle 
+pip3 install cairosvg (apt-get install: cairo, python3-lxml, python3-dev, libffi-dev) 
+download boostrap (.zip)
+
+# Start server at localhost:5000
+python3 __init__.py

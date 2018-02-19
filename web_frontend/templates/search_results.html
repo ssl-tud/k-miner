@@ -1,0 +1,29 @@
+{% extends "index.html" %}
+{% block body %}
+<div class="container" style="max-width:1500px; min-height:100%">
+	<h2 class="page-header">Search-Results <small>for {{wanted_function}}</small></h2>
+
+	<table class="table table-hover" id="search_result_table">
+		<thead> <tr> <th><h3>Systemcalls</h3></th> 
+				{% for kv in kernel_versions %}
+				<th>{{kv}}</th> 
+				{% endfor %}
+			</tr> 
+		</thead>
+		<tbody> 
+			{% for sn, kernel_reports in syscall_to_kernel_report.items() %}
+			<tr style="display:table-row"> 
+				<th scope="row">{{sn}}</th> 
+				{% for kr in kernel_reports %}
+					{% if kr.reports[sn].has_leak(wanted) == True %} 
+					<td><span class="glyphicon glyphicon-ok"></span></td>
+					{% else %}
+					<td><span class="glyphicon glyphicon glyphicon-remove"></span></td>
+					{% endif %}
+				{% endfor %}
+			</tr> 
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+{% endblock %}

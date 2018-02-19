@@ -1,0 +1,11 @@
+{% extends "index.html" %}
+
+{% block body %}
+<div class="container" style="max-width:1500px; min-height:100%">
+		<h1 class="page-header">Kernel Report <small><span style="float:right;">{{cur_kernel_report.version}}</span></small></h1>
+	<h2 class="page-header">Schedule</h2>
+
+	<!-- Draw the schedulegraph -->
+	<embed type="image/svg+xml" src={{graph_data.kernel_schedule_graph|safe}} />
+</div>
+{% endblock%}

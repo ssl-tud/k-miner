@@ -1,0 +1,120 @@
+#include "SABER/UseAfterReturnChecker.h"
+#include "Util/GraphUtil.h"
+#include "Util/AnalysisUtil.h"
+#include <llvm/Support/CommandLine.h>
+#include "MemoryModel/PAG.h"
+#include "MemoryModel/ConsG.h"
+#include <algorithm>
+
+using namespace llvm;
+using namespace analysisUtil;
+
+char UseAfterReturnChecker::ID = 0;
+
+static RegisterPass<UseAfterReturnChecker> USEAFTERRETURNCHECKER("use-after-return-checker",
+								 "UseAfterReturn Checker");
+
+/*!
+ * Initialize sources
+ */
+void UseAfterReturnChecker::initSrcs() {
+	const SPAG *spag = getSPAG();
+	spag->print();
+						
+	for(auto ptsIter = spag->getPtsToGlobalBegin(); ptsIter != spag->getPtsToGlobalEnd(); ++ptsIter) {
+		SVFGNodeSet tmpSvfgSources;
+		const NodeToPairSet &assignments = ptsIter->second;
+
+		for(auto idPairIter = assignments.begin(); idPairIter != assignments.end(); ++idPairIter) {
+			NodeID pagId = idPairIter->second;
+
+			if(spag->isGlobalNode(idPairIter->first))
+				continue;
+
+			for(auto svfgNodeIter = svfgStoreNodes.begin(); 
+			    svfgNodeIter != svfgStoreNodes.end(); ++svfgNodeIter) {
+				if(const StoreSVFGNode *svfgNode = dyn_cast<StoreSVFGNode>(*svfgNodeIter))
+					if(svfgNode->getPAGDstNodeID() == pagId) {
+						tmpSvfgSources.insert(*svfgNodeIter);	
+					}
+			}
+		}
+
+		addToSourcesMap(ptsIter->first, tmpSvfgSources);
+	}
+}
+
+/*!
+ * Initialize sinks
+ */
+// TODO merge with initSrc
+void UseAfterReturnChecker::initSnks() {
+	const SPAG *spag = getSPAG();
+
+	for(auto ptsIter = spag->getPtsToGlobalBegin(); ptsIter != spag->getPtsToGlobalEnd(); ++ptsIter) {
+		SVFGNodeSet tmpSvfgSinks;
+		const NodeToPairSet &assignments = ptsIter->second;
+
+		for(auto idPairIter = assignments.begin(); idPairIter != assignments.end(); ++idPairIter) {
+			NodeID pagId = idPairIter->second;
+
+			for(auto svfgNodeIter = svfgStoreNodes.begin(); 
+			    svfgNodeIter != svfgStoreNodes.end(); ++svfgNodeIter) {
+				if(const StoreSVFGNode *svfgNode = dyn_cast<StoreSVFGNode>(*svfgNodeIter))
+					if(svfgNode->getPAGDstNodeID() == pagId)
+						tmpSvfgSinks.insert(*svfgNodeIter);	
+			}
+		}
+
+		addToSinksMap(ptsIter->first, tmpSvfgSinks);
+	}
+}
+
+void UseAfterReturnChecker::reportNeverFree(const SVFGNode* src, std::string globalValueName, std::string stackValueName) {
+	errs() << bugMsg1("\tNeverFree: Global Pointer to invalid Stack-Addr : ") 
+	       << globalValueName << " -> " << stackValueName << "\n";
+}
+
+void UseAfterReturnChecker::reportPartialLeak(const SVFGNode* src, std::string globalValueName, std::string stackValueName) {
+	errs() << bugMsg2("\tPartialLeak: Path exists with global Pointer to invalid Stack-Addr : ") 
+	       << globalValueName << " -> " << stackValueName << "\n";
+}
+
+std::string UseAfterReturnChecker::getValueName(NodeID id) const {
+	const SPAG *spag = getSPAG();
+	PAGNode* pagNode = spag->getPAGNode(id);
+	std::string valueNameStr;
+	raw_string_ostream valueNameSS(valueNameStr);
+
+	if(pagNode->hasValue()) {
+		const Value* v = pagNode->getValue();
+		if(v->hasName())
+			valueNameSS << v->getName();
+		else
+			valueNameSS << "unknown name(" << pagNode->getId() << ")";
+	} else
+		valueNameSS << "no value";
+
+	return valueNameSS.str();
+}
+
+void UseAfterReturnChecker::reportBug(ProgSlice* slice) {
+
+	NodeID globalPagNodeId = (NodeID)0;
+	NodeID stackPagNodeId = (NodeID)0;
+	StackProgSlice* stackSlice;
+
+	if(stackSlice = dyn_cast<StackProgSlice>(slice)) {
+		globalPagNodeId = stackSlice->getGlobalNodeId();
+		stackPagNodeId = stackSlice->getStackNodeId();
+	}
+
+	if(isAllPathReachable() == false && isSomePathReachable() == false) {
+		reportNeverFree(slice->getSource(), getValueName(globalPagNodeId), getValueName(stackPagNodeId));
+	}
+	else if (isAllPathReachable() == false && isSomePathReachable() == true) {
+		reportPartialLeak(slice->getSource(), getValueName(globalPagNodeId), getValueName(stackPagNodeId));
+		errs() << "\t\t conditional free path: \n" << slice->evalFinalCond() << "\n";
+		slice->annotatePaths();
+	}
+}

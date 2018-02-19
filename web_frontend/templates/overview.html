@@ -1,0 +1,82 @@
+{% extends "index.html" %}
+{% block body %}
+<div class="container" style="max-width:1500px; min-height:100%">
+	<h1 class="page-header">Kernel Report <small>Overview</small></h1>
+
+	<table class="table table-hover" id="syscall_overview_table">
+		<thead> <tr> <th><h3>System calls</h3></th> 
+				{% for kv, kr in kernel_reports.items()%}
+				<th>{{kv}}</th> 
+				{% endfor %}
+			</tr> 
+		</thead>
+		<tbody> 
+			{% for sn, reports in syscall_to_kernel_report.items() %}
+			<tr style="display:table-row"> 
+				<th scope="row">{{sn}}</th> 
+				{% for kr in reports %}
+				<td>{{kr.reports[sn].get_num_uaf()}} / 
+				    {{kr.reports[sn].get_num_uar()}} / 
+				    {{kr.reports[sn].get_num_dfree()}} /
+				    {{kr.reports[sn].get_num_leaks()}} /
+				    {{kr.reports[sn].get_num_dlock()}}</td> 
+				{% endfor %}
+			</tr> 
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<table class="table table-hover" id="driver_overview_table">
+		<thead> <tr> <th><h3>Driver</h3></th> 
+				{% for kv, kr in kernel_reports.items()%}
+				<th>{{kv}}</th> 
+				{% endfor %}
+			</tr> 
+		</thead>
+		<tbody> 
+			{% for dn, reports in driver_to_kernel_report.items() %}
+			<tr style="display:table-row"> 
+				<th scope="row">{{dn}}</th> 
+				{% for kr in reports %}
+				<td>{{kr.reports[dn].get_num_uaf()}} / 
+				    {{kr.reports[dn].get_num_uar()}} / 
+				    {{kr.reports[dn].get_num_dfree()}} /
+				    {{kr.reports[dn].get_num_leaks()}} /
+				    {{kr.reports[dn].get_num_dlock()}} </td> 
+				{% endfor %}
+			</tr> 
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<table class="table table-hover">
+		<thead> <tr> <th><h3>Average Time (sec)</h3></th> 
+				{% for kv, kr in kernel_reports.items()%}
+				<th>{{kv}}</th> 
+				{% endfor %}
+			</tr> 
+		</thead>
+		<tbody> 
+			<tr style="display:table-row"> 
+				<th scope="row"></th> 
+				{% for kv, kr in kernel_reports.items() %}
+				<td>{{kr.get_average_duration()}}</td> 
+				{% endfor %}
+			</tr> 
+		</tbody>
+	</table>
+
+
+	<h3 class="page-header">Number Of Memory-Corruption Vulnerabilities</h3>
+
+	<!-- Draw the overview graph -->
+	<embed type="image/svg+xml" src={{graph_data.kernel_overview_graph|safe}} style="max-width=1000px" />
+
+
+	<h3 class="page-header">Relevant Context</h3>
+
+	<!-- Draw the contextgraph -->
+	<embed type="image/svg+xml" src={{graph_data.kernel_context_graph|safe}} style="max-width=1000px" />
+</div>
+	
+{% endblock%}

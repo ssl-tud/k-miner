@@ -1,0 +1,190 @@
+kminer: Unknown command line argument '-dfree'.  Try: 'kminer -help'
+kminer: Did you mean '-vgep'?
+Warning: No Function "sg_proc_open_debug" found!
+Warning: No Function "sg_proc_seq_show_debug" found!
+Warning: No Function "sg_vma_fault" found!
+Warning: No Function "init_hfsplus_fs" found!
+kminer: /home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/lib/SVF/SABER/ProgSlice.cpp:78: virtual void ProgSlice::AllPathReachableSolve(): Assertion `nodeBB && succBB && "BB is Null"' failed.
+#0 0x0000000000ec7005 llvm::sys::PrintStackTrace(llvm::raw_ostream&) (/home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/build/bin/kminer+0xec7005)
+#1 0x0000000000ec731a PrintStackTraceSignalHandler(void*) (/home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/build/bin/kminer+0xec731a)
+#2 0x0000000000ec5967 llvm::sys::RunSignalHandlers() (/home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/build/bin/kminer+0xec5967)
+#3 0x0000000000ec6a7b SignalHandler(int) (/home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/build/bin/kminer+0xec6a7b)
+#4 0x00007f1939201330 __restore_rt (/lib/x86_64-linux-gnu/libpthread.so.0+0x10330)
+#5 0x00007f1938216c37 gsignal /build/eglibc-SvCtMH/eglibc-2.19/signal/../nptl/sysdeps/unix/sysv/linux/raise.c:56:0
+#6 0x00007f193821a028 abort /build/eglibc-SvCtMH/eglibc-2.19/stdlib/abort.c:91:0
+#7 0x00007f193820fbf6 __assert_fail_base /build/eglibc-SvCtMH/eglibc-2.19/assert/assert.c:92:0
+#8 0x00007f193820fca2 (/lib/x86_64-linux-gnu/libc.so.6+0x2fca2)
+#9 0x000000000056279d ProgSlice::AllPathReachableSolve() /home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/lib/SVF/SABER/ProgSlice.cpp:81:0
+#10 0x00000000004ac270 DoubleFreeChecker::evaluate(SrcSnkAnalysisContext*) /home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/lib/Checker/DoubleFreeChecker.cpp:53:0
+#11 0x000000000046a137 SrcSnkAnalysis::analyze(llvm::Module&) /home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/lib/Checker/SrcSnkAnalysis.cpp:115:0
+#12 0x00000000004ac952 DoubleFreeChecker::runOnModule(llvm::Module&) /home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/include/Checker/DoubleFreeChecker.h:36:0
+#13 0x0000000000801d82 (anonymous namespace)::MPPassManager::runOnModule(llvm::Module&) (/home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/build/bin/kminer+0x801d82)
+#14 0x00000000008024ec llvm::legacy::PassManagerImpl::run(llvm::Module&) (/home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/build/bin/kminer+0x8024ec)
+#15 0x000000000080272d llvm::legacy::PassManager::run(llvm::Module&) (/home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/build/bin/kminer+0x80272d)
+#16 0x00000000004093a0 startAnalysis(llvm::Module&) /home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/tools/kminer.cpp:265:0
+#17 0x00000000004098ae main /home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/tools/kminer.cpp:324:0
+#18 0x00007f1938201f45 __libc_start_main /build/eglibc-SvCtMH/eglibc-2.19/csu/libc-start.c:321:0
+#19 0x0000000000407eb9 _start (/home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/build/bin/kminer+0x407eb9)
+Stack dump:
+0.	Program arguments: kminer vmlinux_v3.19_min.bc -driver=sg -double-free -num-threads=8 -cg-blacklist=blist.txt -pre-analysis-results=initcall_contexts.txt 
+1.	Running pass 'Double-Free Checker' on module 'vmlinux_v3.19_min.bc'.
+#0 0x0000000000ec7005 llvm::sys::PrintStackTrace(llvm::raw_ostream&) (/home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/build/bin/kminer+0xec7005)
+#1 0x0000000000ec731a PrintStackTraceSignalHandler(void*) (/home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/build/bin/kminer+0xec731a)
+#2 0x0000000000ec5967 llvm::sys::RunSignalHandlers() (/home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/build/bin/kminer+0xec5967)
+#3 0x0000000000ec6a7b SignalHandler(int) (/home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/build/bin/kminer+0xec6a7b)
+#4 0x00007f1939201330 __restore_rt (/lib/x86_64-linux-gnu/libpthread.so.0+0x10330)
+#5 0x00007f1938216c37 gsignal /build/eglibc-SvCtMH/eglibc-2.19/signal/../nptl/sysdeps/unix/sysv/linux/raise.c:56:0
+#6 0x00007f193821a028 abort /build/eglibc-SvCtMH/eglibc-2.19/stdlib/abort.c:91:0
+#7 0x00007f193820fbf6 __assert_fail_base /build/eglibc-SvCtMH/eglibc-2.19/assert/assert.c:92:0
+#8 0x00007f193820fca2 (/lib/x86_64-linux-gnu/libc.so.6+0x2fca2)
+#9 0x000000000056279d ProgSlice::AllPathReachableSolve() /home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/lib/SVF/SABER/ProgSlice.cpp:81:0
+#10 0x00000000004ac270 DoubleFreeChecker::evaluate(SrcSnkAnalysisContext*) /home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/lib/Checker/DoubleFreeChecker.cpp:53:0
+#11 0x000000000046a137 SrcSnkAnalysis::analyze(llvm::Module&) /home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/lib/Checker/SrcSnkAnalysis.cpp:115:0
+#12 0x00000000004ac952 DoubleFreeChecker::runOnModule(llvm::Module&) /home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/include/Checker/DoubleFreeChecker.h:36:0
+#13 0x0000000000801d82 (anonymous namespace)::MPPassManager::runOnModule(llvm::Module&) (/home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/build/bin/kminer+0x801d82)
+#14 0x00000000008024ec llvm::legacy::PassManagerImpl::run(llvm::Module&) (/home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/build/bin/kminer+0x8024ec)
+#15 0x000000000080272d llvm::legacy::PassManager::run(llvm::Module&) (/home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/build/bin/kminer+0x80272d)
+#16 0x00000000004093a0 startAnalysis(llvm::Module&) /home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/tools/kminer.cpp:265:0
+#17 0x00000000004098ae main /home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/tools/kminer.cpp:324:0
+#18 0x00007f1938201f45 __libc_start_main /build/eglibc-SvCtMH/eglibc-2.19/csu/libc-start.c:321:0
+#19 0x0000000000407eb9 _start (/home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/build/bin/kminer+0x407eb9)
+Warning: No Function "sg_proc_open_debug" found!
+Warning: No Function "sg_proc_seq_show_debug" found!
+Warning: No Function "sg_vma_fault" found!
+Warning: No Function "init_hfsplus_fs" found!
+Warning: No Function "sg_proc_open_debug" found!
+Warning: No Function "sg_proc_seq_show_debug" found!
+Warning: No Function "sg_vma_fault" found!
+Warning: No Function "init_hfsplus_fs" found!
+[1;33m	 Double-Free:[1;0m at : (drivers/scsi/sg.c sg_read ln:417)
+[1;33m	 Double-Free:[1;0m at : (drivers/scsi/sg.c sg_start_req ln:1682)
+[1;33m	 Double-Free:[1;0m at : (drivers/scsi/sg.c sg_start_req ln:1687)
+[1;33m	 Double-Free:[1;0m at : (drivers/scsi/sg.c sg_start_req ln:1687)
+[1;33m	 Double-Free:[1;0m at : (drivers/scsi/sg.c sg_start_req ln:1687)
+[1;33m	 Double-Free:[1;0m at : (drivers/scsi/sg.c sg_build_sgat ln:1805)
+Warning: No Function "sg_proc_open_debug" found!
+Warning: No Function "sg_proc_seq_show_debug" found!
+Warning: No Function "sg_vma_fault" found!
+Warning: No Function "init_hfsplus_fs" found!
+[1;33m	 Double-Free:[1;0m at : (drivers/scsi/sg.c sg_read ln:417)
+[1;33m	 Double-Free:[1;0m at : (drivers/scsi/sg.c sg_start_req ln:1687)
+[1;33m	 Double-Free:[1;0m at : (drivers/scsi/sg.c sg_start_req ln:1687)
+[1;33m	 Double-Free:[1;0m at : (drivers/scsi/sg.c sg_build_sgat ln:1805)
+Warning: No Function "sg_proc_open_debug" found!
+Warning: No Function "sg_proc_seq_show_debug" found!
+Warning: No Function "sg_vma_fault" found!
+Warning: No Function "init_hfsplus_fs" found!
+Warning: No Function "sg_proc_open_debug" found!
+Warning: No Function "sg_proc_seq_show_debug" found!
+Warning: No Function "sg_vma_fault" found!
+Warning: No Function "init_hfsplus_fs" found!
+Warning: No Function "sg_proc_open_debug" found!
+Warning: No Function "sg_proc_seq_show_debug" found!
+Warning: No Function "sg_vma_fault" found!
+Warning: No Function "sg_proc_open_debug" found!
+Warning: No Function "sg_proc_seq_show_debug" found!
+Warning: No Function "sg_vma_fault" found!
+[1;33m	 Double-Free:[1;0m at : (drivers/scsi/sg.c sg_read ln:417)
+[1;33m	 Double-Free:[1;0m at : (drivers/scsi/sg.c sg_start_req ln:1687)
+[1;33m	 Double-Free:[1;0m at : (drivers/scsi/sg.c sg_build_sgat ln:1805)
+Warning: No Function "sg_proc_open_debug" found!
+Warning: No Function "sg_proc_seq_show_debug" found!
+Warning: No Function "sg_vma_fault" found!
+[1;33m	 Double-Free:[1;0m at : (drivers/scsi/sg.c sg_read ln:417)
+[1;33m	 Double-Free:[1;0m at : (drivers/scsi/sg.c sg_start_req ln:1687)
+[1;33m	 Double-Free:[1;0m at : (drivers/scsi/sg.c sg_build_sgat ln:1805)
+Warning: No Function "sg_proc_open_debug" found!
+Warning: No Function "sg_proc_seq_show_debug" found!
+Warning: No Function "sg_vma_fault" found!
+[1;33m	 Double-Free:[1;0m at : (drivers/scsi/sg.c sg_read ln:417)
+[1;33m	 Double-Free:[1;0m at : (drivers/scsi/sg.c sg_start_req ln:1687)
+[1;33m	 Double-Free:[1;0m at : (drivers/scsi/sg.c sg_build_sgat ln:1805)
+Warning: No Function "sg_proc_open_debug" found!
+Warning: No Function "sg_proc_seq_show_debug" found!
+Warning: No Function "sg_vma_fault" found!
+[1;33m	 Double-Free:[1;0m at : (drivers/scsi/sg.c sg_read ln:417)
+[1;33m	 Double-Free:[1;0m at : (drivers/scsi/sg.c sg_start_req ln:1687)
+[1;33m	 Double-Free:[1;0m at : (drivers/scsi/sg.c sg_start_req ln:1687)
+[1;33m	 Double-Free:[1;0m at : (drivers/scsi/sg.c sg_build_sgat ln:1805)
+Warning: No Function "sg_proc_open_debug" found!
+Warning: No Function "sg_proc_seq_show_debug" found!
+Warning: No Function "sg_vma_fault" found!
+[1;33m	 Double-Free:[1;0m at : (drivers/scsi/sg.c sg_read ln:417)
+[1;33m	 Double-Free:[1;0m at : (drivers/scsi/sg.c sg_start_req ln:1687)
+[1;33m	 Double-Free:[1;0m at : (drivers/scsi/sg.c sg_start_req ln:1687)
+[1;33m	 Double-Free:[1;0m at : (drivers/scsi/sg.c sg_build_sgat ln:1805)
+Warning: No Function "sg_proc_open_debug" found!
+Warning: No Function "sg_proc_seq_show_debug" found!
+Warning: No Function "sg_vma_fault" found!
+[1;33m	 Double-Free:[1;0m at : (drivers/scsi/sg.c sg_read ln:417)
+[1;33m	 Double-Free:[1;0m at : (drivers/scsi/sg.c sg_start_req ln:1687)
+[1;33m	 Double-Free:[1;0m at : (drivers/scsi/sg.c sg_start_req ln:1687)
+[1;33m	 Double-Free:[1;0m at : (drivers/scsi/sg.c sg_build_sgat ln:1805)
+Warning: No Function "sg_proc_open_debug" found!
+Warning: No Function "sg_proc_seq_show_debug" found!
+Warning: No Function "sg_vma_fault" found!
+Warning: No Function "sg_proc_open_debug" found!
+Warning: No Function "sg_proc_seq_show_debug" found!
+Warning: No Function "sg_vma_fault" found!
+[1;33m	 Double-Free:[1;0m at : (drivers/scsi/sg.c sg_read ln:417)
+[1;33m	 Double-Free:[1;0m at : (drivers/scsi/sg.c sg_start_req ln:1687)
+[1;33m	 Double-Free:[1;0m at : (drivers/scsi/sg.c sg_build_sgat ln:1805)
+Warning: No Function "sg_proc_open_debug" found!
+Warning: No Function "sg_proc_seq_show_debug" found!
+Warning: No Function "sg_vma_fault" found!
+[1;33m	 Double-Free:[1;0m at : (drivers/scsi/sg.c sg_read ln:417)
+[1;33m	 Double-Free:[1;0m at : (drivers/scsi/sg.c sg_start_req ln:1687)
+[1;33m	 Double-Free:[1;0m at : (drivers/scsi/sg.c sg_start_req ln:1687)
+[1;33m	 Double-Free:[1;0m at : (drivers/scsi/sg.c sg_build_sgat ln:1805)
+Warning: No Function "sg_proc_open_debug" found!
+Warning: No Function "sg_proc_seq_show_debug" found!
+Warning: No Function "sg_vma_fault" found!
+[1;33m	 Double-Free:[1;0m at : (drivers/scsi/sg.c sg_read ln:417)
+[1;33m	 Double-Free:[1;0m at : (drivers/scsi/sg.c sg_start_req ln:1687)
+[1;33m	 Double-Free:[1;0m at : (drivers/scsi/sg.c sg_start_req ln:1687)
+[1;33m	 Double-Free:[1;0m at : (drivers/scsi/sg.c sg_build_sgat ln:1805)
+kminer: Unknown command line argument '-cg-blacklist=blist.txt'.  Try: 'kminer -help'
+kminer: Did you mean '-dfsan-abilist=blist.txt'?
+kminer: Unknown command line argument '-pre-analysis-results=initcall_contexts.txt'.  Try: 'kminer -help'
+kminer: Did you mean '-pass-remarks=initcall_contexts.txt'?
+kminer: Unknown command line argument '-cg-blacklist=blist.txt'.  Try: 'kminer -help'
+kminer: Did you mean '-dfsan-abilist=blist.txt'?
+kminer: Unknown command line argument '-pre-analysis-results=initcall_contexts.txt'.  Try: 'kminer -help'
+kminer: Did you mean '-pass-remarks=initcall_contexts.txt'?
+kminer: Unknown command line argument '-pre-analysis-results=initcall_contexts.txt'.  Try: 'kminer -help'
+kminer: Did you mean '-pass-remarks=initcall_contexts.txt'?
+kminer: error: Could not open input file: No such file or directory
+kminer: error: Could not open input file: No such file or directory
+#0 0x0000000000ea8a71 llvm::sys::PrintStackTrace(llvm::raw_ostream&) (/home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/build/bin/kminer+0xea8a71)
+#1 0x0000000000ea8d86 PrintStackTraceSignalHandler(void*) (/home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/build/bin/kminer+0xea8d86)
+#2 0x0000000000ea73d3 llvm::sys::RunSignalHandlers() (/home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/build/bin/kminer+0xea73d3)
+#3 0x0000000000ea84e7 SignalHandler(int) (/home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/build/bin/kminer+0xea84e7)
+#4 0x00007fd0a0a70330 __restore_rt (/lib/x86_64-linux-gnu/libpthread.so.0+0x10330)
+#5 0x00000000004912ef SrcSnkAnalysis::initialize(llvm::Module&) /home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/include/Checker/SrcSnkAnalysis.h:58:0
+#6 0x00000000004936e6 DoubleFreeChecker::analyze(llvm::Module&) /home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/lib/Checker/DoubleFreeChecker.cpp:15:0
+#7 0x000000000040a6d7 KernelChecker::runOnModule(llvm::Module&) /home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/include/Checker/KernelChecker.h:25:0
+#8 0x00000000007e37a6 (anonymous namespace)::MPPassManager::runOnModule(llvm::Module&) (/home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/build/bin/kminer+0x7e37a6)
+#9 0x00000000007e3f10 llvm::legacy::PassManagerImpl::run(llvm::Module&) (/home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/build/bin/kminer+0x7e3f10)
+#10 0x00000000007e4151 llvm::legacy::PassManager::run(llvm::Module&) (/home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/build/bin/kminer+0x7e4151)
+#11 0x00000000004085b4 startAnalysis(llvm::Module&) /home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/tools/kminer.cpp:153:0
+#12 0x000000000040887b main /home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/tools/kminer.cpp:194:0
+#13 0x00007fd09fa70f45 __libc_start_main /build/eglibc-SvCtMH/eglibc-2.19/csu/libc-start.c:321:0
+#14 0x0000000000407eb9 _start (/home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/build/bin/kminer+0x407eb9)
+Stack dump:
+0.	Program arguments: kminer vmlinux_v3.19_min.bc -driver=sg -double-free -num-threads=8 -cg-ignore=blist.txt -initcall-contexts=initcall_contexts.txt -report=report.txt -rm-deref -path-sens 
+1.	Running pass 'Double-Free' on module 'vmlinux_v3.19_min.bc'.
+#0 0x0000000000ea8a71 llvm::sys::PrintStackTrace(llvm::raw_ostream&) (/home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/build/bin/kminer+0xea8a71)
+#1 0x0000000000ea8d86 PrintStackTraceSignalHandler(void*) (/home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/build/bin/kminer+0xea8d86)
+#2 0x0000000000ea73d3 llvm::sys::RunSignalHandlers() (/home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/build/bin/kminer+0xea73d3)
+#3 0x0000000000ea84e7 SignalHandler(int) (/home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/build/bin/kminer+0xea84e7)
+#4 0x00007fd0a0a70330 __restore_rt (/lib/x86_64-linux-gnu/libpthread.so.0+0x10330)
+#5 0x00000000004912ef SrcSnkAnalysis::initialize(llvm::Module&) /home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/include/Checker/SrcSnkAnalysis.h:58:0
+#6 0x00000000004936e6 DoubleFreeChecker::analyze(llvm::Module&) /home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/lib/Checker/DoubleFreeChecker.cpp:15:0
+#7 0x000000000040a6d7 KernelChecker::runOnModule(llvm::Module&) /home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/include/Checker/KernelChecker.h:25:0
+#8 0x00000000007e37a6 (anonymous namespace)::MPPassManager::runOnModule(llvm::Module&) (/home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/build/bin/kminer+0x7e37a6)
+#9 0x00000000007e3f10 llvm::legacy::PassManagerImpl::run(llvm::Module&) (/home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/build/bin/kminer+0x7e3f10)
+#10 0x00000000007e4151 llvm::legacy::PassManager::run(llvm::Module&) (/home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/build/bin/kminer+0x7e4151)
+#11 0x00000000004085b4 startAnalysis(llvm::Module&) /home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/tools/kminer.cpp:153:0
+#12 0x000000000040887b main /home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/tools/kminer.cpp:194:0
+#13 0x00007fd09fa70f45 __libc_start_main /build/eglibc-SvCtMH/eglibc-2.19/csu/libc-start.c:321:0
+#14 0x0000000000407eb9 _start (/home/sschmitt/bachelor-thesis-simon-schmitt/KMiner/build/bin/kminer+0x407eb9)

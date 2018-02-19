@@ -1,0 +1,78 @@
+.half-rule {
+	margin-left: 0;
+	text-align: left;
+	width: 100%;
+	line-height: 10px;
+}
+
+.list-unstyled {
+	max-height: 100px;
+	overflow-y: scroll;
+}
+
+.navbar-form label { 
+	margin-top: 5px; 
+	color: grey;
+}
+
+
+.commentBox .form-group:nth-child(2), .actionBox .form-group:nth-child(2) {
+	width:100%;
+}
+
+.commentList {
+	padding:0;
+	list-style:none;
+	max-height:200px;
+	overflow:auto;
+}
+
+.commentList li {
+	margin:0;
+	margin-top:10px;
+}
+
+.commentList li > div {
+	display:table-cell;
+}
+
+.commenterImage {
+	width:30px;
+	margin-right:5px;
+	height:100%;
+	float:left;
+}
+
+.commenterImage img {
+	width:100%;
+	border-radius:50%;
+}
+
+.commentText p {
+	margin:0;
+}
+
+.sub-text {
+	color:#aaa;
+	font-family:verdana;
+	font-size:11px;
+}
+
+.actionBox {
+	border-top:1px solid #bbb;
+	padding:10px;
+}
+
+span.glyphicon-user {
+	    font-size: 1.5em;
+}
+
+/*
+.table-hover>tbody>tr>td:hover, .table-hover>tbody>tr>td:hover{
+	background-color: #f5f5f5!important;
+}
+
+.table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover>th{
+	background-color: inherit;
+}
+*/

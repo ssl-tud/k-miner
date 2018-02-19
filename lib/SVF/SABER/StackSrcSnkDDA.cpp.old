@@ -1,0 +1,316 @@
+#include "SABER/StackSrcSnkDDA.h"
+#include "MSSA/SVFGStat.h"
+#include "Util/GraphUtil.h"
+
+using namespace llvm;
+
+// TODO clang options have to be deleted
+static cl::opt<bool> DumpSlice("dump-slice2", cl::init(false),
+		cl::desc("Dump dot graph of Saber Slices"));
+
+static cl::opt<unsigned> cxtLimit("cxtlimit2",  cl::init(3),
+		cl::desc("Source-Sink Analysis Contexts Limit"));
+
+//NodeID MultiAssignmentSolver::findLatestAssignment(NodeID pagNodeId, const NodeIdSet *pagLoadNodeIds) {
+const SVFGNode* MultiAssignmentSolver::findLatestAssignment(NodeID svfgNodeId, const NodeIdSet *svfgSrcNodeIds) {
+	this->svfgSrcNodeIds = svfgSrcNodeIds;
+
+	// TODO maybe it is necessary that we determine the max svfgNodeId
+//	const SVFGNode *svfgDefNode = graph()->getDefSVFGNode(pag->getPAGNode(pagNodeId));
+//	NodeID maxSvfgNodeId = 0;
+
+//	for(auto svfgEdgeIter = svfgDefNode->OutEdgeBegin(); svfgEdgeIter != svfgDefNode->OutEdgeEnd(); ++svfgEdgeIter) {
+//		const SVFGNode *tmpSvfgNode = graph()->getSVFGNode((*svfgEdgeIter)->getDstID());	
+//		NodeID tmpId = tmpSvfgNode->getId();
+//		
+//		if(isa<StoreSVFGNode>(tmpSvfgNode) && maxSvfgNodeId < tmpId)
+//			maxSvfgNodeId = tmpId;
+//	}
+//	RootDPItem item(maxSvfgNodeId);
+
+	RootDPItem item(svfgNodeId);
+	backwardTraverse(item);
+	const SVFGNode *svfgNode = graph()->getSVFGNode(item.getRoot());
+	return svfgNode;
+}
+
+void MultiAssignmentSolver::backwardTraverse(RootDPItem& item) {
+	pushIntoWorklist(item);
+
+	while(!isWorklistEmpty()) {
+		RootDPItem tmpItem = popFromWorklist();
+		backwardProcess(tmpItem);
+
+		NodeID svfgNodeId = getNodeIDFromItem(tmpItem);
+		const SVFGNode *svfgNode = graph()->getSVFGNode(svfgNodeId);
+
+		if(const StmtSVFGNode *stmtNode = dyn_cast<StmtSVFGNode>(svfgNode)) {
+			// We are looking for an Addr or Gep-Node because they can be sources.
+			if(isa<AddrSVFGNode>(stmtNode) || isa<GepSVFGNode>(stmtNode)) {
+				// The node has to be in the set of nodeIds we are potentialy seeking.
+				if(svfgSrcNodeIds->find(svfgNodeId) != svfgSrcNodeIds->end()) {
+//					NodeID pagSrcNodeId = stmtNode->getPAGSrcNodeID();
+					item.setRoot(svfgNodeId);
+					clearWorklist();
+					break;
+				}
+			}
+		}
+
+		GNODE* v = getNode(getNodeIDFromItem(tmpItem));
+		inv_child_iterator EI = InvGTraits::child_begin(v);
+		inv_child_iterator EE = InvGTraits::child_end(v);
+
+		for(; EI != EE; ++EI) {
+			backwardpropagate(tmpItem, *(EI.getCurrent()) );
+		}
+	}
+}
+
+void StackSrcSnkDDA::analyze(llvm::Module& module) {
+	initialize(module);
+	ContextCond::setMaxCxtLen(cxtLimit);
+
+	// Iterate through the collection of all sources.
+	for(auto svfgNodesIter = svfgNodeSources.begin(); svfgNodesIter != svfgNodeSources.end(); ++svfgNodesIter) { 
+		SVFGNodeSet &sources = svfgNodesIter->second; 
+		SVFGNodeSet &sinks = svfgNodeSinks.at(svfgNodesIter->first); 
+		setSources(sources);
+		setSinks(sinks);
+			
+		// Only iterate through the sources of a specific global node.
+		for (SVFGNodeSetIter sourcesIter = sourcesBegin(); sourcesIter != sourcesEnd(); ++sourcesIter) {
+			setCurSlice(*sourcesIter);
+			getCurStackSlice()->setGlobalNodeId(svfgNodesIter->first);	
+
+			DBOUT(DGENERAL, outs() << "Analysing slice:" << (*sourcesIter)->getId() << ")\n");
+			ContextCond cxt;
+			DPIm item((*sourcesIter)->getId(),cxt);
+			forwardTraverse(item);
+
+			DBOUT(DSaber, outs() << "Forward process for slice:" << (*sourcesIter)->getId() 
+				<< " (size = " << getCurSlice()->getForwardSliceSize() << ")\n");
+
+			// Backward from all sinks that were found during forwarding.
+			for (SVFGNodeSetIter sinksIter = getCurSlice()->sinksBegin(); 
+					sinksIter != getCurSlice()->sinksEnd(); ++sinksIter) {
+				ContextCond cxt;
+				DPIm item((*sinksIter)->getId(),cxt);
+				backwardTraverse(item);
+			}
+
+			DBOUT(DSaber, outs() << "Backward process for slice:" << (*sourcesIter)->getId() 
+				<< " (size = " << getCurSlice()->getBackwardSliceSize() << ")\n");
+
+			// Check if a path starting at a source always reachs a sink.
+			AllPathReachability();
+
+			DBOUT(DSaber, outs() << "Guard computation for slice:" 
+					<< (*sourcesIter)->getId() << ")\n");
+
+			// If a potential bug was found, find the stack node that is assigned. 
+			if(!getCurStackSlice()->isAllReachable() && !setAssignmentNodeId(*sourcesIter)) 
+				solveMultipleAssignments(*sourcesIter);
+
+			reportBug(getCurSlice());
+		}
+	}
+
+	finalize();
+}
+
+/*!
+ * Propagate information forward by matching context
+ */
+void StackSrcSnkDDA::forwardpropagate(const DPIm& item, SVFGEdge* edge) {
+	DBOUT(DSaber,outs() << "\n##processing source: " << getCurSlice()->getSource()->getId() <<" forward propagate from (" << edge->getSrcID());
+
+	const SVFGNode* dstNode = edge->getDstNode();
+	DPIm newItem(dstNode->getId(),item.getContexts());
+
+	/// perform context sensitive reachability
+	// push context for calling
+	if (edge->isCallVFGEdge()) {
+		CallSiteID csId = 0;
+
+		if(const CallDirSVFGEdge* callEdge = dyn_cast<CallDirSVFGEdge>(edge))
+			csId = callEdge->getCallSiteId();
+		else
+			csId = cast<CallIndSVFGEdge>(edge)->getCallSiteId();
+
+		newItem.pushContext(csId);
+		DBOUT(DSaber, outs() << " push cxt [" << csId << "] ");
+	}
+	// match context for return
+	else if (edge->isRetVFGEdge()) {
+		CallSiteID csId = 0;
+
+		if(const RetDirSVFGEdge* callEdge = dyn_cast<RetDirSVFGEdge>(edge))
+			csId = callEdge->getCallSiteId();
+		else
+			csId = cast<RetIndSVFGEdge>(edge)->getCallSiteId();
+
+		if (newItem.matchContext(csId) == false) {
+			DBOUT(DSaber, outs() << "-|-\n");
+			return;
+		}
+
+		DBOUT(DSaber, outs() << " pop cxt [" << csId << "] ");
+	}
+
+	/// whether this dstNode has been visited or not
+	if(forwardVisited(dstNode,newItem)) {
+		DBOUT(DSaber,outs() << " node "<< dstNode->getId() <<" has been visited\n");
+		return;
+	}
+	else
+		addForwardVisited(dstNode, newItem);
+
+	if(pushIntoWorklist(newItem))
+		DBOUT(DSaber,outs() << " --> " << edge->getDstID() << ", cxt size: " << newItem.getContexts().cxtSize() <<")\n");
+
+}
+
+/*!
+ * Propagate information backward without matching context, as forward analysis already did it
+ */
+void StackSrcSnkDDA::backwardpropagate(const DPIm& item, SVFGEdge* edge) {
+	DBOUT(DSaber,outs() << "backward propagate from (" 
+			    << edge->getDstID() << " --> " << edge->getSrcID() << ")\n");
+	const SVFGNode* srcNode = edge->getSrcNode();
+
+	if(backwardVisited(srcNode))
+		return;
+	else
+		addBackwardVisited(srcNode);
+
+	ContextCond cxt;
+	DPIm newItem(srcNode->getId(), cxt);
+	pushIntoWorklist(newItem);
+}
+
+/// Guarded reachability search
+void StackSrcSnkDDA::AllPathReachability() {
+	ProgSlice *slice = getCurStackSlice();
+	/// annotate SVFG with slice information for debugging purpose
+	if(DumpSlice)
+		annotateSlice(slice);
+
+	slice->AllPathReachableSolve();
+
+	const SVFGNode* node = slice->getSource();
+
+	// Special case where a pointer is NULL 
+	for(auto svfgEdgesIter = node->InEdgeBegin(); svfgEdgesIter != node->InEdgeEnd(); ++svfgEdgesIter) {
+		if((*svfgEdgesIter)->getSrcID() == (NodeID)0)
+			slice->setAllReachable();
+	}
+
+	if(isSatisfiableForAll(slice)== true) 
+		slice->setAllReachable();
+}
+
+// TODO generalize this function
+void StackSrcSnkDDA::findSVFGStoreNodes() {
+	const SVFG* svfg = getSVFG();
+
+	for(auto iter = svfg->begin(); iter != svfg->end(); ++iter) {
+		SVFGNode *node = iter->second;
+
+		if(StoreSVFGNode::classof(node)) {
+			svfgStoreNodes.insert(node);
+		}
+	}
+}
+
+bool StackSrcSnkDDA::setAssignmentNodeId(const SVFGNode* svfgNode) {
+	assert(isa<StmtSVFGNode>(svfgNode) && "in hasMultipleAssignments node has to be Stmt");
+	const StmtSVFGNode *stmtNode = dyn_cast<StmtSVFGNode>(svfgNode);
+	NodeID pagDstId = stmtNode->getPAGDstNodeID();
+	StackProgSlice *slice = getCurStackSlice();
+	int i = 0;
+	NodeID pagGlobalId = slice->getGlobalNodeId();
+	NodeID pagStackId = (NodeID)0;
+	const NodeToPairSetMap &ptsMap = spag->getGlobalAssignments();
+	const NodeToPairSet &ptsSet = ptsMap.at(pagGlobalId);
+
+	// Count the stack nodes that write to the pagDstNode of the svfgNode.
+	for(auto ptsIter = ptsSet.begin(); ptsIter != ptsSet.end(); ++ptsIter) { 
+		if(ptsIter->second == pagDstId && spag->isStackNode(ptsIter->first)) {
+			pagStackId = ptsIter->first;
+			i++;
+		}
+	}
+
+	if(i == 0)
+		return true;
+	else if (i == 1) {
+		slice->setStackNodeId(pagStackId);
+		return true;
+	}
+
+	// We have at least two stack nodes that are assigned to a global node.
+	return false;
+}
+
+void StackSrcSnkDDA::solveMultipleAssignments(const SVFGNode* svfgNode) {
+	assert(isa<StmtSVFGNode>(svfgNode) && "in hasMultipleAssignments node has to be Stmt");
+	const StmtSVFGNode *stmtNode = dyn_cast<StmtSVFGNode>(svfgNode);
+	NodeID pagAssignmentNodeId = stmtNode->getPAGDstNodeID();
+	StackProgSlice *slice = getCurStackSlice();
+	NodeID globalNodeId = slice->getGlobalNodeId();
+	const NodeToPairSetMap &ptsMap= spag->getGlobalAssignments();
+	const NodeToPairSet &pSet = ptsMap.at(globalNodeId);
+	NodeIdSet svfgSrcNodeIds;
+
+	// get the stack PAGNodes that are potentialy written to the global node
+	for(auto pairIter = pSet.begin(); pairIter!= pSet.end(); ++pairIter) {
+		if(pairIter->second == pagAssignmentNodeId && spag->isStackNode(pairIter->first)) {
+//			pagLoadNodeIds.insert(pairIter->first);
+			PAGNode *pagSrcNode = spag->getPAGNode(pairIter->first);
+			svfgSrcNodeIds.insert(graph()->getDefSVFGNode(pagSrcNode)->getId());
+		}
+	}
+
+//	NodeID latestAssignmentNodeId = mas->findLatestAssignment(pagAssignmentNodeId, &pagLoadNodeIds);
+	const SVFGNode *svfgLatestAssignmentNode = mas->findLatestAssignment(svfgNode->getId(), &svfgSrcNodeIds);
+	const StmtSVFGNode *stmtLatestAssignmentNode = dyn_cast<StmtSVFGNode>(svfgLatestAssignmentNode);
+	assert(stmtNode && "Should be a StmtNode");
+
+	// It is possible that there is actually no assignment at this svfgNode.
+	// So mas will return a svfgNode with the NodeId 0.
+	if(svfgLatestAssignmentNode->getId() == 0)  {
+		slice->setAllReachable();
+		slice->setStackNodeId(0);
+	} else 
+		slice->setStackNodeId(stmtLatestAssignmentNode->getPAGSrcNodeID());
+}
+
+void StackSrcSnkDDA::setCurSlice(const SVFGNode* src) {
+	if(_curSlice!=nullptr) {
+		delete _curSlice;
+		_curSlice = nullptr;
+		clearVisitedMap();
+	}
+
+	_curSlice = new StackProgSlice(src, getPathAllocator(), getSVFG());
+}
+
+StackProgSlice* StackSrcSnkDDA::getCurStackSlice() {
+	assert(isa<StackProgSlice>(_curSlice) && "curSlice should be a StackProgSlice");
+	return dyn_cast<StackProgSlice>(_curSlice);
+}
+
+void StackSrcSnkDDA::printSourceMap() {
+	for(auto iter = svfgNodeSources.begin(); iter != svfgNodeSources.end(); ++iter) {
+		llvm::outs() << "global_node " << iter->first << " ";
+		
+		const SVFGNodeSet nodeSet = iter->second;
+		
+		for(auto iter2 = nodeSet.begin(); iter2 != nodeSet.end(); ++iter2) {
+			llvm::outs() << " -> " << (*iter2)->getId();	
+		}	
+
+		llvm::outs() << "\n";
+	}	
+}

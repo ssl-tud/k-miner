@@ -1,0 +1,548 @@
+{% extends "index.html" %}
+
+{% block body %}
+<div class="container" style="max-width:1500px; min-height:100%">
+	<h1 class="page-header">Driver Report <small> for {{cur_report.driver_name}} <span style="float:right;">{{cur_kernel_report.version}}</span></small></h1>
+	<h2 class="page-header">Checker Results</h2>
+
+	<h3>Use-After-Free</h3>
+	<div class="row" data-toggle="collapse" href="#collapse_uaf">
+		<div class="col-md-4">{{cur_report.uaf_checker_report.get_num_bugs()}} Bugs found</div>
+		<div class="col-md-3">took {{cur_report.uaf_checker_report.duration}} sec</div>
+		<div class="col-md-4">{{cur_report.uaf_checker_report.num_analyzed_var}} Variables analyzed</div>
+		<div class="col-md-1"> 
+			<button type="button" class="btn btn-default btn-sm"> 
+				<span class="glyphicon glyphicon-chevron-down"></span>
+			</button> 
+		</div>
+	</div>
+	<hr class="half-rule"/>
+	
+	<!-- Use-After-Free memory bugs -->
+	<div id="collapse_uaf" class="collapse">
+		{% for bug in cur_report.uaf_checker_report.bugs%}
+		<table class="table table-hover">
+			<thead> <tr> <th><h4>{{loop.index}}. Memory-Corruption Vulnerablility ({{bug.ID}}):</h4></th> <th>Dangling Pointer</th> <th>Free</th> <th>Use</th> </tr> </thead>
+			<tbody> 
+				<tr> 
+					<th scope="row">Variable Name</th> 
+					<td>{{bug.dangling_ptr.name}}</td> 
+					<td>{{bug.free.name}}</td> 
+					<td>{{bug.use.name}}</td> 
+				</tr> 
+				<tr> 
+					<th scope="row">Function</th> 
+					<td>{{bug.dangling_ptr.loc.function_name}}</td> 
+					<td>{{bug.free.loc.function_name}}</td>
+					<td>{{bug.use.loc.function_name}}</td>
+				</tr> 
+				<tr> 
+					<th scope="row">File</th> 
+					{% if bug.dangling_ptr.loc.file_name != "Unknown" %}
+						<td><a href="{{bug.dangling_ptr.loc.getLink(cur_kernel_report.version)}}">{{bug.dangling_ptr.loc.file_name}}</a></td>
+					{% else %}
+						<td>{{bug.dangling_ptr.loc.file_name}}</td>
+					{% endif %}
+
+					{% if bug.free.loc.file_name != "Unknown" %}
+						<td><a href="{{bug.free.loc.getLink(cur_kernel_report.version)}}">{{bug.free.loc.file_name}}</a></td> 
+					{% else %}
+						<td>{{bug.free.loc.file_name}}</td> 
+					{% endif %}
+
+					{% if bug.use.loc.file_name != "Unknown" %}
+						<td><a href="{{bug.use.loc.getLink(cur_kernel_report.version)}}">{{bug.use.loc.file_name}}</a></td> 
+					{% else %}
+						<td>{{bug.use.loc.file_name}}</td> 
+					{% endif %}
+				</tr> 
+				<tr> 
+					<th scope="row">Line</th> 
+					<td>{{bug.dangling_ptr.loc.line}}</td> 
+					<td>{{bug.free.loc.line}}</td> 
+					<td>{{bug.use.loc.line}}</td> 
+				</tr> 
+			</tbody>
+		</table>
+
+		<div class="row">
+			<div class="col-md-4">
+				<h4>Driver to Variable</h4>
+				<div style="height:350px;border:1px solid #ccc;font:16px/26px Georgia, Garamond, Serif;overflow:auto; white-space:nowrap;">
+					{% for f in bug.api_path %}
+					{{f|safe}} <br>
+					{% endfor %}
+				</div>
+			</div>
+			<div class="col-md-4">
+				<h4>Path to Free </h4>
+				<div style="height:350px;border:1px solid #ccc;font:16px/26px Georgia, Garamond, Serif;overflow:auto; white-space:nowrap;">
+					{% for f in bug.free_path%}
+					{{f|safe}} <br>
+					{% endfor %}
+				</div>
+			</div>
+			<div class="col-md-4">
+				<h4>Path to Use</h4>
+				<div style="height:350px;border:1px solid #ccc;font:16px/26px Georgia, Garamond, Serif;overflow:auto; white-space:nowrap;">
+					{% for f in bug.use_path%}
+					{{f|safe}} <br>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+
+	<h3>Use-After-Return</h3>
+	<div class="row" data-toggle="collapse" href="#collapse_uar">
+		<div class="col-md-4">{{cur_report.uar_checker_report.get_num_bugs()}} Bugs found</div>
+		<div class="col-md-3">took {{cur_report.uar_checker_report.duration}} sec</div>
+		<div class="col-md-4">{{cur_report.uar_checker_report.num_analyzed_var}} Variables analyzed</div>
+		<div class="col-md-1"> 
+			<button type="button" class="btn btn-default btn-sm"> 
+				<span class="glyphicon glyphicon-chevron-down"></span>
+			</button> 
+		</div>
+	</div>
+	<hr class="half-rule"/>
+	
+	<!-- Use-After-Return memory bugs -->
+	<div id="collapse_uar" class="collapse">
+		{% for bug in cur_report.uar_checker_report.bugs%}
+		<table class="table table-hover">
+			<thead> <tr> <th><h4>{{loop.index}}. Memory-Corruption Vulnerablility ({{bug.ID}}):</h4></th> <th>Dangling Pointer</th> <th>Local Variable</th> </tr> </thead>
+			<tbody> 
+				<tr> 
+					<th scope="row">Variable Name</th> 
+					<td>{{bug.dangling_ptr.name}}</td> 
+					<td>{{bug.local_var.name}}</td> 
+				</tr> 
+				<tr> 
+					<th scope="row">Function</th> 
+					<td>{{bug.dangling_ptr.loc.function_name}}</td> 
+					<td>{{bug.local_var.loc.function_name}}</td>
+				</tr> 
+				<tr> 
+					<th scope="row">File</th> 
+					{% if bug.dangling_ptr.loc.file_name != "Unknown" %}
+						<td><a href="{{bug.dangling_ptr.loc.getLink(cur_kernel_report.version)}}">{{bug.dangling_ptr.loc.file_name}}</a></td>
+					{% else %}
+						<td>{{bug.dangling_ptr.loc.file_name}}</td>
+					{% endif %}
+
+					{% if bug.local_var.loc.file_name != "Unknown" %}
+						<td><a href="{{bug.local_var.loc.getLink(cur_kernel_report.version)}}">{{bug.local_var.loc.file_name}}</a></td> 
+					{% else %}
+						<td>{{bug.local_var.loc.file_name}}</td> 
+					{% endif %}
+				</tr> 
+				<tr> 
+					<th scope="row">Line</th> 
+					<td>{{bug.dangling_ptr.loc.line}}</td> 
+					<td>{{bug.local_var.loc.line}}</td> 
+				</tr> 
+			</tbody>
+		</table>
+
+		<div class="row">
+			<div class="col-md-4">
+				<h4>Driver to Local Variable</h4>
+				<div style="height:350px;border:1px solid #ccc;font:16px/26px Georgia, Garamond, Serif;overflow:auto; white-space:nowrap;">
+					{% for f in bug.api_path %}
+					{{f|safe}} <br>
+					{% endfor %}
+				</div>
+			</div>
+			<div class="col-md-4">
+				<h4>DanglingPointer to OutOfScope</h4>
+				<div style="height:350px;border:1px solid #ccc;font:16px/26px Georgia, Garamond, Serif;overflow:auto; white-space:nowrap;">
+					{% for f in bug.dptr_to_oos_path %}
+					{{f|safe}} <br>
+					{% endfor %}
+				</div>
+			</div>
+			<div class="col-md-4">
+				<h4>LocalVariable to OutOfScope</h4>
+				<div style="height:350px;border:1px solid #ccc;font:16px/26px Georgia, Garamond, Serif;overflow:auto; white-space:nowrap;">
+					{% for f in bug.lvar_to_oos_path %}
+					{{f|safe}} <br>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+
+	<h3>Double Free</h3>
+	<div class="row" data-toggle="collapse" href="#collapse_dfree">
+		<div class="col-md-4">{{cur_report.dfree_checker_report.get_num_bugs()}} Bugs found</div>
+		<div class="col-md-3">took {{cur_report.dfree_checker_report.duration}} sec</div>
+		<div class="col-md-4">{{cur_report.dfree_checker_report.num_analyzed_var}} Variables analyzed</div>
+		<div class="col-md-1"> 
+			<button type="button" class="btn btn-default btn-sm"> 
+				<span class="glyphicon glyphicon-chevron-down"></span>
+			</button> 
+		</div>
+	</div>
+	<hr class="half-rule"/>
+	
+	<!-- Double-Free memory bugs -->
+	<div id="collapse_dfree" class="collapse">
+		{% for bug in cur_report.dfree_checker_report.bugs%}
+		<table class="table table-hover">
+			<thead> <tr> <th><h4>{{loop.index}}. Memory-Corruption Vulnerablility ({{bug.ID}}):</h4></th> <th>Dangling Pointer</th> <th>Free</th> <th>Free</th> </tr> </thead>
+			<tbody> 
+				<tr> 
+					<th scope="row">Variable Name</th> 
+					<td>{{bug.dangling_ptr.name}}</td> 
+					<td>{{bug.free1.name}}</td> 
+					<td>{{bug.free2.name}}</td> 
+				</tr> 
+				<tr> 
+					<th scope="row">Function</th> 
+					<td>{{bug.dangling_ptr.loc.function_name}}</td> 
+					<td>{{bug.free1.loc.function_name}}</td>
+					<td>{{bug.free2.loc.function_name}}</td>
+				</tr> 
+				<tr> 
+					<th scope="row">File</th> 
+					{% if bug.dangling_ptr.loc.file_name != "Unknown" %}
+						<td><a href="{{bug.dangling_ptr.loc.getLink(cur_kernel_report.version)}}">{{bug.dangling_ptr.loc.file_name}}</a></td>
+					{% else %}
+						<td>{{bug.dangling_ptr.loc.file_name}}</td>
+					{% endif %}
+
+					{% if bug.free1.loc.file_name != "Unknown" %}
+						<td><a href="{{bug.free1.loc.getLink(cur_kernel_report.version)}}">{{bug.free1.loc.file_name}}</a></td> 
+					{% else %}
+						<td>{{bug.free1.loc.file_name}}</td> 
+					{% endif %}
+
+					{% if bug.free2.loc.file_name != "Unknown" %}
+						<td><a href="{{bug.free2.loc.getLink(cur_kernel_report.version)}}">{{bug.free2.loc.file_name}}</a></td> 
+					{% else %}
+						<td>{{bug.free2.loc.file_name}}</td> 
+					{% endif %}
+				</tr> 
+				<tr> 
+					<th scope="row">Line</th> 
+					<td>{{bug.dangling_ptr.loc.line}}</td> 
+					<td>{{bug.free1.loc.line}}</td> 
+					<td>{{bug.free2.loc.line}}</td> 
+				</tr> 
+			</tbody>
+		</table>
+
+		<div class="row">
+			<div class="col-md-4">
+				<h4>Driver to Variable</h4>
+				<div style="height:350px;border:1px solid #ccc;font:16px/26px Georgia, Garamond, Serif;overflow:auto; white-space:nowrap;">
+					{% for f in bug.api_path %}
+					{{f|safe}} <br>
+					{% endfor %}
+				</div>
+			</div>
+			<div class="col-md-4">
+				<h4>Path to first Free </h4>
+				<div style="height:350px;border:1px solid #ccc;font:16px/26px Georgia, Garamond, Serif;overflow:auto; white-space:nowrap;">
+					{% for f in bug.free_path1%}
+					{{f|safe}} <br>
+					{% endfor %}
+				</div>
+			</div>
+			<div class="col-md-4">
+				<h4>Path to second Free</h4>
+				<div style="height:350px;border:1px solid #ccc;font:16px/26px Georgia, Garamond, Serif;overflow:auto; white-space:nowrap;">
+					{% for f in bug.free_path2%}
+					{{f|safe}} <br>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+
+
+	<h3>Memory Leak</h3>
+	<div class="row">
+		<div class="col-md-4">{{cur_report.leak_checker_report.get_num_bugs()}} Bugs found</div>
+		<div class="col-md-3">took {{cur_report.leak_checker_report.duration}} sec</div>
+		<div class="col-md-4">{{cur_report.leak_checker_report.num_analyzed_var}} Variables analyzed</div>
+		<div class="col-md-1"> 
+			<button type="button" class="btn btn-default btn-sm" data-toggle="collapse" href="#collapse_leak"> 
+				<span class="glyphicon glyphicon-chevron-down"></span>
+			</button> 
+		</div>
+	</div>
+	<hr class="half-rule"/>
+	
+	<!-- Memory-Leak bugs -->
+	<div id="collapse_leak" class="collapse">
+		{% for bug in cur_report.leak_checker_report.bugs%}
+		<table class="table table-hover">
+			<thead> <tr> <th><h4>{{loop.index}}. Memory-Corruption Vulnerability ({{bug.ID}}):</h4></th> <th>Leaking Pointer</th> </tr> </thead>
+			<tbody> 
+				<tr> 
+					<th scope="row">Leak Type</th> 
+					{% if bug.never_free == True %}
+						<td>Never Free</td> 
+					{% else %}
+						<td>Partial Leak</td> 
+					{% endif %}
+				</tr> 
+				<tr> 
+					<th scope="row">Variable Name</th> 
+					<td>{{bug.leak_ptr.name}}</td> 
+				</tr> 
+				<tr> 
+					<th scope="row">Function</th> 
+					<td>{{bug.leak_ptr.loc.function_name}}</td> 
+				</tr> 
+				<tr> 
+					<th scope="row">File</th> 
+					{% if bug.leak_ptr.loc.file_name != "Unknown" %}
+						<td><a href="{{bug.leak_ptr.loc.getLink(cur_kernel_report.version)}}">{{bug.leak_ptr.loc.file_name}}</a></td> 
+					{% else %}
+						<td>{{bug.leak_ptr.loc.file_name}}</td>
+					{% endif %}
+				</tr> 
+				<tr> 
+					<th scope="row">Line</th> 
+					<td>{{bug.leak_ptr.loc.line}}</td> 
+				</tr> 
+			</tbody>
+		</table>
+		{% endfor %}
+	</div>
+
+
+	<h3>Double Lock</h3>
+	<div class="row" data-toggle="collapse" href="#collapse_dlock">
+		<div class="col-md-4">{{cur_report.dlock_checker_report.get_num_bugs()}} Bugs found</div>
+		<div class="col-md-3">took {{cur_report.dlock_checker_report.duration}} sec</div>
+		<div class="col-md-4">{{cur_report.dlock_checker_report.num_analyzed_var}} Variables analyzed</div>
+		<div class="col-md-1"> 
+			<button type="button" class="btn btn-default btn-sm"> 
+				<span class="glyphicon glyphicon-chevron-down"></span>
+			</button> 
+		</div>
+	</div>
+	<hr class="half-rule"/>
+	
+	<!-- Double-Lock memory bugs -->
+	<div id="collapse_dlock" class="collapse">
+		{% for bug in cur_report.dlock_checker_report.bugs%}
+		<table class="table table-hover">
+			<thead> <tr> <th><h4>{{loop.index}}. Memory-Corruption Vulnerablility ({{bug.ID}}):</h4></th> <th>Lock Object</th> <th>First Lock</th> <th>Second Lock</th> </tr> </thead>
+			<tbody> 
+				<tr> 
+					<th scope="row">Variable Name</th> 
+					<td>{{bug.lock_var.name}}</td> 
+					<td>{{bug.lock1.name}}</td> 
+					<td>{{bug.lock2.name}}</td> 
+				</tr> 
+				<tr> 
+					<th scope="row">Function</th> 
+					<td>{{bug.lock_var.loc.function_name}}</td> 
+					<td>{{bug.lock1.loc.function_name}}</td>
+					<td>{{bug.lock2.loc.function_name}}</td>
+				</tr> 
+				<tr> 
+					<th scope="row">File</th> 
+					{% if bug.lock_var.loc.file_name != "Unknown" %}
+						<td><a href="{{bug.lock_var.loc.getLink(cur_kernel_report.version)}}">{{bug.lock_var.loc.file_name}}</a></td>
+					{% else %}
+						<td>{{bug.lock_var.loc.file_name}}</td>
+					{% endif %}
+
+					{% if bug.lock1.loc.file_name != "Unknown" %}
+						<td><a href="{{bug.lock1.loc.getLink(cur_kernel_report.version)}}">{{bug.lock1.loc.file_name}}</a></td> 
+					{% else %}
+						<td>{{bug.lock1.loc.file_name}}</td> 
+					{% endif %}
+
+					{% if bug.lock2.loc.file_name != "Unknown" %}
+						<td><a href="{{bug.lock2.loc.getLink(cur_kernel_report.version)}}">{{bug.lock2.loc.file_name}}</a></td> 
+					{% else %}
+						<td>{{bug.lock2.loc.file_name}}</td> 
+					{% endif %}
+				</tr> 
+				<tr> 
+					<th scope="row">Line</th> 
+					<td>{{bug.lock_var.loc.line}}</td> 
+					<td>{{bug.lock1.loc.line}}</td> 
+					<td>{{bug.lock2.loc.line}}</td> 
+				</tr> 
+			</tbody>
+		</table>
+
+		<div class="row">
+			<div class="col-md-4">
+				<h4>Lock Object</h4>
+				<div style="height:350px;border:1px solid #ccc;font:16px/26px Georgia, Garamond, Serif;overflow:auto; white-space:nowrap;">
+					{% for f in bug.api_path %}
+					{{f|safe}} <br>
+					{% endfor %}
+				</div>
+			</div>
+			<div class="col-md-4">
+				<h4>Path to first Lock</h4>
+				<div style="height:350px;border:1px solid #ccc;font:16px/26px Georgia, Garamond, Serif;overflow:auto; white-space:nowrap;">
+					{% for f in bug.lock_path1%}
+					{{f|safe}} <br>
+					{% endfor %}
+				</div>
+			</div>
+			<div class="col-md-4">
+				<h4>Path to second Lock</h4>
+				<div style="height:350px;border:1px solid #ccc;font:16px/26px Georgia, Garamond, Serif;overflow:auto; white-space:nowrap;">
+					{% for f in bug.lock_path2%}
+					{{f|safe}} <br>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+
+
+	<h2 class="page-header">Partitioner</h2>
+	<table class="table table-hover">
+		<thead> <tr> <th><h3>Kernel Reduction</h3></th> <th>Relevant</th> <th>Original</th> </tr> </thead>
+		<tbody> 
+			<tr> 
+				<th scope="row">Functions</th> 
+				<td>{{cur_report.partitioner_stat.numKRFuncs}}</td> 
+				<td>{{cur_report.partitioner_stat.numKOFuncs}}</td> 
+			</tr> 
+			<tr> 
+				<th scope="row">Global Variables</th> 
+				<td>{{cur_report.partitioner_stat.numKRGVs}}</td> 
+				<td>{{cur_report.partitioner_stat.numKOGVs}}</td> 
+			</tr> 
+		</tbody>
+	</table>
+	<hr class="half-rule"/>
+
+	<button type="button" class="btn btn-default btn-sm" data-toggle="collapse" href="#kernel_graph">
+		<span class="glyphicon glyphicon-chevron-down"></span> Show Graph  
+	</button> 
+
+	<!-- Draw kernel reduction graph -->
+	<div id="kernel_graph" class="collapse">
+		<embed type="image/svg+xml" src={{graph_data|safe}} style="max-width=1000px" />
+	</div>
+
+	<hr class="half-rule"/>
+	<table class="table table-hover">
+		<thead> <tr> <th><h3>Driver Reduction</h3></th> <th>Relevant</th> <th>Limit</th></tr> </thead>
+		<tbody> 
+			<tr> 
+				<th scope="row">Functions</th> 
+				<td>{{cur_report.partitioner_stat.numARFuncs}}</td> 
+				<td>{{cur_report.partitioner_stat.api_func_limit}}</td> 
+			</tr> 
+			<tr> 
+				<th scope="row">Global Variables</th> 
+				<td>{{cur_report.partitioner_stat.numARGVs}}</td> 
+			</tr> 
+			<tr> 
+				<th scope="row">CallGraph Depth</th> 
+				<td>{{cur_report.partitioner_stat.aRCGDepth}}</td> 
+			</tr> 
+		</tbody>
+	</table>
+
+	<hr class="half-rule"/>
+	<table class="table table-hover">
+		<thead> <tr> <th><h3>Initcall Reduction</h3></th> <th>Relevant</th> <th>Original</th> <th>Limit</th></tr> </thead>
+		<tbody> 
+			<tr> 
+				<th scope="row">Num Initcalls</th> 
+				<td>{{cur_report.partitioner_stat.numIR}}</td> 
+				<td>{{cur_report.partitioner_stat.numIO}}</td> 
+			</tr> 
+			<tr> 
+				<th scope="row">Functions</th> 
+				<td>{{cur_report.partitioner_stat.numIRFuncs}}</td> 
+				<td>{{cur_report.partitioner_stat.numIOFuncs}}</td> 
+				<td>{{cur_report.partitioner_stat.initcall_func_limit}}</td> 
+			</tr> 
+			<tr> 
+				<th scope="row">Global Variables</th> 
+				<td>{{cur_report.partitioner_stat.numIRGVs}}</td> 
+				<td>{{cur_report.partitioner_stat.numIOGVs}}</td> 
+			</tr> 
+			<tr> 
+				<th scope="row">CallGraph Depth</th> 
+				<td>{{cur_report.partitioner_stat.iACGDepth}}</td> 
+				<td>{{cur_report.partitioner_stat.iRCGDepth}}</td> 
+				<td>{{cur_report.partitioner_stat.iOCGDepth}}</td> 
+			</tr> 
+		</tbody>
+	</table>
+
+	<table class="table table-hover">
+		<thead> <tr> <th><h2 class="page-header">System Info</h2></th> <th> </th> </tr> </thead>
+		<tbody> 
+			<tr> 
+				<th scope="row">Kernel</th> 
+				<td>{{cur_report.system_info.kernel_name}}</td> 
+			</tr> 
+			<tr> 
+				<th scope="row">Kernel Release</th> 
+				<td>{{cur_report.system_info.kernel_release}}</td> 
+			</tr> 
+			<tr> 
+				<th scope="row">Kernel Version</th> 
+				<td>{{cur_report.system_info.kernel_version}}</td>
+			</tr> 
+			<tr> 
+				<th scope="row">Processor</th> 
+				<td>{{cur_report.system_info.processor}}</td> 
+			</tr> 
+			<tr> 
+				<th scope="row">Num Cores</th> 
+				<td>{{cur_report.system_info.num_cores}}</td> 
+			</tr> 
+			<tr> 
+				<th scope="row">Num Threads</th> 
+				<td>{{cur_report.num_threads}}</td> 
+			</tr> 
+			<tr> 
+				<th scope="row">MemTotal</th> 
+				<td>{{cur_report.system_info.mem_total}}</td> 
+			</tr> 
+		</tbody>
+	</table>
+
+	<h2 class="page-header">Comments</h2>
+
+	<div class="actionBox">
+		<ul class="commentList">
+			{% for c in cur_report.comments %}
+			<li>
+				<div class="commenterImage">
+					<span class="glyphicon glyphicon-user"></span>
+				</div>
+				<div class="commentText">
+					<p class="">{{c.get_html_printable_text()|safe}}</p> <span class="date sub-text">on {{c.date}}</span>
+				</div>
+			</li>
+			{% endfor %}
+		</ul>
+		<hr class="half-rule"/>
+		<div class="row">
+			<textarea class="form-control" rows="3" id="new_comment" placeholder="Comment ..."></textarea>
+		</div>
+		<div class="row">
+			<div class="col-md-5"></div>
+			<div class="col-md-2" style="top:5px">
+				<button type="submit" class="btn btn-default btn-block" id="comment_btn">Add</button>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock%}
+

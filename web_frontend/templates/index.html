@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>K-Miner</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+		<link href="{{ url_for('static', filename='css/local-theme.css') }}" rel="stylesheet">
+		<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+	</head>
+
+	<body>
+		<nav class="navbar navbar-default">
+			<div class="container" style="max-width:2000px; min-width:65%; min-height:100%">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="/overview/?kernel_version={{cur_kernel_report.version}}">K-Miner</a>
+				</div>
+
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li><a href="/mem_crpt_overview/">MemoryCorruptions<span class="sr-only">(current)</span></a></li>
+						<li><a href="/kernel_schedule/?kernel_version={{cur_kernel_report.version}}">KernelSchedule<span class="sr-only">(current)</span></a></li>
+
+						<!-- kernel version selection -->
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">KernelVersion<span class="caret"></span></a>
+							<ul class="dropdown-menu" id="select_kernel_version">
+								{% for kv in kernel_versions %}
+									<li><a href="#">{{kv}}</a></li>
+								{% endfor %}
+							</ul>
+						</li>
+						<!-- system call selection -->
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Syscalls<span class="caret"></span></a>
+							<ul class="dropdown-menu list-unstyled" id="select_systemcalls">
+								{% for report in cur_kernel_report.get_syscall_reports() %}
+								<li style="display:list-item"><a href="#">{{report.syscall_name}}</a></li>
+								{% endfor %}
+							</ul>
+						</li>
+						<!-- driver selection -->
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Driver<span class="caret"></span></a>
+							<ul class="dropdown-menu list-unstyled" id="select_driver">
+								{% for report in cur_kernel_report.get_driver_reports() %}
+								<li style="display:list-item"><a href="#">{{report.driver_name}}</a></li>
+								{% endfor %}
+							</ul>
+						</li>
+					</ul>
+
+					<form class="navbar-form navbar-left">
+						<button id="prev_btn" type="submit" class="btn btn-default" {% if cur_report is not defined %} disabled="disabled" {% endif %}>
+							<span class="glyphicon glyphicon glyphicon-menu-left"></span>
+						</button>
+						<button id="next_btn" type="submit" class="btn btn-default" {% if cur_report is not defined %} disabled="disabled" {% endif %}>
+							<span class="glyphicon glyphicon glyphicon-menu-right"></span>
+						</button>
+					</form>
+
+					<form class="navbar-form navbar-left" action="/_search/" method="Get">
+						<!-- system call search selection -->
+						<div class="form-group">
+							<input type="hidden" name="kernel_version" value="{{cur_kernel_report.version}}"/>
+							<input type="text" name="search" class="form-control" placeholder="Search ...">
+						</div>
+
+						<button type="submit" class="btn btn-default">Submit</button>
+					</form>
+
+					 <form id="filter" class="navbar-form navbar-left checkbox"> 
+						 <label><input id="leak_only" type="checkbox"> Bugs only</label> 
+					 </form>
+				</div>
+			</div>
+		</nav>
+
+		<!-- Kernel Report this shows either an overview or a detailed view of a specific system call -->
+		{% block body %} {% endblock %}
+
+		<!-- Scripts -->
+		<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script> -->
+		<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.0.0.min.js') }}"></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+		<script type="text/javascript">
+
+			$(document).ready(function(){
+				if(localStorage.getItem("leak_only") == "true" && !$("#leak_only").is(":checked"))
+					$("#leak_only").trigger("click");
+			});
+
+			$("#leak_only").click( function(){
+				$.ajax({
+					url: "/_get_mem_crpt_only/",
+					type: "GET",
+					async: true,
+					cache: false,
+					dataType: "json",
+					content_type: "application/json; charset=utf-8",
+					data: { "leak_only": !$("#leak_only").is(":checked")},
+					success: function(data) {
+						$("#leak_only").prop("checked", !$("#leak_only").is(":checked"));
+
+						$("#select_systemcalls > li").each(function(){
+							var li_syscall_name = $(this).text().toString();	
+							
+							if($("#leak_only").is(":checked")) {
+								// if the system call is not in the list of system calls with at least one leak.
+								if(data.result.indexOf(li_syscall_name) < 0)
+									$(this).hide();
+							} else {
+								$(this).show();
+							}
+						});
+						
+						$("#syscall_overview_table > tbody > tr").each(function(){
+							var th_syscall_name = $(this).find("th").text().toString();	
+							
+							if($("#leak_only").is(":checked")) {
+								// if the system call is not in the list of system calls with at least one leak.
+								if(data.result.indexOf(th_syscall_name) < 0) {
+									$(this).hide();
+								}
+							} else {
+								$(this).show();
+							}
+						});
+
+						localStorage.setItem("leak_only", $("#leak_only").is(":checked"));
+					},
+				});
+
+				return false;
+
+//				kernel_version = "{{cur_kernel_report.version}}";
+//				syscall_name = "{% if cur_report is defined %}{{cur_report.syscall_name}}{% else %}{% endif %}";
+//				window.location = "/{% if cur_report is defined %}report{% else %}overview{% endif %}/?kernel_version=" 
+//					+ kernel_version + "&syscall_name=" + syscall_name + "&leak_only=" + $("#leak_only").prop("checked");
+//				return false;
+			});
+
+
+			// Prev system call report.
+			$("#prev_btn").click( function(){
+				window.location = "/report/_prev/";
+				return false;
+			});
+
+			// Next system call report.
+			$("#next_btn").click( function(){
+				window.location = "/report/_next/";
+				return false;
+			});
+
+			// Kernel version selection.
+			$("#select_kernel_version li a").click(function(){
+				//$(this).parents(".dropdown").find('.dropdown-toggle').html($(this).text() + ' <span class="caret"></span>'); 
+				//$(this).parents(".dropdown").find('.dropdown-toggle').val($(this).data('value'));
+				kernel_version = $(this).text().toString();
+				syscall_name = "{% if cur_report is defined %}{{cur_report.syscall_name}}{% else %}{% endif %}";
+				driver_name = "{% if cur_report is defined %}{{cur_report.driver_name}}{% else %}{% endif %}";
+				//window.location = "/report/_syscall/?kernel_version=" + kernel_version + "&syscall_name=" + syscall_name;
+			  	path = location.href.split("?")[0];
+				if(syscall_name != "")
+					window.location = location.pathname + "?kernel_version=" + kernel_version + "&syscall_name=" + syscall_name;
+				else
+					window.location = location.pathname + "?kernel_version=" + kernel_version + "&driver_name=" + driver_name;
+				return false;
+			});
+
+			// System call selection.
+			$("#select_systemcalls li a").click(function(){
+				kernel_version = "{{cur_kernel_report.version}}";
+				syscall_name = $(this).text().toString();
+				window.location = "/report/_syscall/?kernel_version=" + kernel_version + "&syscall_name=" + syscall_name;
+				return false;
+			});
+
+			// Driver selection.
+			$("#select_driver li a").click(function(){
+				kernel_version = "{{cur_kernel_report.version}}";
+				driver_name = $(this).text().toString();
+				window.location = "/report/_driver/?kernel_version=" + kernel_version + "&driver_name=" + driver_name;
+				return false;
+			});
+
+			// System call selection.
+			$("#select_mem_currupt_option li").click(function(){
+				//$(this).parents(".dropdown").find('.dropdown-toggle').html($(this).text() + ' <span class="caret"></span>'); 
+				//$(this).parents(".dropdown").find('.dropdown-toggle').val($(this).data('value'));
+				status = $(this).attr("id"); //$(this).text().toString();
+				status = status.replace(" ", "");
+
+				kernel_version = $(this).closest("table").attr("id")
+				memory_corruption_id =  $(this).closest("tr").find("td[name=mem_corruption_id]").text().toString();
+
+				if(status == "Positive")
+					$(this).parents(".dropdown").find('.btn').html('<i class="glyphicon glyphicon-ok"></i>');
+				else if(status == "False")
+					$(this).parents(".dropdown").find('.btn').html('<i class="glyphicon glyphicon-remove"></i>');
+				else if(status == "Remove")
+					$(this).parents(".dropdown").find('.btn').html('<i class="glyphicon glyphicon-trash"></i>');
+				else
+					$(this).parents(".dropdown").find('.btn').html('<i class="glyphicon glyphicon-option-horizontal"></i>');
+
+			       	$(this).parents(".dropdown").find('.btn').val($(this).data('value'));
+				$(this).closest(".dropdown-menu").prev().dropdown("toggle");
+				window.location = "/mem_crpt_overview/_update_status/?kernel_version=" + kernel_version + "&memory_corruption_id=" + memory_corruption_id
+							+ "&status=" + status;
+				return false;
+			});
+
+			
+			// System call selection.
+			$("#syscall_overview_table").find("td").click(function(){
+				index = $(this).index();
+				syscall_name = $(this).closest("tr").find("th").text().toString();
+				//kernel_version = $(this).find("thead").rows[index].text().toString();
+				kernel_version = $(this).closest("table").find("thead > tr > th").eq(index).text().toString();
+				window.location = "/report/_syscall/?kernel_version=" + kernel_version + "&syscall_name=" + syscall_name;
+				return false;
+			});
+
+			// Search results.
+			$("#search_result_table").find("td").click(function(){
+				index = $(this).index();
+				syscall_name = $(this).closest("tr").find("th").text().toString();
+				//kernel_version = $(this).find("thead").rows[index].text().toString();
+				kernel_version = $(this).closest("table").find("thead > tr > th").eq(index).text().toString();
+				window.location = "/report/_syscall/?kernel_version=" + kernel_version + "&syscall_name=" + syscall_name;
+				return false;
+			});
+
+			// Memory leak overview.
+			//$("#mem_crpt_overview_table").find("td").click(function(){
+//			$("table[name='mem_crpt_overview_table']").find("td").click(function(){
+//				index = $(this).index();
+//
+//				if(index != 5)
+//					return false;
+//
+//				kernel_version = $(this).closest("table").attr("id")
+//				memory_corruption_id =  $(this).closest("tr").find("td[name=mem_corruption_id]").text().toString();
+//				//type = $(this).closest("tr").find("td[name=type]").text().toString();
+//				//func_name = $(this).closest("tr").find("td[name=func_name]").text().toString();
+//				//file_name = $(this).closest("tr").find("td[name=file_name]").text().toString();
+//				//line = $(this).closest("tr").find("td[name=line]").text().toString();
+//				checked = $(this).closest("tr").find("td[name=checked] > span");
+//				//alert("CHECK: " + type + " " + func_name + " " + file_name + " " + line);
+//				//window.location = "/mem_crpt_overview/_check/";
+//				$.get("/mem_crpt_overview/_check/", {"kernel_version":kernel_version, "memory_corruption_id":memory_corruption_id}, function(data) {
+//				      	if(data.result)
+//						checked.hide();
+//					else
+//						checked.show();
+//					});
+//				return false;
+//			});
+//
+			// If a comment is added. It will be send to the server and the page should reload.
+			$("#comment_btn").click(function() {
+				new_comment = $("#new_comment").val();	
+				$("#new_comment").val("");	
+				$.post("/report/_add_comment/", {"new_comment": new_comment});
+				api_name = $(this).closest("tr").find("th").text().toString();
+				kernel_version = $(this).closest("table").find("thead > tr > th").eq(index).text().toString();
+				if(api_name != "")
+					window.location = "/report/_syscall/?kernel_version=" + kernel_version + "&syscall_name=" + api_name;
+				else
+					window.location = "/report/_driver/?kernel_version=" + kernel_version + "&driver_name=" + api_name;
+				return false;
+
+			});
+		</script>
+	</body>
+</html>
+

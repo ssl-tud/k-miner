@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>K-Miner</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+		<link href="{{ url_for('static', filename='css/local-theme.css') }}" rel="stylesheet">
+		<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+	</head>
+
+	<body>
+		<div class="container" style="max-width:1500px; min-height:100%">
+			{% block body %} {% endblock %}
+		</div>
+	</body>
+</html>
+

@@ -1,0 +1,44 @@
+Warning: No Function "drm_gem_dmabuf_kmap_atomic" found!
+Warning: No Function "drm_gem_dmabuf_kunmap_atomic" found!
+Warning: No Function "drm_prime_pages_to_sg" found!
+Warning: No Function "drm_prime_sg_to_page_addr_arrays" found!
+[1;33m	 Double-Lock:[1;0m at : (drivers/gpu/drm/drm_prime.c drm_gem_prime_fd_to_handle ln:564)
+[1;33m	 Double-Lock:[1;0m at : (drivers/gpu/drm/drm_prime.c drm_gem_prime_fd_to_handle ln:565)
+Warning: No Function "drm_gem_dmabuf_kmap_atomic" found!
+Warning: No Function "drm_gem_dmabuf_kunmap_atomic" found!
+Warning: No Function "drm_prime_pages_to_sg" found!
+Warning: No Function "drm_prime_sg_to_page_addr_arrays" found!
+[1;33m	 Double-Lock:[1;0m at : (drivers/gpu/drm/drm_prime.c drm_gem_prime_fd_to_handle ln:564)
+[1;33m	 Double-Lock:[1;0m at : (drivers/gpu/drm/drm_prime.c drm_gem_prime_fd_to_handle ln:565)
+Warning: No Function "drm_gem_dmabuf_kmap_atomic" found!
+Warning: No Function "drm_gem_dmabuf_kunmap_atomic" found!
+Warning: No Function "drm_prime_pages_to_sg" found!
+Warning: No Function "drm_prime_sg_to_page_addr_arrays" found!
+Warning: No Function "drm_gem_dmabuf_kmap_atomic" found!
+Warning: No Function "drm_gem_dmabuf_kunmap_atomic" found!
+Warning: No Function "drm_prime_pages_to_sg" found!
+Warning: No Function "drm_prime_sg_to_page_addr_arrays" found!
+[1;33m	 Double-Lock:[1;0m at : (drivers/gpu/drm/drm_prime.c drm_gem_prime_fd_to_handle ln:564)
+[1;33m	 Double-Lock:[1;0m at : (drivers/gpu/drm/drm_prime.c drm_gem_prime_fd_to_handle ln:565)
+Warning: No Function "drm_gem_dmabuf_kmap_atomic" found!
+Warning: No Function "drm_gem_dmabuf_kunmap_atomic" found!
+Warning: No Function "drm_prime_pages_to_sg" found!
+Warning: No Function "drm_prime_sg_to_page_addr_arrays" found!
+[1;33m	 Double-Lock:[1;0m at : (drivers/gpu/drm/drm_prime.c drm_gem_prime_fd_to_handle ln:564)
+[1;33m	 Double-Lock:[1;0m at : (drivers/gpu/drm/drm_prime.c drm_gem_prime_fd_to_handle ln:565)
+kminer: Unknown command line argument '-cg-blacklist=blist.txt'.  Try: 'kminer -help'
+kminer: Did you mean '-dfsan-abilist=blist.txt'?
+kminer: Unknown command line argument '-pre-analysis-results=initcall_contexts.txt'.  Try: 'kminer -help'
+kminer: Did you mean '-pass-remarks=initcall_contexts.txt'?
+kminer: Too many positional arguments specified!
+Can specify at most 1 positional arguments: See: kminer -help
+kminer: Unknown command line argument '-inicall-contexts=initcall_contexts.txt'.  Try: 'kminer -help'
+kminer: Did you mean '-initcall-contexts=initcall_contexts.txt'?
+kminer: Too many positional arguments specified!
+Can specify at most 1 positional arguments: See: kminer -help
+kminer: Unknown command line argument '-inicall-contexts=initcall_contexts.txt'.  Try: 'kminer -help'
+kminer: Did you mean '-initcall-contexts=initcall_contexts.txt'?
+kminer: Too many positional arguments specified!
+Can specify at most 1 positional arguments: See: kminer -help
+kminer: Too many positional arguments specified!
+Can specify at most 1 positional arguments: See: kminer -help

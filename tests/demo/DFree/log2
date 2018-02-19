@@ -1,0 +1,5873 @@
+Analyze Func = sg_start_req ln: 1687 fl: drivers/scsi/sg.c
+forward...
+backward 5 free sinksFound 4795 sg_start_req
+Found 4795 sg_start_req
+.Path= blk_put_request
+(22178)
+
+Path= blk_put_request
+(29926)
+(22178)
+
+Path= blk_put_request
+(48306)
+(29926)
+(22178)
+
+Path= blk_put_request
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_finish_rem_req
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_finish_rem_req
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_finish_rem_req
+---> sg_finish_rem_req
+(47759)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_new_read
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_new_read
+---> sg_new_read
+(47837)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_new_read
+---> sg_new_read
+(47838)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_new_read
+---> sg_new_read
+(47841)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_common_write
+<--- sg_common_write
+(31342)
+---> sg_finish_rem_req
+(47759)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_ioctl
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_start_req
+(26615)
+<--- sg_common_write
+(31342)
+---> sg_finish_rem_req
+(47759)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_new_write
+<--- sg_new_write
+(31282)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_new_write
+<--- sg_new_write
+(31283)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_new_write
+<--- sg_new_write
+(47758)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_new_write
+<--- sg_new_write
+(47759)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_new_write
+<--- sg_new_write
+(47760)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_new_write
+<--- sg_new_write
+(47762)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_start_req
+(21046)
+(26615)
+<--- sg_common_write
+(31342)
+---> sg_finish_rem_req
+(47759)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_common_write
+<--- sg_common_write
+(47896)
+<--- sg_new_write
+(31282)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_common_write
+(31804)
+<--- sg_new_write
+(31283)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_common_write
+<--- sg_common_write
+(31338)
+<--- sg_new_write
+(47758)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_common_write
+<--- sg_common_write
+(31342)
+<--- sg_new_write
+(47759)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_common_write
+<--- sg_common_write
+(31343)
+<--- sg_new_write
+(47760)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_common_write
+<--- sg_common_write
+(31336)
+<--- sg_new_write
+(47762)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_common_write
+<--- sg_common_write
+(31337)
+<--- sg_new_write
+(47762)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_common_write
+<--- sg_common_write
+(31340)
+<--- sg_new_write
+(47762)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_start_req
+(26611)
+(21046)
+(26615)
+<--- sg_common_write
+(31342)
+---> sg_finish_rem_req
+(47759)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= blk_end_request_all
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+<--- sg_new_write
+(31282)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_start_req
+(26612)
+<--- sg_common_write
+(31338)
+<--- sg_new_write
+(47758)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_start_req
+(26615)
+<--- sg_common_write
+(31342)
+<--- sg_new_write
+(47759)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_start_req
+(26620)
+<--- sg_common_write
+(31343)
+<--- sg_new_write
+(47760)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_start_req
+(26617)
+<--- sg_common_write
+(31336)
+<--- sg_new_write
+(47762)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_start_req
+(26616)
+<--- sg_common_write
+(31337)
+<--- sg_new_write
+(47762)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_start_req
+(30039)
+<--- sg_common_write
+(31340)
+<--- sg_new_write
+(47762)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Found 4795 sg_start_req
+Path= sg_start_req
+(4795)
+(26611)
+(21046)
+(26615)
+<--- sg_common_write
+(31342)
+---> sg_finish_rem_req
+(47759)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= blk_end_bidi_request
+<--- blk_end_bidi_request
+(31645)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+<--- sg_new_write
+(31282)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= blk_end_bidi_request
+<--- blk_end_bidi_request
+(47788)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+<--- sg_new_write
+(31282)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_start_req
+(15439)
+(26612)
+<--- sg_common_write
+(31338)
+<--- sg_new_write
+(47758)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_start_req
+(21046)
+(26615)
+<--- sg_common_write
+(31342)
+<--- sg_new_write
+(47759)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_start_req
+(21123)
+(26620)
+<--- sg_common_write
+(31343)
+<--- sg_new_write
+(47760)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_start_req
+(15450)
+(26617)
+<--- sg_common_write
+(31336)
+<--- sg_new_write
+(47762)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_start_req
+(15447)
+(26616)
+<--- sg_common_write
+(31337)
+<--- sg_new_write
+(47762)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_start_req
+(15442)
+(30039)
+<--- sg_common_write
+(31340)
+<--- sg_new_write
+(47762)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= blk_update_bidi_request
+(47787)
+<--- blk_end_bidi_request
+(31645)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+<--- sg_new_write
+(31282)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_start_req
+(21043)
+(15439)
+(26612)
+<--- sg_common_write
+(31338)
+<--- sg_new_write
+(47758)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_start_req
+(26611)
+(21046)
+(26615)
+<--- sg_common_write
+(31342)
+<--- sg_new_write
+(47759)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_start_req
+(15476)
+(21123)
+(26620)
+<--- sg_common_write
+(31343)
+<--- sg_new_write
+(47760)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_start_req
+<--- sg_start_req
+(22524)
+(21123)
+(26620)
+<--- sg_common_write
+(31343)
+<--- sg_new_write
+(47760)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_start_req
+(21048)
+(15450)
+(26617)
+<--- sg_common_write
+(31336)
+<--- sg_new_write
+(47762)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_start_req
+(21047)
+(15447)
+(26616)
+<--- sg_common_write
+(31337)
+<--- sg_new_write
+(47762)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= Unknown
+(21114)
+(15442)
+(30039)
+<--- sg_common_write
+(31340)
+<--- sg_new_write
+(47762)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Found 4795 sg_start_req
+Path= sg_start_req
+(4795)
+(26611)
+(21046)
+(26615)
+<--- sg_common_write
+(31342)
+<--- sg_new_write
+(47759)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_start_req
+(21052)
+(15476)
+(21123)
+(26620)
+<--- sg_common_write
+(31343)
+<--- sg_new_write
+(47760)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= blk_rq_set_block_pc
+(19272)
+<--- sg_start_req
+(22524)
+(21123)
+(26620)
+<--- sg_common_write
+(31343)
+<--- sg_new_write
+(47760)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_start_req
+(15441)
+(21114)
+(15442)
+(30039)
+<--- sg_common_write
+(31340)
+<--- sg_new_write
+(47762)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= blk_rq_set_block_pc
+(22175)
+(19272)
+<--- sg_start_req
+(22524)
+(21123)
+(26620)
+<--- sg_common_write
+(31343)
+<--- sg_new_write
+(47760)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= sg_start_req
+(21044)
+(15441)
+(21114)
+(15442)
+(30039)
+<--- sg_common_write
+(31340)
+<--- sg_new_write
+(47762)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= blk_rq_set_block_pc
+(29925)
+(22175)
+(19272)
+<--- sg_start_req
+(22524)
+(21123)
+(26620)
+<--- sg_common_write
+(31343)
+<--- sg_new_write
+(47760)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= blk_rq_set_block_pc
+(48408)
+(29925)
+(22175)
+(19272)
+<--- sg_start_req
+(22524)
+(21123)
+(26620)
+<--- sg_common_write
+(31343)
+<--- sg_new_write
+(47760)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Path= blk_rq_set_block_pc
+===> blk_rq_set_block_pc
+(21042)
+(48408)
+(29925)
+(22175)
+(19272)
+<--- sg_start_req
+(22524)
+(21123)
+(26620)
+<--- sg_common_write
+(31343)
+<--- sg_new_write
+(47760)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+.Path= __blk_put_request
+(22130)
+
+Path= __blk_put_request
+(29917)
+(22130)
+
+Path= __blk_put_request
+(48148)
+(29917)
+(22130)
+
+Path= __blk_put_request
+===> __blk_put_request
+(22079)
+(48148)
+(29917)
+(22130)
+
+Path= __blk_put_request
+===> __blk_put_request
+(22071)
+(48148)
+(29917)
+(22130)
+
+Path= __blk_put_request
+===> __blk_put_request
+(22179)
+(48148)
+(29917)
+(22130)
+
+Path= blk_finish_request
+(19210)
+===> __blk_put_request
+(22079)
+(48148)
+(29917)
+(22130)
+
+Path= blk_finish_request
+(37678)
+===> __blk_put_request
+(22079)
+(48148)
+(29917)
+(22130)
+
+Path= blk_finish_request
+(29901)
+===> __blk_put_request
+(22071)
+(48148)
+(29917)
+(22130)
+
+Path= blk_put_request
+(29926)
+===> __blk_put_request
+(22179)
+(48148)
+(29917)
+(22130)
+
+Path= blk_finish_request
+(22069)
+(19210)
+===> __blk_put_request
+(22079)
+(48148)
+(29917)
+(22130)
+
+Path= blk_finish_request
+---> blk_finish_request
+(37751)
+(37678)
+===> __blk_put_request
+(22079)
+(48148)
+(29917)
+(22130)
+
+Path= blk_finish_request
+(48299)
+(29901)
+===> __blk_put_request
+(22071)
+(48148)
+(29917)
+(22130)
+
+Path= blk_end_bidi_request
+---> blk_end_bidi_request
+(36425)
+---> blk_finish_request
+(37751)
+(37678)
+===> __blk_put_request
+(22079)
+(48148)
+(29917)
+(22130)
+
+Path= blk_finish_request
+===> blk_finish_request
+(22226)
+(48299)
+(29901)
+===> __blk_put_request
+(22071)
+(48148)
+(29917)
+(22130)
+
+Path= blk_end_request_all
+---> blk_end_request_all
+(47758)
+---> blk_end_bidi_request
+(36425)
+---> blk_finish_request
+(37751)
+(37678)
+===> __blk_put_request
+(22079)
+(48148)
+(29917)
+(22130)
+
+Path= blk_end_bidi_request
+(29942)
+===> blk_finish_request
+(22226)
+(48299)
+(29901)
+===> __blk_put_request
+(22071)
+(48148)
+(29917)
+(22130)
+
+Path= sg_common_write
+<--- sg_common_write
+(31338)
+---> blk_end_request_all
+(47758)
+---> blk_end_bidi_request
+(36425)
+---> blk_finish_request
+(37751)
+(37678)
+===> __blk_put_request
+(22079)
+(48148)
+(29917)
+(22130)
+
+Path= blk_end_bidi_request
+(48329)
+(29942)
+===> blk_finish_request
+(22226)
+(48299)
+(29901)
+===> __blk_put_request
+(22071)
+(48148)
+(29917)
+(22130)
+
+Path= sg_start_req
+(26612)
+<--- sg_common_write
+(31338)
+---> blk_end_request_all
+(47758)
+---> blk_end_bidi_request
+(36425)
+---> blk_finish_request
+(37751)
+(37678)
+===> __blk_put_request
+(22079)
+(48148)
+(29917)
+(22130)
+
+Path= blk_end_bidi_request
+===> blk_end_bidi_request
+(22234)
+(48329)
+(29942)
+===> blk_finish_request
+(22226)
+(48299)
+(29901)
+===> __blk_put_request
+(22071)
+(48148)
+(29917)
+(22130)
+
+Path= sg_start_req
+(15439)
+(26612)
+<--- sg_common_write
+(31338)
+---> blk_end_request_all
+(47758)
+---> blk_end_bidi_request
+(36425)
+---> blk_finish_request
+(37751)
+(37678)
+===> __blk_put_request
+(22079)
+(48148)
+(29917)
+(22130)
+
+Path= blk_end_request_all
+(29944)
+===> blk_end_bidi_request
+(22234)
+(48329)
+(29942)
+===> blk_finish_request
+(22226)
+(48299)
+(29901)
+===> __blk_put_request
+(22071)
+(48148)
+(29917)
+(22130)
+
+Path= sg_start_req
+(21043)
+(15439)
+(26612)
+<--- sg_common_write
+(31338)
+---> blk_end_request_all
+(47758)
+---> blk_end_bidi_request
+(36425)
+---> blk_finish_request
+(37751)
+(37678)
+===> __blk_put_request
+(22079)
+(48148)
+(29917)
+(22130)
+
+Path= blk_end_request_all
+(48232)
+(29944)
+===> blk_end_bidi_request
+(22234)
+(48329)
+(29942)
+===> blk_finish_request
+(22226)
+(48299)
+(29901)
+===> __blk_put_request
+(22071)
+(48148)
+(29917)
+(22130)
+
+Path= sg_start_req
+(26611)
+(21043)
+(15439)
+(26612)
+<--- sg_common_write
+(31338)
+---> blk_end_request_all
+(47758)
+---> blk_end_bidi_request
+(36425)
+---> blk_finish_request
+(37751)
+(37678)
+===> __blk_put_request
+(22079)
+(48148)
+(29917)
+(22130)
+
+Path= blk_end_request_all
+===> blk_end_request_all
+(21025)
+(48232)
+(29944)
+===> blk_end_bidi_request
+(22234)
+(48329)
+(29942)
+===> blk_finish_request
+(22226)
+(48299)
+(29901)
+===> __blk_put_request
+(22071)
+(48148)
+(29917)
+(22130)
+
+Path= sg_common_write
+(47759)
+===> blk_end_request_all
+(21025)
+(48232)
+(29944)
+===> blk_end_bidi_request
+(22234)
+(48329)
+(29942)
+===> blk_finish_request
+(22226)
+(48299)
+(29901)
+===> __blk_put_request
+(22071)
+(48148)
+(29917)
+(22130)
+
+..Path= __blk_put_request
+(22141)
+
+Path= __blk_put_request
+(29918)
+(22141)
+
+Path= __blk_put_request
+(47996)
+(29918)
+(22141)
+
+Path= __blk_put_request
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_rq_rl
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_rq_rl
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_rq_rl
+(19256)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_rq_rl
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_rq_rl
+(22154)
+(19256)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_rq_rl
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_rq_rl
+(29920)
+(22154)
+(19256)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= __blk_put_request
+---> __blk_put_request
+(37679)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= __blk_put_request
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= __blk_put_request
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_rq_rl
+(48251)
+(29920)
+(22154)
+(19256)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_finish_request
+---> blk_finish_request
+(37749)
+---> __blk_put_request
+(37679)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_finish_request
+---> blk_finish_request
+(37753)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_finish_request
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_put_request
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_rq_rl
+===> blk_rq_rl
+(22136)
+(48251)
+(29920)
+(22154)
+(19256)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_end_bidi_request
+---> blk_end_bidi_request
+(36425)
+---> blk_finish_request
+(37749)
+---> __blk_put_request
+(37679)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_end_bidi_request
+<--- blk_end_bidi_request
+(31645)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_end_bidi_request
+<--- blk_end_bidi_request
+(47788)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= sg_finish_rem_req
+---> sg_finish_rem_req
+(38178)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= sg_finish_rem_req
+---> sg_finish_rem_req
+(47758)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= sg_finish_rem_req
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= __blk_put_request
+(29917)
+===> blk_rq_rl
+(22136)
+(48251)
+(29920)
+(22154)
+(19256)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_bidi_request
+(47787)
+<--- blk_end_bidi_request
+(31645)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_bidi_request
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_bidi_request
+<--- blk_update_bidi_request
+(31594)
+<--- blk_end_bidi_request
+(47788)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= sg_new_read
+---> sg_new_read
+(47837)
+---> sg_finish_rem_req
+(38178)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= sg_new_read
+---> sg_new_read
+(47838)
+---> sg_finish_rem_req
+(38178)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= sg_new_read
+---> sg_new_read
+(47841)
+---> sg_finish_rem_req
+(38178)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= sg_common_write
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_bidi_request
+<--- blk_update_bidi_request
+(31593)
+(47787)
+<--- blk_end_bidi_request
+(31645)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(31653)
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(38645)
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(31654)
+<--- blk_update_bidi_request
+(31594)
+<--- blk_end_bidi_request
+(47788)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= sg_ioctl
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47837)
+---> sg_finish_rem_req
+(38178)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_end_request_all
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(31653)
+<--- blk_update_bidi_request
+(31593)
+(47787)
+<--- blk_end_bidi_request
+(31645)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(38645)
+<--- blk_update_bidi_request
+(31593)
+(47787)
+<--- blk_end_bidi_request
+(31645)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(31840)
+(31653)
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(31841)
+(31654)
+<--- blk_update_bidi_request
+(31594)
+<--- blk_end_bidi_request
+(47788)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= sg_new_write
+<--- sg_new_write
+(31282)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47837)
+---> sg_finish_rem_req
+(38178)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= sg_new_write
+<--- sg_new_write
+(31283)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47837)
+---> sg_finish_rem_req
+(38178)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= sg_new_write
+<--- sg_new_write
+(47758)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47837)
+---> sg_finish_rem_req
+(38178)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= sg_new_write
+<--- sg_new_write
+(47760)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47837)
+---> sg_finish_rem_req
+(38178)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= sg_new_write
+<--- sg_new_write
+(47762)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47837)
+---> sg_finish_rem_req
+(38178)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_end_bidi_request
+<--- blk_end_bidi_request
+(31645)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_end_bidi_request
+<--- blk_end_bidi_request
+(47788)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(31840)
+(31653)
+<--- blk_update_bidi_request
+(31593)
+(47787)
+<--- blk_end_bidi_request
+(31645)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(29882)
+(31840)
+(31653)
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(29882)
+(31841)
+(31654)
+<--- blk_update_bidi_request
+(31594)
+<--- blk_end_bidi_request
+(47788)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= sg_common_write
+<--- sg_common_write
+(47896)
+<--- sg_new_write
+(31282)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47837)
+---> sg_finish_rem_req
+(38178)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= sg_common_write
+(31804)
+<--- sg_new_write
+(31283)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47837)
+---> sg_finish_rem_req
+(38178)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= sg_common_write
+<--- sg_common_write
+(31343)
+<--- sg_new_write
+(47760)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47837)
+---> sg_finish_rem_req
+(38178)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= sg_common_write
+<--- sg_common_write
+(31336)
+<--- sg_new_write
+(47762)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47837)
+---> sg_finish_rem_req
+(38178)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= sg_common_write
+<--- sg_common_write
+(31337)
+<--- sg_new_write
+(47762)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47837)
+---> sg_finish_rem_req
+(38178)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= sg_common_write
+<--- sg_common_write
+(31340)
+<--- sg_new_write
+(47762)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47837)
+---> sg_finish_rem_req
+(38178)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_bidi_request
+(47787)
+<--- blk_end_bidi_request
+(31645)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_bidi_request
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_bidi_request
+<--- blk_update_bidi_request
+(31594)
+<--- blk_end_bidi_request
+(47788)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(19164)
+(29882)
+(31840)
+(31653)
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(22010)
+(29882)
+(31840)
+(31653)
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(31841)
+(29882)
+(31840)
+(31653)
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(19164)
+(29882)
+(31841)
+(31654)
+<--- blk_update_bidi_request
+(31594)
+<--- blk_end_bidi_request
+(47788)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(22010)
+(29882)
+(31841)
+(31654)
+<--- blk_update_bidi_request
+(31594)
+<--- blk_end_bidi_request
+(47788)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_end_request_all
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+<--- sg_new_write
+(31282)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47837)
+---> sg_finish_rem_req
+(38178)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= sg_start_req
+(26620)
+<--- sg_common_write
+(31343)
+<--- sg_new_write
+(47760)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47837)
+---> sg_finish_rem_req
+(38178)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= sg_start_req
+(26617)
+<--- sg_common_write
+(31336)
+<--- sg_new_write
+(47762)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47837)
+---> sg_finish_rem_req
+(38178)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= sg_start_req
+(26616)
+<--- sg_common_write
+(31337)
+<--- sg_new_write
+(47762)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47837)
+---> sg_finish_rem_req
+(38178)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= sg_start_req
+(30039)
+<--- sg_common_write
+(31340)
+<--- sg_new_write
+(47762)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47837)
+---> sg_finish_rem_req
+(38178)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_bidi_request
+<--- blk_update_bidi_request
+(31593)
+(47787)
+<--- blk_end_bidi_request
+(31645)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(31653)
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(38645)
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(31654)
+<--- blk_update_bidi_request
+(31594)
+<--- blk_end_bidi_request
+(47788)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(21982)
+(19164)
+(29882)
+(31840)
+(31653)
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(19163)
+(22010)
+(29882)
+(31840)
+(31653)
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(21982)
+(19164)
+(29882)
+(31841)
+(31654)
+<--- blk_update_bidi_request
+(31594)
+<--- blk_end_bidi_request
+(47788)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(19163)
+(22010)
+(29882)
+(31841)
+(31654)
+<--- blk_update_bidi_request
+(31594)
+<--- blk_end_bidi_request
+(47788)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_end_bidi_request
+<--- blk_end_bidi_request
+(31645)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+<--- sg_new_write
+(31282)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47837)
+---> sg_finish_rem_req
+(38178)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_end_bidi_request
+<--- blk_end_bidi_request
+(47788)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+<--- sg_new_write
+(31282)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47837)
+---> sg_finish_rem_req
+(38178)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= sg_start_req
+(21123)
+(26620)
+<--- sg_common_write
+(31343)
+<--- sg_new_write
+(47760)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47837)
+---> sg_finish_rem_req
+(38178)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= sg_start_req
+(15450)
+(26617)
+<--- sg_common_write
+(31336)
+<--- sg_new_write
+(47762)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47837)
+---> sg_finish_rem_req
+(38178)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= sg_start_req
+(15447)
+(26616)
+<--- sg_common_write
+(31337)
+<--- sg_new_write
+(47762)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47837)
+---> sg_finish_rem_req
+(38178)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= sg_start_req
+(15442)
+(30039)
+<--- sg_common_write
+(31340)
+<--- sg_new_write
+(47762)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47837)
+---> sg_finish_rem_req
+(38178)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(31653)
+<--- blk_update_bidi_request
+(31593)
+(47787)
+<--- blk_end_bidi_request
+(31645)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(38645)
+<--- blk_update_bidi_request
+(31593)
+(47787)
+<--- blk_end_bidi_request
+(31645)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(31840)
+(31653)
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(31841)
+(31654)
+<--- blk_update_bidi_request
+(31594)
+<--- blk_end_bidi_request
+(47788)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(29873)
+(21982)
+(19164)
+(29882)
+(31840)
+(31653)
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(22002)
+(19163)
+(22010)
+(29882)
+(31840)
+(31653)
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(29873)
+(21982)
+(19164)
+(29882)
+(31841)
+(31654)
+<--- blk_update_bidi_request
+(31594)
+<--- blk_end_bidi_request
+(47788)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(22002)
+(19163)
+(22010)
+(29882)
+(31841)
+(31654)
+<--- blk_update_bidi_request
+(31594)
+<--- blk_end_bidi_request
+(47788)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_bidi_request
+(47787)
+<--- blk_end_bidi_request
+(31645)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+<--- sg_new_write
+(31282)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47837)
+---> sg_finish_rem_req
+(38178)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= sg_start_req
+(15476)
+(21123)
+(26620)
+<--- sg_common_write
+(31343)
+<--- sg_new_write
+(47760)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47837)
+---> sg_finish_rem_req
+(38178)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= sg_start_req
+<--- sg_start_req
+(22524)
+(21123)
+(26620)
+<--- sg_common_write
+(31343)
+<--- sg_new_write
+(47760)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47837)
+---> sg_finish_rem_req
+(38178)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= sg_start_req
+(21048)
+(15450)
+(26617)
+<--- sg_common_write
+(31336)
+<--- sg_new_write
+(47762)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47837)
+---> sg_finish_rem_req
+(38178)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= sg_start_req
+(21047)
+(15447)
+(26616)
+<--- sg_common_write
+(31337)
+<--- sg_new_write
+(47762)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47837)
+---> sg_finish_rem_req
+(38178)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= Unknown
+(21114)
+(15442)
+(30039)
+<--- sg_common_write
+(31340)
+<--- sg_new_write
+(47762)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47837)
+---> sg_finish_rem_req
+(38178)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(31840)
+(31653)
+<--- blk_update_bidi_request
+(31593)
+(47787)
+<--- blk_end_bidi_request
+(31645)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(29882)
+(31840)
+(31653)
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(29882)
+(31841)
+(31654)
+<--- blk_update_bidi_request
+(31594)
+<--- blk_end_bidi_request
+(47788)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(48395)
+(29873)
+(21982)
+(19164)
+(29882)
+(31840)
+(31653)
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(29881)
+(22002)
+(19163)
+(22010)
+(29882)
+(31840)
+(31653)
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(48395)
+(29873)
+(21982)
+(19164)
+(29882)
+(31841)
+(31654)
+<--- blk_update_bidi_request
+(31594)
+<--- blk_end_bidi_request
+(47788)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(29881)
+(22002)
+(19163)
+(22010)
+(29882)
+(31841)
+(31654)
+<--- blk_update_bidi_request
+(31594)
+<--- blk_end_bidi_request
+(47788)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= sg_start_req
+(21052)
+(15476)
+(21123)
+(26620)
+<--- sg_common_write
+(31343)
+<--- sg_new_write
+(47760)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47837)
+---> sg_finish_rem_req
+(38178)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_rq_set_block_pc
+(19272)
+<--- sg_start_req
+(22524)
+(21123)
+(26620)
+<--- sg_common_write
+(31343)
+<--- sg_new_write
+(47760)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47837)
+---> sg_finish_rem_req
+(38178)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= sg_start_req
+(26611)
+(21048)
+(15450)
+(26617)
+<--- sg_common_write
+(31336)
+<--- sg_new_write
+(47762)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47837)
+---> sg_finish_rem_req
+(38178)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= sg_start_req
+(15441)
+(21114)
+(15442)
+(30039)
+<--- sg_common_write
+(31340)
+<--- sg_new_write
+(47762)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47837)
+---> sg_finish_rem_req
+(38178)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= sg_start_req
+(26612)
+(21114)
+(15442)
+(30039)
+<--- sg_common_write
+(31340)
+<--- sg_new_write
+(47762)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47837)
+---> sg_finish_rem_req
+(38178)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(19164)
+(29882)
+(31840)
+(31653)
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(22010)
+(29882)
+(31840)
+(31653)
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(31841)
+(29882)
+(31840)
+(31653)
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(19164)
+(29882)
+(31841)
+(31654)
+<--- blk_update_bidi_request
+(31594)
+<--- blk_end_bidi_request
+(47788)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(22010)
+(29882)
+(31841)
+(31654)
+<--- blk_update_bidi_request
+(31594)
+<--- blk_end_bidi_request
+(47788)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+===> blk_update_request
+(21965)
+(48395)
+(29873)
+(21982)
+(19164)
+(29882)
+(31840)
+(31653)
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(22009)
+(29881)
+(22002)
+(19163)
+(22010)
+(29882)
+(31840)
+(31653)
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+===> blk_update_request
+(21958)
+(48395)
+(29873)
+(21982)
+(19164)
+(29882)
+(31841)
+(31654)
+<--- blk_update_bidi_request
+(31594)
+<--- blk_end_bidi_request
+(47788)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(22009)
+(29881)
+(22002)
+(19163)
+(22010)
+(29882)
+(31841)
+(31654)
+<--- blk_update_bidi_request
+(31594)
+<--- blk_end_bidi_request
+(47788)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_rq_set_block_pc
+(22175)
+(19272)
+<--- sg_start_req
+(22524)
+(21123)
+(26620)
+<--- sg_common_write
+(31343)
+<--- sg_new_write
+(47760)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47837)
+---> sg_finish_rem_req
+(38178)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= sg_start_req
+(21044)
+(15441)
+(21114)
+(15442)
+(30039)
+<--- sg_common_write
+(31340)
+<--- sg_new_write
+(47762)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47837)
+---> sg_finish_rem_req
+(38178)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(21982)
+(19164)
+(29882)
+(31840)
+(31653)
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(19163)
+(22010)
+(29882)
+(31840)
+(31653)
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(21982)
+(19164)
+(29882)
+(31841)
+(31654)
+<--- blk_update_bidi_request
+(31594)
+<--- blk_end_bidi_request
+(47788)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(19163)
+(22010)
+(29882)
+(31841)
+(31654)
+<--- blk_update_bidi_request
+(31594)
+<--- blk_end_bidi_request
+(47788)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_bidi_request
+(19141)
+===> blk_update_request
+(21965)
+(48395)
+(29873)
+(21982)
+(19164)
+(29882)
+(31840)
+(31653)
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_bidi_request
+(38162)
+===> blk_update_request
+(21965)
+(48395)
+(29873)
+(21982)
+(19164)
+(29882)
+(31840)
+(31653)
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(19158)
+(22009)
+(29881)
+(22002)
+(19163)
+(22010)
+(29882)
+(31840)
+(31653)
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_bidi_request
+(29872)
+===> blk_update_request
+(21958)
+(48395)
+(29873)
+(21982)
+(19164)
+(29882)
+(31841)
+(31654)
+<--- blk_update_bidi_request
+(31594)
+<--- blk_end_bidi_request
+(47788)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(19158)
+(22009)
+(29881)
+(22002)
+(19163)
+(22010)
+(29882)
+(31841)
+(31654)
+<--- blk_update_bidi_request
+(31594)
+<--- blk_end_bidi_request
+(47788)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_rq_set_block_pc
+(29925)
+(22175)
+(19272)
+<--- sg_start_req
+(22524)
+(21123)
+(26620)
+<--- sg_common_write
+(31343)
+<--- sg_new_write
+(47760)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47837)
+---> sg_finish_rem_req
+(38178)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(29873)
+(21982)
+(19164)
+(29882)
+(31840)
+(31653)
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(22002)
+(19163)
+(22010)
+(29882)
+(31840)
+(31653)
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(29873)
+(21982)
+(19164)
+(29882)
+(31841)
+(31654)
+<--- blk_update_bidi_request
+(31594)
+<--- blk_end_bidi_request
+(47788)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(22002)
+(19163)
+(22010)
+(29882)
+(31841)
+(31654)
+<--- blk_update_bidi_request
+(31594)
+<--- blk_end_bidi_request
+(47788)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_bidi_request
+(21960)
+(19141)
+===> blk_update_request
+(21965)
+(48395)
+(29873)
+(21982)
+(19164)
+(29882)
+(31840)
+(31653)
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_bidi_request
+---> blk_update_bidi_request
+(37751)
+(38162)
+===> blk_update_request
+(21965)
+(48395)
+(29873)
+(21982)
+(19164)
+(29882)
+(31840)
+(31653)
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(21981)
+(19158)
+(22009)
+(29881)
+(22002)
+(19163)
+(22010)
+(29882)
+(31840)
+(31653)
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_bidi_request
+(48374)
+(29872)
+===> blk_update_request
+(21958)
+(48395)
+(29873)
+(21982)
+(19164)
+(29882)
+(31841)
+(31654)
+<--- blk_update_bidi_request
+(31594)
+<--- blk_end_bidi_request
+(47788)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(21981)
+(19158)
+(22009)
+(29881)
+(22002)
+(19163)
+(22010)
+(29882)
+(31841)
+(31654)
+<--- blk_update_bidi_request
+(31594)
+<--- blk_end_bidi_request
+(47788)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_rq_set_block_pc
+(48408)
+(29925)
+(22175)
+(19272)
+<--- sg_start_req
+(22524)
+(21123)
+(26620)
+<--- sg_common_write
+(31343)
+<--- sg_new_write
+(47760)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47837)
+---> sg_finish_rem_req
+(38178)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(48395)
+(29873)
+(21982)
+(19164)
+(29882)
+(31840)
+(31653)
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(29881)
+(22002)
+(19163)
+(22010)
+(29882)
+(31840)
+(31653)
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(48395)
+(29873)
+(21982)
+(19164)
+(29882)
+(31841)
+(31654)
+<--- blk_update_bidi_request
+(31594)
+<--- blk_end_bidi_request
+(47788)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(29881)
+(22002)
+(19163)
+(22010)
+(29882)
+(31841)
+(31654)
+<--- blk_update_bidi_request
+(31594)
+<--- blk_end_bidi_request
+(47788)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_bidi_request
+===> blk_update_bidi_request
+(22225)
+(48374)
+(29872)
+===> blk_update_request
+(21958)
+(48395)
+(29873)
+(21982)
+(19164)
+(29882)
+(31841)
+(31654)
+<--- blk_update_bidi_request
+(31594)
+<--- blk_end_bidi_request
+(47788)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_rq_set_block_pc
+===> blk_rq_set_block_pc
+(21042)
+(48408)
+(29925)
+(22175)
+(19272)
+<--- sg_start_req
+(22524)
+(21123)
+(26620)
+<--- sg_common_write
+(31343)
+<--- sg_new_write
+(47760)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47837)
+---> sg_finish_rem_req
+(38178)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+===> blk_update_request
+(21965)
+(48395)
+(29873)
+(21982)
+(19164)
+(29882)
+(31840)
+(31653)
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(22009)
+(29881)
+(22002)
+(19163)
+(22010)
+(29882)
+(31840)
+(31653)
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+===> blk_update_request
+(21958)
+(48395)
+(29873)
+(21982)
+(19164)
+(29882)
+(31841)
+(31654)
+<--- blk_update_bidi_request
+(31594)
+<--- blk_end_bidi_request
+(47788)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(22009)
+(29881)
+(22002)
+(19163)
+(22010)
+(29882)
+(31841)
+(31654)
+<--- blk_update_bidi_request
+(31594)
+<--- blk_end_bidi_request
+(47788)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_end_bidi_request
+(29942)
+===> blk_update_bidi_request
+(22225)
+(48374)
+(29872)
+===> blk_update_request
+(21958)
+(48395)
+(29873)
+(21982)
+(19164)
+(29882)
+(31841)
+(31654)
+<--- blk_update_bidi_request
+(31594)
+<--- blk_end_bidi_request
+(47788)
+---> blk_finish_request
+(47894)
+---> __blk_put_request
+(37683)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_bidi_request
+(19141)
+===> blk_update_request
+(21965)
+(48395)
+(29873)
+(21982)
+(19164)
+(29882)
+(31840)
+(31653)
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_bidi_request
+(38162)
+===> blk_update_request
+(21965)
+(48395)
+(29873)
+(21982)
+(19164)
+(29882)
+(31840)
+(31653)
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(19158)
+(22009)
+(29881)
+(22002)
+(19163)
+(22010)
+(29882)
+(31840)
+(31653)
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_bidi_request
+(29872)
+===> blk_update_request
+(21958)
+(48395)
+(29873)
+(21982)
+(19164)
+(29882)
+(31841)
+(31654)
+<--- blk_update_bidi_request
+(31594)
+<--- blk_end_bidi_request
+(47788)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(19158)
+(22009)
+(29881)
+(22002)
+(19163)
+(22010)
+(29882)
+(31841)
+(31654)
+<--- blk_update_bidi_request
+(31594)
+<--- blk_end_bidi_request
+(47788)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_bidi_request
+(21960)
+(19141)
+===> blk_update_request
+(21965)
+(48395)
+(29873)
+(21982)
+(19164)
+(29882)
+(31840)
+(31653)
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_bidi_request
+---> blk_update_bidi_request
+(37751)
+(38162)
+===> blk_update_request
+(21965)
+(48395)
+(29873)
+(21982)
+(19164)
+(29882)
+(31840)
+(31653)
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(21981)
+(19158)
+(22009)
+(29881)
+(22002)
+(19163)
+(22010)
+(29882)
+(31840)
+(31653)
+<--- blk_update_bidi_request
+(31593)
+<--- blk_end_bidi_request
+(31645)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_bidi_request
+(48374)
+(29872)
+===> blk_update_request
+(21958)
+(48395)
+(29873)
+(21982)
+(19164)
+(29882)
+(31841)
+(31654)
+<--- blk_update_bidi_request
+(31594)
+<--- blk_end_bidi_request
+(47788)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_request
+(21981)
+(19158)
+(22009)
+(29881)
+(22002)
+(19163)
+(22010)
+(29882)
+(31841)
+(31654)
+<--- blk_update_bidi_request
+(31594)
+<--- blk_end_bidi_request
+(47788)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_bidi_request
+(48374)
+(29872)
+===> blk_update_request
+(21958)
+(48395)
+(29873)
+(21982)
+(19164)
+(29882)
+(31841)
+(31654)
+<--- blk_update_bidi_request
+(31594)
+<--- blk_end_bidi_request
+(47788)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+Path= blk_update_bidi_request
+(48374)
+(29872)
+===> blk_update_request
+(21958)
+(48395)
+(29873)
+(21982)
+(19164)
+(29882)
+(31841)
+(31654)
+<--- blk_update_bidi_request
+(31594)
+<--- blk_end_bidi_request
+(47788)
+<--- blk_end_request_all
+(47894)
+<--- sg_common_write
+(47896)
+---> sg_finish_rem_req
+(31804)
+---> blk_put_request
+(39513)
+---> __blk_put_request
+(37704)
+---> blk_rq_rl
+(34788)
+(36455)
+(22155)
+(19257)
+<=== __blk_put_request
+(10403)
+(47996)
+(29918)
+(22141)
+
+.
+backward 3 null sinks
+...
+backward 0 use sinks
+
+Eval paths ...
+===================
+ALL PATHS:
+Free= sg_start_req
+(4795)
+(26611)
+(21046)
+(26615)
+<--- sg_common_write
+(31342)
+---> sg_finish_rem_req
+(47759)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+===> __blk_put_request
+(22179)
+(48148)
+(29917)
+(22130)
+
+Free= sg_start_req
+(4795)
+(26611)
+(21043)
+(15439)
+(26612)
+<--- sg_common_write
+(31338)
+---> blk_end_request_all
+(47758)
+---> blk_end_bidi_request
+(36425)
+---> blk_finish_request
+(37751)
+(37678)
+===> __blk_put_request
+(22079)
+(48148)
+(29917)
+(22130)
+
+Free= sg_start_req
+(4795)
+(26611)
+(21046)
+(26615)
+<--- sg_common_write
+(31342)
+(47759)
+===> blk_end_request_all
+(21025)
+(48232)
+(29944)
+===> blk_end_bidi_request
+(22234)
+(48329)
+(29942)
+===> blk_finish_request
+(22226)
+(48299)
+(29901)
+===> __blk_put_request
+(22071)
+(48148)
+(29917)
+(22130)
+
+Free= sg_start_req
+(4795)
+(26611)
+(21046)
+(26615)
+<--- sg_common_write
+(31342)
+---> sg_finish_rem_req
+(47759)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+Free= sg_start_req
+(4795)
+(26611)
+(21046)
+(26615)
+<--- sg_common_write
+(31342)
+<--- sg_new_write
+(47759)
+<--- sg_ioctl
+(31799)
+---> sg_new_read
+(47836)
+---> sg_finish_rem_req
+(38178)
+(39512)
+===> blk_put_request
+(20821)
+(48306)
+(29926)
+(22178)
+
+-------------------
+Free= 48514 ln: 1369 fl: block/blk-core.c
+Free= 48514 ln: 1369 fl: block/blk-core.c
+Free= 48514 ln: 1369 fl: block/blk-core.c
+Free= 48515 ln: 1403 fl: block/blk-core.c
+Free= 48515 ln: 1403 fl: block/blk-core.c
+Null= 22498 ln: 2011 fl: drivers/scsi/sg.c
+Null= 22498 ln: 2011 fl: drivers/scsi/sg.c
+Null= 22498 ln: 2011 fl: drivers/scsi/sg.c
+Null= 22498 ln: 2011 fl: drivers/scsi/sg.c
+Null= 22523 ln: 1270 fl: block/blk-core.c
+Null= 22524 ln: 1270 fl: block/blk-core.c
+BackwardPaths:
+sg_start_req sg_common_write sg_new_write 
+sg_start_req sg_common_write sg_new_write sg_ioctl 

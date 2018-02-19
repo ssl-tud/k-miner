@@ -1,0 +1,75 @@
+#ifndef USEAFTERRETURNHECKER_H_
+#define USEAFTERRETURNCHECKER_H_
+#include "SABER/StackSrcSnkDDA.h"
+#include "SABER/SaberCheckerAPI.h"
+#include "Util/DPItem.h"
+#include "MemoryModel/SPAG.h"
+
+/*!
+ * Static UseAfterReturn Detector
+ */
+class UseAfterReturnChecker : public StackSrcSnkDDA, public llvm::ModulePass {
+
+public:
+	/// Pass ID
+	static char ID;
+
+	UseAfterReturnChecker(char id = ID): ModulePass(ID) { }
+
+	virtual ~UseAfterReturnChecker() { }
+
+
+	/// We start from here
+	virtual bool runOnModule(llvm::Module& module) {
+//		module.dump();
+		/// start analysis
+		analyze(module);
+		return false;
+	}
+
+	/// Get pass name
+	virtual const char* getPassName() const {
+		return "Static UseAfterReturn Analysis";
+	}
+
+	/// Pass dependence
+	virtual void getAnalysisUsage(llvm::AnalysisUsage& au) const {
+		/// do not intend to change the IR in this pass,
+		au.setPreservesAll();
+	}
+
+	// Find all SVFGNodes that store a stack node into a global node.
+	virtual void initSrcs();
+
+	//Find all SVFGNodes that store a node into a global node.
+	virtual void initSnks();
+
+	/// A SVFG node is source if it is an assignment of a stack node to a global node. 
+	inline bool isSouce(const SVFGNode* node) {
+		return getSources().find(node)!=getSources().end();
+	}
+	/// A SVFG node is source if it is an assignment to a global node. 
+	inline bool isSink(const SVFGNode* node) {
+		const SVFGNode* curSourceNode = getCurSlice()->getSource();
+
+		if(curSourceNode->getId() != node->getId())
+			return getSinks().find(node)!=getSinks().end();
+
+		return false;
+	}
+
+protected:
+	// Checks if it was a NeverFree or a PartialLeak bug and dumps a warnging.
+	virtual void reportBug(ProgSlice* slice);
+	void reportNeverFree(const SVFGNode* src, std::string globalValueName, std::string stackValueName);
+	void reportPartialLeak(const SVFGNode* src, std::string globalValueName, std::string stackValueName);
+
+private:
+	// Converts all assigned nodes of a corresponding one to a Set of SVFGNodes.
+	void convertPAGNodesToSVFGNodes(const NodeToPairSet &assignments, SVFGNodeSet &res);
+
+	// Returns the value name of a PAGNode with the given id.
+	std::string getValueName(NodeID id) const; 
+};
+
+#endif /* USEAFTERRETURNCHECKER_H_ */

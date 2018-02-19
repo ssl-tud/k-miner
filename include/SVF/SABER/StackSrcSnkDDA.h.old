@@ -1,0 +1,172 @@
+#ifndef STACKSRCSNKANALYSIS_H_
+#define STACKSRCSNKANALYSIS_H_
+
+#include "SABER/CFLSolver.h"
+#include "Util/DPItem.h"
+#include "MSSA/SVFGOPT.h"
+#include "SABER/ProgSlice.h"
+#include "SABER/SaberSVFGBuilder.h"
+#include "WPA/Andersen.h"
+#include "WPA/FlowSensitive.h"
+#include "SABER/SrcSnkDDA.h"
+#include "MemoryModel/SPAG.h"
+
+/*
+ * Finds the latest assignment of a global varibale by backwarding from
+ * a given node.
+ */
+class MultiAssignmentSolver : public CFLSolver<SVFG*, RootDPItem> {
+public:
+	MultiAssignmentSolver(SVFG* svfg) {
+		pag = PAG::getPAG();
+		setGraph(svfg);	
+	}
+
+	virtual ~MultiAssignmentSolver() { }
+
+	// Is used to find the latest node that is assignet to a given SVFGNode 
+	// and a set of potential assignments.
+	const SVFGNode* findLatestAssignment(NodeID svfgNodeId, const NodeIdSet* svfgSrcNodeIds); 
+
+protected:
+	// backwards from a given svfgNode and stores the latest stack node inside the item.
+	virtual void backwardTraverse(RootDPItem& item); 
+	virtual void forwardProcess(const RootDPItem& item) { }
+	virtual void backwardProcess(const RootDPItem& item) { }
+
+private:
+	// Contains the potential assignments, that are checked against during the bawarding.
+	const NodeIdSet *svfgSrcNodeIds;
+	PAG *pag;
+};
+
+/*!
+ * Stack source-sink analysis, which serves as an extension of the base analysis.
+ */
+class StackSrcSnkDDA : public SrcSnkDDA {
+
+public:
+	typedef std::map<NodeID, SVFGNodeSet> IdToSVFGSetMap;
+
+	StackSrcSnkDDA(): spag(nullptr), fspta(nullptr), mas(nullptr){ }
+
+	virtual ~StackSrcSnkDDA() { 
+		if(spag != nullptr)	
+			delete spag;
+		spag = nullptr;
+
+		if(fspta != nullptr)
+			delete fspta;
+		fspta = nullptr;
+
+		if(mas!= nullptr)
+			delete mas;
+		mas = nullptr;
+	}
+
+	/// Start analysis here
+	virtual void analyze(llvm::Module& module);
+
+	/// Initialize analysis
+	virtual void initialize(llvm::Module& module) {
+		ptaCallGraph = new PTACallGraph(&module);
+		fspta = FlowSensitive::createFSWPA(module);
+		AndersenWaveDiff* ander = AndersenWaveDiff::createAndersenWaveDiff(module);
+		svfg = new SVFGOPT(ptaCallGraph);
+		memSSA.build(svfg,ander);
+//		memSSA.build(svfg,fspta);
+		setGraph(memSSA.getSVFG());
+		AndersenWaveDiff::releaseAndersenWaveDiff();
+		/// allocate control-flow graph branch conditions
+		getPathAllocator()->allocate(module);
+		spag = new SPAG(fspta->getSVFG());
+		spag->build();
+		mas = new MultiAssignmentSolver(fspta->getSVFG());
+		findSVFGStoreNodes();
+
+		initSrcs();
+		initSnks();
+	}
+
+	/// Finalize analysis
+	virtual void finalize() {
+		dumpSlices();
+	}
+
+
+	void findSVFGStoreNodes(); 
+
+	/// Initialize sources and sinks
+	virtual void initSrcs() = 0;
+	virtual void initSnks() = 0;
+	virtual bool isSourceLikeFun(const llvm::Function* fun){ return false; }; 
+	virtual bool isSinkLikeFun(const llvm::Function* fun){ return false; }; 
+	virtual bool isSouce(const SVFGNode* node) = 0;
+	virtual bool isSink(const SVFGNode* node) = 0;
+
+	/// report bug on the current analyzed slice
+	virtual void reportBug(ProgSlice* slice) = 0;
+
+	inline void setCurSlice(const SVFGNode* src); 
+
+	inline StackProgSlice* getCurStackSlice();
+
+	inline const SPAG* getSPAG() const {
+		return spag;
+	}
+
+	inline void addToSourcesMap(NodeID id, SVFGNodeSet sources) {
+		svfgNodeSources.insert(std::pair<NodeID, SVFGNodeSet>(id, sources));
+	}
+
+	inline void addToSinksMap(NodeID id, SVFGNodeSet sinks) {
+		svfgNodeSinks.insert(std::pair<NodeID, SVFGNodeSet>(id, sinks));
+	}
+
+	inline void setSourceMap(IdToSVFGSetMap &svfgNodeSources) {
+		this->svfgNodeSources = svfgNodeSources;
+	}
+
+	inline void setSinkMap(IdToSVFGSetMap &svfgNodeSinks) {
+		this->svfgNodeSinks = svfgNodeSinks;
+	}
+
+	inline IdToSVFGSetMap& getSourceMap() {
+		return svfgNodeSources;
+	}
+
+	inline IdToSVFGSetMap& getSinkMap() {
+		return svfgNodeSinks;
+	}
+
+	inline void printSourceMap(); 
+
+protected:
+	/// Propagate information forward by matching context
+	virtual void forwardpropagate(const DPIm& item, SVFGEdge* edge);
+
+	/// Propagate information backward without matching context, as forward analysis already did it
+	virtual void backwardpropagate(const DPIm& item, SVFGEdge* edge);
+
+	/// Guarded reachability search
+	virtual void AllPathReachability();
+
+	// Contains all SVFGNodes with the store-type.
+	SVFGNodeSet svfgStoreNodes;
+
+private:
+	// Check if less than two stack nodes write to the global node and 
+	// store the PAGNodeID of the stack node to the current slice. Otherwise return false.
+	bool setAssignmentNodeId(const SVFGNode* node);
+	// Find the latest stack node that has written into the global node.
+	void solveMultipleAssignments(const SVFGNode* node); 
+
+	IdToSVFGSetMap svfgNodeSources;
+	IdToSVFGSetMap svfgNodeSinks;
+	SPAG *spag;
+	FlowSensitive* fspta;
+	MultiAssignmentSolver *mas;
+};
+
+
+#endif /* SRCSNKDDA_H_ */
