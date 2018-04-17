@@ -1,0 +1,115 @@
+diff --git a/scripts/Makefile.build b/scripts/Makefile.build
+index e5a28da..da58ff2 100644
+--- a/scripts/Makefile.build
++++ b/scripts/Makefile.build
+@@ -86,13 +86,14 @@ endif
+ 
+ ifneq ($(strip $(obj-y) $(obj-m) $(obj-) $(subdir-m) $(lib-target)),)
+ builtin-target := $(obj)/built-in.o
++builtin-target_bc := $(obj)/built-in.bc
+ endif
+ 
+ modorder-target := $(obj)/modules.order
+ 
+ # We keep a list of all modules in $(MODVERDIR)
+ 
+-__build: $(if $(KBUILD_BUILTIN),$(builtin-target) $(lib-target) $(extra-y)) \
++__build: $(if $(KBUILD_BUILTIN),$(builtin-target) $(builtin-target_bc) $(lib-target) $(extra-y)) \
+ 	 $(if $(KBUILD_MODULES),$(obj-m) $(modorder-target)) \
+ 	 $(subdir-ym) $(always)
+ 	@:
+@@ -198,7 +199,15 @@ $(obj)/%.ll: $(src)/%.S FORCE
+ quiet_cmd_cc_o_c = CC $(quiet_modtag)  $@
+ 
+ ifndef CONFIG_MODVERSIONS
+-cmd_cc_o_c = $(CC) $(c_flags) -c -o $@ $<
++#cmd_cc_o_c = $(CC) $(c_flags) -c -o $@ $<
++#	$(CC) $(c_flags) -save-temps=obj -o $(filter-out lib/built-in.bc, $(filter-out arch/x86/entry/vdso/*.o, $(@))) -c $<;
++
++cmd_cc_o_c = \
++if [[ $(@) != "scripts/mod/empty.o" ]] && [[ ! $(@) =~ "arch/x86/boot"* ]] && [[ ! $(@) =~ "arch/x86/realmode/rm"* ]] ; then \
++	$(CC) $(c_flags) -save-temps=obj -o $(patsubst %.bc, %.o, $(@)) -g -c $<; \
++else \
++	$(CC) $(c_flags) -c -o $@ $<; \
++fi
+ 
+ else
+ # When module versioning is enabled the following steps are executed:
+@@ -308,6 +317,9 @@ $(obj)/%.o: $(src)/%.c $(recordmcount_source) $(objtool_obj) FORCE
+ 	$(call cmd,force_checksrc)
+ 	$(call if_changed_rule,cc_o_c)
+ 
++$(obj)/%.bc: $(src)/%.c
++	$(call if_changed_rule,cc_o_c)
++
+ # Single-part modules are special since we need to mark them in $(MODVERDIR)
+ 
+ $(single-used-m): $(obj)/%.o: $(src)/%.c $(recordmcount_source) $(objtool_obj) FORCE
+@@ -374,6 +386,14 @@ $(obj)/%.s: $(src)/%.S FORCE
+ 
+ quiet_cmd_as_o_S = AS $(quiet_modtag)  $@
+ 
++quiet_cmd_as_bc_S = $(CC) -emit-llvm $(quiet_modtag) $@
++cmd_as_bc_S       = $(CC) $(a_flags) -emit-llvm -c -o $@ $<
++
++asm_ign := ""
++$(obj)/%.bc: $(src)/%.S FORCE 
++	$(eval asm_ign += $@)
++	$(call if_changed_dep,as_bc_S)
++
+ ifndef CONFIG_MODVERSIONS
+ cmd_as_o_S = $(CC) $(a_flags) -c -o $@ $<
+ 
+@@ -458,8 +478,24 @@ cmd_link_o_target = $(if $(strip $(obj-y)),\
+ 		      $(cmd_secanalysis),\
+ 		      $(cmd_make_empty_builtin) $@)
+ 
++tmp = $(patsubst %.o, %.bc, $(obj-y))
++bc-y = $(filter-out $(asm_ign), $(tmp))
++#$(foreach ign, $(asm_ign), $(eval link_bc-y = $(filter-out $ign, $(link_bc-y))))
++#quiet_cmd_link_o_target_bc = llvm-link $@
++ifneq ($(bc-y),"")
++	cmd_link_bc_target = $(if $(strip $(bc-y)),\
++      			llvm-link -o $@ $(filter $(bc-y), $^) \
++      			$(cmd_secanalysis),\
++			echo "" > $@)
++	#rm -f $@; $(AR) rcs$(KBUILD_ARFLAGS) $@)
++else
++	cmd_link_bc_target = echo "" > $@ 
++endif
++
+ $(builtin-target): $(obj-y) FORCE
+ 	$(call if_changed,link_o_target)
++$(builtin-target_bc): $(bc-y) FORCE
++	$(call if_changed,link_bc_target) 
+ 
+ targets += $(builtin-target)
+ endif # builtin-target
+@@ -489,8 +525,13 @@ else
+   cmd_link_l_target = rm -f $@; $(AR) rcs$(KBUILD_ARFLAGS) $@ $(lib-y)
+ endif
+ 
++#$(patsubst %.o, %.bc, $(lib-y))
++lib_bc-y := $(filter-out lib/built-in.bc, $(patsubst %.o, %.bc, $(lib-y)))
++	 cmd_link_bc_l_target = llvm-link -o $(filter-out lib/built-in.bc, $@.bc) $(filter-out lib/built-in.bc, $(lib_bc-y))
++
+ $(lib-target): $(lib-y) FORCE
+ 	$(call if_changed,link_l_target)
++	$(call if_changed,link_bc_l_target)
+ 
+ targets += $(lib-target)
+ 
+@@ -546,8 +587,13 @@ endif
+ quiet_cmd_link_multi-m = LD [M]  $@
+ cmd_link_multi-m = $(cmd_link_multi-link)
+ 
++quiet_cmd_link_bc_multi-y = llvm-link      $@
++cmd_link_bc_multi-y = llvm-link -o $(patsubst %.o, %.bc, $@) $(patsubst %.o, %.bc, $(link_multi_deps))
++#cmd_link_bc_multi-y = llvm-link -o $@ $(link_multi_deps_bc)
++
+ $(multi-used-y): FORCE
+ 	$(call if_changed,link_multi-y)
++	$(call if_changed,link_bc_multi-y)
+ $(call multi_depend, $(multi-used-y), .o, -objs -y)
+ 
+ $(multi-used-m): FORCE
