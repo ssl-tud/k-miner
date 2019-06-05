@@ -162,7 +162,7 @@ bool SrcSnkAnalysis::verifySrcSnk(const KSrcSnkDPItem &srcSnkItem) {
 
 	// The sink has been already analyzed if srSet.size > 0.
 	// We skip nullStoreNodes as they are not correctly mapped to gep nodes.
-	if(srcSet.size() > 0 && srcSet.find(srcNode) != srcSet.end() || isNullStoreNode(snkNode))
+	if((srcSet.size() > 0 && srcSet.find(srcNode) != srcSet.end()) || isNullStoreNode(snkNode))
 		return true;
 
 	worklist.push(item);

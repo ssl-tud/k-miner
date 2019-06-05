@@ -8,6 +8,8 @@ std::istream& operator>> (std::istream& is, Location &loc) {
 	is >> loc.funcName;
 	is >> loc.line;
 	is >> loc.varName;
+
+	return is;
 }
 
 std::ostream& operator<< (std::ostream& os, const Location &loc) {
@@ -15,6 +17,8 @@ std::ostream& operator<< (std::ostream& os, const Location &loc) {
 	os << loc.funcName << " ";
 	os << loc.line << " ";
 	os << loc.varName<< " ";
+
+	return os;
 }
 
 std::istream& operator>> (std::istream& is, UARBug &bug) {

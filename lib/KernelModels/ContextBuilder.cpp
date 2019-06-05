@@ -111,7 +111,7 @@ void ContextBuilder::minimizeContext(llvm::Module &module, KernelContextObj *con
 	StringSet relevantGVs;
 
 	// Reduce the depth of the call graph as long as the functions limit wont be exceeded.
-	for(uint32_t depth = maxCGDepth; depth >= 0; depth--) {
+	for(int32_t depth = maxCGDepth; depth >= 0; depth--) {
 
 		// Collect the contexts of all root functions.
 		for(const auto &iter : context->getContextRoot())  {

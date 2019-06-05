@@ -87,7 +87,7 @@ protected:
 	/**
 	 * Return the number of variables analyzed.
 	 */
-	virtual unsigned int getNumAnalyzedVars() const { }
+	virtual unsigned int getNumAnalyzedVars() const { return 0; }
 
 	/**
 	 * Adds a bug to the set of bugs.
