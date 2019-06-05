@@ -472,7 +472,7 @@ public:
 			return cur < rhs.cur;
 		else if(getRootID() != rhs.getRootID())
 			return getRootID() < rhs.getRootID();
-		else if(prevNodeId != prevNodeId)
+		else if(prevNodeId != rhs.prevNodeId)
 			return prevNodeId < rhs.prevNodeId;
 		else 
 			return cxtVisitedNodes < rhs.cxtVisitedNodes;

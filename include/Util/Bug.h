@@ -463,6 +463,8 @@ public:
 	bool operator< (const MemLeakBug& rhs) const {
 		if(sourceLoc != rhs.sourceLoc)
 			return sourceLoc < rhs.sourceLoc;
+
+		return false;
 	}
 
 	bool operator!= (const MemLeakBug& rhs) const {

@@ -237,7 +237,7 @@ public:
 			cxtRoot == rhs.cxtRoot && 
 			functions == rhs.functions && 
 			globalvars == rhs.globalvars &&
-			maxCGDepth == maxCGDepth);
+			maxCGDepth == rhs.maxCGDepth);
 	}
 
 	inline bool operator!= (const KernelContextObj& rhs) const {
